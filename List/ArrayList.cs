@@ -31,15 +31,51 @@ namespace List
             CopyArrayToList(values, _array);
         }
 
-
-
-
-
-
-
-        private static void CopyArrayToList(T[]from, T[]to)
+        public void Add(T value)
         {
-            for(int i = 0; i < from.Length; ++i)
+            if (Length == _array.Length)
+            {
+                UpSize();
+            }
+
+            _array[Length] = value;
+            ++Length;
+        }
+
+        public void RemoveLastElement()
+        {
+            _array[Length-1] = default(T);
+            --Length;
+            if(Length < _array.Length/2 )
+            {
+                UpSize();
+            }
+        }
+
+        public T Get(int index)
+        {
+            if ((index >= Length) || (index < 0))
+            {
+                throw new IndexOutOfRangeException();
+            }
+            
+            return _array[index];
+        }
+
+        private void UpSize()
+        {
+            int newRealLenght = (int)(_array.Length * lenghtCoef + 1);
+
+            T[] upSizeArray = new T[newRealLenght];
+            CopyArrayToList(_array, upSizeArray);
+            _array = upSizeArray;
+        }
+
+
+
+        private static void CopyArrayToList(T[] from, T[] to)
+        {
+            for (int i = 0; i < from.Length; ++i)
             {
                 to[i] = from[i];
             }
