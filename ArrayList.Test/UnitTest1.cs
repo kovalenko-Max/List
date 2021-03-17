@@ -44,16 +44,19 @@ namespace ArrayList.Test
             stringArrayList.Add("Car");
             stringArrayList.Add("adasdasdasd");
             stringArrayList.Add("Nat");
-            stringArrayList.RemoveLastElement();
-            stringArrayList.RemoveLastElement();
-            stringArrayList.RemoveLastElement();
-            stringArrayList.RemoveLastElement();
-            stringArrayList.RemoveLastElement();
-            stringArrayList.RemoveLastElement();
-            stringArrayList.RemoveLastElement();
 
+            ArrayList<string> ar = new ArrayList<string>();
+            ar.Add("Cat");
+            ar.Add("Thms");
+            ar.Add("Dog");
+            ar.Add("Car");
+            ar.Add("adasdasdasd");
 
-            string s = stringArrayList.Get(3);
+            bool compare = stringArrayList.Equals(ar);
+            
+            ar.Add("Nat");
+
+            compare = stringArrayList.Equals(ar);
 
         }
     }

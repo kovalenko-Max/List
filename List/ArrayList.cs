@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace List
 {
-    public class ArrayList<T>
+    public class ArrayList<T> : IEnumerable<T>
     {
         public int Length { get; private set; }
 
@@ -19,7 +22,7 @@ namespace List
         public ArrayList(T value)
         {
             Length = 1;
-            _array = new T[defoultLenght + 1];
+            _array = new T[defoultLenght];
             _array[0] = value;
         }
 
@@ -44,9 +47,9 @@ namespace List
 
         public void RemoveLastElement()
         {
-            _array[Length-1] = default(T);
+            _array[Length - 1] = default(T);
             --Length;
-            if(Length < _array.Length/2 )
+            if (Length < _array.Length / 2)
             {
                 UpSize();
             }
@@ -58,27 +61,78 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-            
+
             return _array[index];
+        }
+
+        //public bool Equals(ArrayList<T> arrayList)
+        //{
+        //    bool result = true;
+
+        //    if (this.Length == arrayList.Length)
+        //    {
+        //        Comparer<T> comparer = Comparer<T>.Default;
+        //        for (int i = 0; i < this.Length; ++i)
+        //        {
+        //            if (comparer.Compare(this.Get(i), arrayList.Get(i)) != 0)
+        //            {
+        //                result = false;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        result = false;
+        //    }
+
+        //    return result;
+        //}
+
+        public bool Equals(ArrayList<T> arrayList)
+        {
+            bool result = true;
+
+            if (this.Length == arrayList.Length)
+            {
+                for (int i = 0; i < this.Length; ++i)
+                {
+                    bool b = Enumerable.SequenceEqual(this, arrayList);
+                }
+            }
+            else
+            {
+                result = false;
+            }
+
+            return result;
         }
 
         private void UpSize()
         {
-            int newRealLenght = (int)(_array.Length * lenghtCoef + 1);
+            int newRealLenght = (int)(Length * lenghtCoef + 1);
 
             T[] upSizeArray = new T[newRealLenght];
             CopyArrayToList(_array, upSizeArray);
             _array = upSizeArray;
         }
 
-
-
         private static void CopyArrayToList(T[] from, T[] to)
         {
-            for (int i = 0; i < from.Length; ++i)
+            int copyLenght = from.Length < to.Length ? from.Length : to.Length;
+            for (int i = 0; i < copyLenght; ++i)
             {
                 to[i] = from[i];
             }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return ((IEnumerable<T>)_array).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _array.GetEnumerator();
         }
     }
 }
