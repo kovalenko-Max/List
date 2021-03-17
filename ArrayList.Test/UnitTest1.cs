@@ -16,48 +16,109 @@ namespace ArrayList.Test
         //    Assert.Pass();
         //}
 
-        [TestCase(new int[] {5, 10, 15, 20 })]
-        [TestCase(new char[] {'g', 's', 'a', '5'})]
-        public void ArrayList_WhenValue_ShouldRturnNewArrayList(char[] array)
+        [TestCase(25, 1, 2)]
+        public void Add_WhenIntValue_ShouldToEnd(int value, int mockNumb, int expectedMockNumb)
         {
-            ArrayList<char> arrayList = new ArrayList<char>(array);
+            ArrayList<int> actualArrayList = ArrayListMock.GetIntArrayListMock(mockNumb);
+            actualArrayList.Add(value);
+            ArrayList<int> expectedArrayList = ArrayListMock.GetIntArrayListMock(expectedMockNumb, value);
+
+            Assert.AreEqual(expectedArrayList, actualArrayList);
+        }
+
+        [TestCase("Alex", 1, 2)]
+        public void Add_WhenStringValue_ShouldAddToEnd(string value, int mockNumb, int expectedMockNumb)
+        {
+            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            actualArrayList.Add(value);
+            ArrayList<string> expectedArrayList = ArrayListMock.GetStringArrayListMock(expectedMockNumb, value);
+
+            Assert.AreEqual(expectedArrayList, actualArrayList);
         }
         
-        [TestCase(new int[] { 5, 10, 15, 20 }, 299)]
-        public void Add_WhenValue_ShouldAddNewValueToEnd(int[] array ,int value)
+        [TestCase(4, 87)]
+        [TestCase(0, 1)]
+        [TestCase(9, 38)]
+        public void Get_WhenIndex_ShouldGetElement(int index, int expected)
         {
-            ArrayList<int> arrayList = new ArrayList<int>(array);
+            ArrayList<int> arrayList = ArrayListMock.GetIntArrayListMock(numb: 1);
+            int actual = arrayList[index];
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(2, 9999, 1, 3)]
+        public void Set_WhenIndex_ShouldGetElement(int index, int value,int mockNumb, int expectedMockNumb)
+        {
+            ArrayList<int> expectedArrayList = ArrayListMock.GetIntArrayListMock(numb: expectedMockNumb);
+            ArrayList<int> actual = ArrayListMock.GetIntArrayListMock(mockNumb);
+            actual[index] = value;
+            Assert.AreEqual(expectedArrayList, actual);
+        }
 
-            arrayList.Add(value);
-            arrayList.Add(99);
-            arrayList.Add(40);
-            arrayList.Add(13);
-            arrayList.Add(125);
-            arrayList.Get(4);
-            arrayList.Get(5);
+        [TestCase()]
+        public void AddAt_WhenIndexAndValue_ShouldAddElementByIndex()
+        {
+            ArrayList<string> arrayList = ArrayListMock.GetStringArrayListMock(1);
 
-            ArrayList<string> stringArrayList = new ArrayList<string>();
-
-            stringArrayList.Add("Cat");
-            stringArrayList.Add("Thms");
-            stringArrayList.Add("Dog");
-            stringArrayList.Add("Car");
-            stringArrayList.Add("adasdasdasd");
-            stringArrayList.Add("Nat");
-
-            ArrayList<string> ar = new ArrayList<string>();
-            ar.Add("Cat");
-            ar.Add("Thms");
-            ar.Add("Dog");
-            ar.Add("Car");
-            ar.Add("adasdasdasd");
-
-            bool compare = stringArrayList.Equals(ar);
+            arrayList.AddAt(0, "Абра-кадабра");
+            arrayList.Add("255");
+            arrayList.Add("Car");
+            arrayList.AddAt(6, "Новое значение");
+            arrayList.AddAtFirst("Новое значение в начало списка");
+            arrayList.RemoveAt(3);
+            arrayList.RemoveAtLast();
             
-            ar.Add("Nat");
-
-            compare = stringArrayList.Equals(ar);
+            arrayList.RemoveRange(3, 5);
 
         }
+
+        public static class ArrayListMock
+        {
+            public static ArrayList<int> GetIntArrayListMock(int numb, int value = 0)
+            {
+                int[] a;
+                switch (numb)
+                {
+                    default:
+                        a = new int[0];
+                        break;
+                    case 1:
+                        a = new int[] { 1, 325, 5, 25, 87, 922, 2, 1, 99, 38 };
+                        break;
+                    case 2:
+                        a = new int[] { 1, 325, 5, 25, 87, 922, 2, 1, 99, 38, value };
+                        break;
+                    case 3:
+                        a = new int[] { 1, 325, 9999, 25, 87, 922, 2, 1, 99, 38 };
+                        break;
+                }
+
+                return new ArrayList<int>(a);
+            }
+
+            public static ArrayList<string> GetStringArrayListMock(int numb, string value = "")
+            {
+                string[] a;
+                switch (numb)
+                {
+                    default:
+                        a = new string[0];
+                        break;
+                    case 1:
+                        a = new string[] { "Cat", "dog", "Кто-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
+                        break;
+                    case 2:
+                        a = new string[] { "Cat", "dog", "Кто-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f", value };
+                        break;
+
+                    case 3:
+                        a = new string[] { "dog", "Кто-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
+                        break;
+                }
+
+                return new ArrayList<string>(a);
+            }
+        }
     }
+
+
 }
