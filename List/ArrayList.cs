@@ -78,21 +78,25 @@ namespace List
 
         public void AddAt(int index, T value)
         {
-            ++Length;
-            if (Length >= _array.Length)
+            if ((index <= Length) && (index >= 0))
             {
-                this.UpSize();
+                ++Length;
+                if (Length >= _array.Length)
+                {
+                    this.UpSize();
+                }
+                this.Shift(index, Length, 1);
+                _array[index] = value;
             }
-            this.Shift(index, Length, 1);
-            _array[index] = value;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+
         }
 
         public void AddList(ArrayList<T> arrayList)
         {
-            //for(int i = 0; i<arrayList.Length; ++i)
-            //{
-            //    this.Add(arrayList[i]);
-            //}
             AddListAt(Length, arrayList);
         }
 
@@ -108,16 +112,13 @@ namespace List
             {
                 this.UpSize();
             }
-            Shift(index, Length-1, arrayList.Length);
-            
+            Shift(index, Length - 1, arrayList.Length);
 
             for (int i = 0; i < arrayList.Length; ++i)
             {
                 _array[index] = arrayList[i];
                 ++index;
             }
-
-
         }
 
         public void RemoveAtLast()
@@ -322,7 +323,7 @@ namespace List
             {
                 toString += _array[i] + " ";
             }
-            return toString;
+            return toString.Trim();
         }
 
         private void UpSize()
