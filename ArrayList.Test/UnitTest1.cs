@@ -190,6 +190,55 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
+        [TestCase("25", 11, 4)]
+        public void RemoveAllByValue_WhenAllValues_ShoulRemoved(string value, int mockNumb, int expected)
+        {
+            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            int actual = actualArrayList.RemoveAllByValue(value);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 7, 13)]
+        public void AddList_WhenArrayList_ShouldAddToArrayList(int mockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            ArrayList<string> listForAdding = ArrayListMock.GetStringArrayListMock(numbListForAdding);
+
+            ArrayList<string> expectedArrayList = ArrayListMock.GetStringArrayListMock(expectedMockNumb);
+
+            actualArrayList.AddList(listForAdding);
+            Assert.AreEqual(expectedArrayList, actualArrayList);
+        }
+
+        [TestCase(4, 1, 7, 14)]
+        [TestCase(2, 7, 16, 17)]
+        [TestCase(8, 18, 16, 19)]
+        [TestCase(8, 1, 7, 13)]
+        public void AddListAt_WhenIndexAndArrayList_ShouldAddArrayListAtIndex(int index, int mockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            ArrayList<string> listForAdding = ArrayListMock.GetStringArrayListMock(numbListForAdding);
+
+            ArrayList<string> expectedArrayList = ArrayListMock.GetStringArrayListMock(expectedMockNumb);
+
+            actualArrayList.AddListAt(index, listForAdding);
+            Assert.AreEqual(expectedArrayList, actualArrayList);
+        }
+
+        // [TestCase(1, 7, 15)]
+        public void AddListAtFirst_WhenArrayList_ShouldAddAtFirst(int mockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            ArrayList<string> listForAdding = ArrayListMock.GetStringArrayListMock(numbListForAdding);
+
+            ArrayList<string> expectedArrayList = ArrayListMock.GetStringArrayListMock(expectedMockNumb);
+
+            actualArrayList.AddListAtFirst(listForAdding);
+            Assert.AreEqual(expectedArrayList, actualArrayList);
+        }
+
+
         public static class ArrayListMock
         {
             public static ArrayList<int> GetIntArrayListMock(int numb, int value = 0)
@@ -258,6 +307,38 @@ namespace ArrayList.Test
                         break;
                     case 10:
                         a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "25", "a, b, c, d, e, f" };
+                        break;
+
+                    case 11:
+                        a = new string[] { "Cat", "dog", "25", " то-то", "25", "что-то", "25", "@@??", "25", "a, b, c, d, e, f" };
+                        break;
+
+                    case 12:
+                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "a, b, c, d, e, f" };
+                        break;
+
+                    case 13:
+                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f", "Cat", "dog", " то-то", "что-то", "@@??" };
+                        break;
+
+                    case 14:
+                        a = new string[] { "Cat", "dog", " то-то", "что-то", "Cat", "dog", " то-то", "что-то", "@@??", "@@??", "", "25", "a, b, c, d, e, f" };
+                        break;
+                    case 15:
+                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
+                        break;
+                    case 16:
+                        a = new string[] { "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
+                        break;
+
+                    case 17:
+                        a = new string[] { "Cat", "dog", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", " то-то", "что-то", "@@??" };
+                        break;
+                    case 18:
+                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
+                        break;
+                    case 19:
+                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
                         break;
                 }
 

@@ -87,6 +87,46 @@ namespace List
             _array[index] = value;
         }
 
+        public void AddList(ArrayList<T> arrayList)
+        {
+            //for(int i = 0; i<arrayList.Length; ++i)
+            //{
+            //    this.Add(arrayList[i]);
+            //}
+            AddListAt(Length, arrayList);
+        }
+
+        public void AddListAtFirst(ArrayList<T> arrayList)
+        {
+            AddListAt(0, arrayList);
+        }
+
+        public void AddListAt(int index, ArrayList<T> arrayList)
+        {
+            int indexTo = Length;
+            Length += arrayList.Length;
+            if (Length >= _array.Length)
+            {
+                this.UpSize();
+            }
+            //this.Shift(arrayList.Length, arrayList.Length);
+            shif2(index, indexTo, arrayList.Length);
+
+            for(int i = 0; i< arrayList.Length; ++i)
+            {
+                _array[index] = arrayList[i];
+                ++index;
+            }
+
+            void shif2(int indexFrom, int indexTo, int shiftCoutn)
+            {
+                for(int i = indexFrom; i < indexTo; ++i)
+                {
+                    _array[i + shiftCoutn] = _array[i];
+                }
+            }
+        }
+
         public void RemoveAtLast()
         {
             RemoveAt(Length - 1);
@@ -136,6 +176,31 @@ namespace List
             RemoveAt(indexForRemove);
 
             return indexForRemove;
+        }
+
+        public int RemoveAllByValue(T value)
+        {
+            int count = 0;
+            int indexForRemove = GetIndexByValue(value);
+            while (indexForRemove != -1)
+            {
+                RemoveAt(indexForRemove);
+                ++count;
+                indexForRemove = GetIndexByValue(value);
+            }
+
+            return count;
+        }
+
+        public void Reverse()
+        {
+            int halfLenght = Length / 2;
+
+            for (int i = 0; i < halfLenght; ++i)
+            {
+                int rotateIndex = Length - 1 - i;
+                Swap(ref _array[i], ref _array[rotateIndex]);
+            }
         }
 
         public int GetIndexByValue(T value)
@@ -233,17 +298,6 @@ namespace List
             }
         }
 
-        public void Reverse()
-        {
-            int halfLenght = Length / 2;
-
-            for (int i = 0; i < halfLenght; ++i)
-            {
-                int rotateIndex = Length - 1 - i;
-                Swap(ref _array[i], ref _array[rotateIndex]);
-            }
-        }
-
         public override bool Equals(object obj)
         {
             ArrayList<T> compareAray = (ArrayList<T>)obj;
@@ -286,6 +340,14 @@ namespace List
             CopyArrayToList(_array, upSizeArray);
             _array = upSizeArray;
         }
+        private void UpSize(int newLengh)
+        {
+            int newRealLenght = (int)(newLengh * lenghtCoef + 1);
+
+            T[] upSizeArray = new T[newRealLenght];
+            CopyArrayToList(_array, upSizeArray);
+            _array = upSizeArray;
+        }
 
         private static void CopyArrayToList(T[] from, T[] to)
         {
@@ -296,12 +358,6 @@ namespace List
             }
         }
 
-
-        /// <summary>
-        /// Shifts array elements from index to shiftCount. If the number is negative, it shifts the beginning.
-        /// </summary>
-        /// <param name="indexFrom"></param>
-        /// <param name="shiftCount"></param>
         private void Shift(int indexFrom, int shiftCount)
         {
             if (shiftCount > 0)
@@ -320,6 +376,8 @@ namespace List
             }
         }
 
+
+
         private void Swap(ref T a, ref T b)
         {
             T tmp = a;
@@ -328,23 +386,3 @@ namespace List
         }
     }
 }
-
-
-//public bool Equals(ArrayList<T> arrayList)
-//{
-//    bool result = true;
-
-//    if (this.Length == arrayList.Length)
-//    {
-//        for (int i = 0; i < this.Length; ++i)
-//        {
-//            bool b = Enumerable.SequenceEqual(this, arrayList);
-//        }
-//    }
-//    else
-//    {
-//        result = false;
-//    }
-
-//    return result;
-//}
