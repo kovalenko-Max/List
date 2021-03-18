@@ -83,7 +83,7 @@ namespace List
             {
                 this.UpSize();
             }
-            this.Shift(index, 1);
+            this.Shift(index, Length, 1);
             _array[index] = value;
         }
 
@@ -103,28 +103,21 @@ namespace List
 
         public void AddListAt(int index, ArrayList<T> arrayList)
         {
-            int indexTo = Length;
             Length += arrayList.Length;
             if (Length >= _array.Length)
             {
                 this.UpSize();
             }
-            //this.Shift(arrayList.Length, arrayList.Length);
-            shif2(index, indexTo, arrayList.Length);
+            Shift(index, Length-1, arrayList.Length);
+            
 
-            for(int i = 0; i< arrayList.Length; ++i)
+            for (int i = 0; i < arrayList.Length; ++i)
             {
                 _array[index] = arrayList[i];
                 ++index;
             }
 
-            void shif2(int indexFrom, int indexTo, int shiftCoutn)
-            {
-                for(int i = indexFrom; i < indexTo; ++i)
-                {
-                    _array[i + shiftCoutn] = _array[i];
-                }
-            }
+
         }
 
         public void RemoveAtLast()
@@ -140,7 +133,7 @@ namespace List
             {
                 this.UpSize();
             }
-            this.Shift(index, -1);
+            Shift(index, Length, -1);
         }
 
         public void RemoveRange(int index, int count)
@@ -151,7 +144,7 @@ namespace List
                 _array[i] = default(T);
             }
             Length -= count;
-            this.Shift(index, -count);
+            this.Shift(index, Length, -count);
 
             if (Length < _array.Length / 2)
             {
@@ -340,14 +333,6 @@ namespace List
             CopyArrayToList(_array, upSizeArray);
             _array = upSizeArray;
         }
-        private void UpSize(int newLengh)
-        {
-            int newRealLenght = (int)(newLengh * lenghtCoef + 1);
-
-            T[] upSizeArray = new T[newRealLenght];
-            CopyArrayToList(_array, upSizeArray);
-            _array = upSizeArray;
-        }
 
         private static void CopyArrayToList(T[] from, T[] to)
         {
@@ -358,25 +343,23 @@ namespace List
             }
         }
 
-        private void Shift(int indexFrom, int shiftCount)
+        private void Shift(int indexFrom, int indexTo, int shiftCount)
         {
             if (shiftCount > 0)
             {
-                for (int i = Length - 1; i > indexFrom; --i)
+                for (int i = indexTo; (i - shiftCount) >= indexFrom; --i)
                 {
                     _array[i] = _array[i - shiftCount];
                 }
             }
             else
             {
-                for (int i = indexFrom; i < Length; ++i)
+                for (int i = indexFrom; i < indexTo; ++i)
                 {
                     _array[i] = _array[i - shiftCount];
                 }
             }
         }
-
-
 
         private void Swap(ref T a, ref T b)
         {
