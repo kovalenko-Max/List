@@ -106,9 +106,6 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
-
-
-
         [TestCase(3, 3, 1, 5)]
         public void RemoveRange_WhenIndexAndRange_ShoudlRemoveRange(int index, int count, int mockNumb, int expectedMockNumb)
         {
@@ -242,12 +239,25 @@ namespace ArrayList.Test
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase()]
+        public void Add_Test()
+        {
+            ArrayList<string> arrayList = new ArrayList<string>(new string[] {"1", "2","3" });
+            arrayList.Add("New value");
+            arrayList.Add("New value 2");
 
+            string s = arrayList[2];
 
+            arrayList[1] = "1213131321321";
 
+            arrayList.RemoveAtLast();
+            arrayList.RemoveAtLast();
+            arrayList.RemoveAtLast();
+            arrayList.RemoveAtLast();
 
+            
 
-
+        }
 
         public static class ArrayListMock
         {

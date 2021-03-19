@@ -5,14 +5,15 @@ using System.Linq;
 
 namespace List
 {
-    public class ArrayList<T>
+    public class ArrayList<T> where T : IComparable
     {
         public int Length { get; private set; }
+        
         public T this[int index]
         {
             get
             {
-                if (index < Length)
+                if ((index < Length) && (index >= 0))
                 {
                     return _array[index];
                 }
@@ -23,7 +24,7 @@ namespace List
             }
             set
             {
-                if (index < Length)
+                if ((index < Length) && (index >= 0))
                 {
                     _array[index] = value;
                 }
@@ -64,16 +65,17 @@ namespace List
         {
             if (Length >= _array.Length)
             {
-                UpSize();
+                Resize();
             }
 
             _array[Length] = value;
             ++Length;
         }
 
-        public void AddAtFirst(T value)
+        public void AddFirst(T value)
         {
-            this.AddAt(0, value);
+            int index = 0;
+            this.AddAt(index, value);
         }
 
         public void AddAt(int index, T value)
@@ -83,7 +85,7 @@ namespace List
                 ++Length;
                 if (Length >= _array.Length)
                 {
-                    this.UpSize();
+                    this.Resize();
                 }
                 this.Shift(index, Length, 1);
                 _array[index] = value;
@@ -102,7 +104,8 @@ namespace List
 
         public void AddListAtFirst(ArrayList<T> arrayList)
         {
-            AddListAt(0, arrayList);
+            int firstIndex = 0;
+            AddListAt(firstIndex, arrayList);
         }
 
         public void AddListAt(int index, ArrayList<T> arrayList)
@@ -110,8 +113,9 @@ namespace List
             Length += arrayList.Length;
             if (Length >= _array.Length)
             {
-                this.UpSize();
+                Resize();
             }
+
             Shift(index, Length - 1, arrayList.Length);
 
             for (int i = 0; i < arrayList.Length; ++i)
@@ -123,7 +127,8 @@ namespace List
 
         public void RemoveAtLast()
         {
-            RemoveAt(Length - 1);
+            int index = Length - 1;
+            RemoveAt(index);
         }
 
         public void RemoveAt(int index)
@@ -132,7 +137,7 @@ namespace List
             --Length;
             if (Length < _array.Length / 2)
             {
-                this.UpSize();
+                this.Resize();
             }
             Shift(index, Length, -1);
         }
@@ -149,7 +154,7 @@ namespace List
 
             if (Length < _array.Length / 2)
             {
-                this.UpSize();
+                this.Resize();
             }
 
         }
@@ -326,7 +331,7 @@ namespace List
             return toString.Trim();
         }
 
-        private void UpSize()
+        private void Resize()
         {
             int newRealLenght = (int)(Length * lenghtCoef + 1);
 
