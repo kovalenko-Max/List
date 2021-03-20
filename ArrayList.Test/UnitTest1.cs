@@ -209,6 +209,17 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
+        [TestCase(1, 2)]
+        [TestCase(20, 20)]
+        public void Reverse_WhenArray_ShouldRevers(int mockNumb, int expectedMockNumb)
+        {
+            ArrayList<string> actualArrayList = ArrayListMock.GetMock_Reverse(mockNumb);
+            ArrayList<string> expectedArrayList = ArrayListMock.GetMock_Reverse(expectedMockNumb);
+            actualArrayList.Reverse();
+
+            Assert.AreEqual(expectedArrayList, actualArrayList);
+        }
+
         [TestCase("0", 1, 0)]
         [TestCase("5", 1, 6)]
         [TestCase("8", 1, 9)]
@@ -251,10 +262,11 @@ namespace ArrayList.Test
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(1, "")]
+        [TestCase(1, "0")]
+        [TestCase(20, default(string))]
         public void GetMin_WhenArrayList_ShouldReturnMinElement(int mockNumb, string expected)
         {
-            ArrayList<string> arrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            ArrayList<string> arrayList = ArrayListMock.GetMock(mockNumb);
             string actual = arrayList.GetMin();
 
             Assert.AreEqual(expected, actual);
@@ -291,15 +303,7 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
-        [TestCase(8, 9)]
-        public void Reverse_WhenArray_ShouldRevers(int mockNumb, int expectedMockNumb)
-        {
-            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
-            ArrayList<string> expectedArrayList = ArrayListMock.GetStringArrayListMock(expectedMockNumb);
-            actualArrayList.Reverse();
-
-            Assert.AreEqual(expectedArrayList, actualArrayList);
-        }
+        
 
         [TestCase("", 1, 10)]
         public void RemoveByValue_WhenArray_ShouldRevers(string value, int mockNumb, int expectedMockNumb)
@@ -502,7 +506,7 @@ namespace ArrayList.Test
                         break;
 
                     case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", };
+                        array = new string[] { "0", "1", "2", "3", "4", "5", "6" };
                         break;
 
                     case 2:
@@ -597,23 +601,48 @@ namespace ArrayList.Test
                         break;
 
                     case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", };
+                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8"};
                         break;
 
                     case 2:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", };
+                        array = new string[] { "0", "1", "2", "3", "4", "5", "6" };
                         break;
 
                     case 3:
-                        array = new string[] { "2", "3", "4", "5", "6", "7", "8", };
+                        array = new string[] { "2", "3", "4", "5", "6", "7", "8" };
                         break;
 
                     case 4:
-                        array = new string[] { "0", "1", "2", "5", "6", "7", "8", };
+                        array = new string[] { "0", "1", "2", "5", "6", "7", "8" };
                         break;
 
                     case 5:
                         array = new string[] { "0", "1" };
+                        break;
+
+                    case 20:
+                        array = new string[] { };
+                        break;
+                }
+
+                return new ArrayList<string>(array);
+            }
+
+            public static ArrayList<string> GetMock_Reverse(int numb)
+            {
+                string[] array;
+                switch (numb)
+                {
+                    default:
+                        array = new string[] { };
+                        break;
+
+                    case 1:
+                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+                        break;
+                    
+                    case 2:
+                        array = new string[] { "8", "7", "6", "5", "4", "3", "2", "1", "0" };
                         break;
 
                     case 20:
