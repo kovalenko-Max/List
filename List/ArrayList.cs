@@ -204,7 +204,10 @@ namespace List
         public int RemoveByValue(T value)
         {
             int indexForRemove = GetIndexByValue(value);
-            RemoveAt(indexForRemove);
+            if(indexForRemove != -1)
+            {
+                RemoveAt(indexForRemove);
+            }
 
             return indexForRemove;
         }
@@ -216,8 +219,8 @@ namespace List
             while (indexForRemove != -1)
             {
                 RemoveAt(indexForRemove);
-                ++count;
                 indexForRemove = GetIndexByValue(value);
+                ++count;
             }
 
             return count;

@@ -211,6 +211,7 @@ namespace ArrayList.Test
 
         [TestCase("3", 1, 3)]
         [TestCase("8", 1, 9)]
+        [TestCase("non-existent Value", 1, -1)]
         public void RemoveByValue_WhenArray_ShouldRevers(string value, int mockNumb, int expected)
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
@@ -223,6 +224,7 @@ namespace ArrayList.Test
         [TestCase("3", 1, 2)]
         [TestCase("8", 1, 4)]
         [TestCase("8", 2, 12)]
+        [TestCase("non-existent Value", 1, 0)]
         public void RemoveAllByValue_WhenAllValues_ShoulRemoved(string value, int mockNumb, int expected)
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
@@ -296,41 +298,29 @@ namespace ArrayList.Test
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(1, 4)]
-        public void Sort_WhenIntArrayList_ShouldBeSorted(int mockNumb, int expectedMockNumb)
-        {
-            ArrayList<int> actualArrayList = ArrayListMock.GetIntArrayListMock(mockNumb);
-            ArrayList<int> expectedArrayList = ArrayListMock.GetIntArrayListMock(expectedMockNumb);
-
-            actualArrayList.SortAscending();
-
-            Assert.AreEqual(expectedArrayList, actualArrayList);
-        }
-
-        [TestCase(1, 8)]
+        [TestCase(3, 1)]
+        [TestCase(2, 2)]
+        [TestCase(20, 20)]
         public void SortAscending_WhenStringArrayList_ShouldBeSorted(int mockNumb, int expectedMockNumb)
         {
-            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
-            ArrayList<string> expectedArrayList = ArrayListMock.GetStringArrayListMock(expectedMockNumb);
+            ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
+            ArrayList<string> expectedArrayList = ArrayListMock.GetMock(expectedMockNumb);
             actualArrayList.SortAscending();
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
-        [TestCase(1, 9)]
+        [TestCase(3, 4)]
+        [TestCase(2, 2)]
+        [TestCase(20, 20)]
         public void SortDescending_WhenStringArrayList_ShouldBeSorted(int mockNumb, int expectedMockNumb)
         {
-            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
-            ArrayList<string> expectedArrayList = ArrayListMock.GetStringArrayListMock(expectedMockNumb);
+            ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
+            ArrayList<string> expectedArrayList = ArrayListMock.GetMock(expectedMockNumb);
             actualArrayList.SortDescending();
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
-
-
-
-
-
 
         public static class ArrayListMock
         {
@@ -468,6 +458,15 @@ namespace ArrayList.Test
 
                     case 2:
                         array = new string[] { "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8" };
+                        break;
+
+
+                    case 3:
+                        array = new string[] { "2", "5", "8", "0", "8", "1", "8", "3", "3", "4", "6", "7", "8" };
+                        break;
+
+                    case 4:
+                        array = new string[] { "8", "8", "8", "8", "7", "6", "5", "4", "3", "3", "2", "1", "0" };
                         break;
 
                     case 20:
