@@ -209,12 +209,36 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
+        [TestCase("3", 1, 3)]
+        [TestCase("8", 1, 9)]
+        public void RemoveByValue_WhenArray_ShouldRevers(string value, int mockNumb, int expected)
+        {
+            ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
+
+            int actual = actualArrayList.RemoveByValue(value);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase("3", 1, 2)]
+        [TestCase("8", 1, 4)]
+        [TestCase("8", 2, 12)]
+        public void RemoveAllByValue_WhenAllValues_ShoulRemoved(string value, int mockNumb, int expected)
+        {
+            ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
+
+            int actual = actualArrayList.RemoveAllByValue(value);
+
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase(1, 2)]
         [TestCase(20, 20)]
         public void Reverse_WhenArray_ShouldRevers(int mockNumb, int expectedMockNumb)
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock_Reverse(mockNumb);
             ArrayList<string> expectedArrayList = ArrayListMock.GetMock_Reverse(expectedMockNumb);
+
             actualArrayList.Reverse();
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
@@ -241,7 +265,7 @@ namespace ArrayList.Test
 
             Assert.AreEqual(expected, actual);
         }
-        
+
         [TestCase(1, 0)]
         [TestCase(20, 0)]
         public void GetIndexOfMin_WhenArrayList_ShouldReturnIndexOfMax(int mockNumb, int expected)
@@ -303,26 +327,9 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
-        
 
-        [TestCase("", 1, 10)]
-        public void RemoveByValue_WhenArray_ShouldRevers(string value, int mockNumb, int expectedMockNumb)
-        {
-            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
-            ArrayList<string> expectedArrayList = ArrayListMock.GetStringArrayListMock(expectedMockNumb);
-            actualArrayList.RemoveByValue(value);
 
-            Assert.AreEqual(expectedArrayList, actualArrayList);
-        }
 
-        [TestCase("25", 11, 4)]
-        public void RemoveAllByValue_WhenAllValues_ShoulRemoved(string value, int mockNumb, int expected)
-        {
-            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
-            int actual = actualArrayList.RemoveAllByValue(value);
-
-            Assert.AreEqual(expected, actual);
-        }
 
 
         public static class ArrayListMock
@@ -457,6 +464,10 @@ namespace ArrayList.Test
 
                     case 1:
                         array = new string[] { "0", "1", "2", "3", "3", "4", "5", "6", "7", "8", "8", "8", "8" };
+                        break;
+
+                    case 2:
+                        array = new string[] { "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8" };
                         break;
 
                     case 20:
@@ -601,7 +612,7 @@ namespace ArrayList.Test
                         break;
 
                     case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8"};
+                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
                         break;
 
                     case 2:
@@ -640,7 +651,7 @@ namespace ArrayList.Test
                     case 1:
                         array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
                         break;
-                    
+
                     case 2:
                         array = new string[] { "8", "7", "6", "5", "4", "3", "2", "1", "0" };
                         break;
