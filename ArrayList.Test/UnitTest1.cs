@@ -230,10 +230,12 @@ namespace ArrayList.Test
 
             Assert.AreEqual(expected, actual);
         }
-        [TestCase(1, 5)]
+        
+        [TestCase(1, 0)]
+        [TestCase(20, 0)]
         public void GetIndexOfMin_WhenArrayList_ShouldReturnIndexOfMax(int mockNumb, int expected)
         {
-            ArrayList<string> arrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            ArrayList<string> arrayList = ArrayListMock.GetMock(mockNumb);
             int actual = arrayList.GetIndexOfMin();
 
             Assert.AreEqual(expected, actual);
