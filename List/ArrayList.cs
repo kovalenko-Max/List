@@ -110,7 +110,7 @@ namespace List
 
         public void AddListAt(int index, ArrayList<T> arrayList)
         {
-            if ((index < Length) && (index >= 0))
+            if ((index <= Length) && (index >= 0))
             {
                 Length += arrayList.Length;
                 if (Length >= _array.Length)
@@ -149,12 +149,13 @@ namespace List
         {
             if ((index < Length) && (index >= 0))
             {
-                _array[index] = default(T);
                 --Length;
+
                 if (Length < _array.Length / 2)
                 {
                     this.Resize();
                 }
+
                 Shift(index, Length, -1);
             }
             else

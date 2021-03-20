@@ -6,18 +6,18 @@ namespace ArrayList.Test
 {
     public class ArrayListTests
     {
-        [TestCase(4, 87)]
-        [TestCase(0, 1)]
-        [TestCase(9, 38)]
-        public void Get_WhenIndex_ShouldGetElement(int index, int expected)
+        [TestCase(0, 1, "0")]
+        [TestCase(4, 1, "4")]
+        [TestCase(8, 1, "8")]
+        public void Get_WhenIndex_ShouldGetElement(int index, int mockNumb, string expected)
         {
-            ArrayList<int> arrayList = ArrayListMock.GetIntArrayListMock(numb: 1);
+            ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
 
-            int actual = arrayList[index];
+            string actual = actualArrayList[index];
 
             Assert.AreEqual(expected, actual);
         }
-
+        
         [TestCase(2, 9999, 1, 3)]
         public void Set_WhenIndex_ShouldSetElement(int index, int value, int mockNumb, int expectedMockNumb)
         {
@@ -36,9 +36,9 @@ namespace ArrayList.Test
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock_Add(mockNumb);
             ArrayList<string> expectedArrayList = ArrayListMock.GetMock_Add(expectedMockNumb);
-            
+
             actualArrayList.Add(value);
-            
+
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
@@ -47,7 +47,7 @@ namespace ArrayList.Test
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock_AddAt(mockNumb);
             ArrayList<string> expectedArrayList = ArrayListMock.GetMock_AddAt(expectedMockNumb);
-            
+
             actualArrayList.AddAtFirst(value);
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
@@ -60,7 +60,7 @@ namespace ArrayList.Test
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock_AddAt(mockNumb);
             ArrayList<string> expectedArrayList = ArrayListMock.GetMock_AddAt(expectedMockNumb);
-            
+
             actualArrayList.AddAt(index, value);
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
@@ -158,7 +158,7 @@ namespace ArrayList.Test
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
-        
+
         [TestCase(25, 1)]
         [TestCase(-25, 1)]
         public void RemoveAt_WhenIndexAndArrayList_ShouldThrowIndexOutOfRangeException(int index, int mockNumb)
@@ -176,7 +176,7 @@ namespace ArrayList.Test
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock_RemoveRange(mockNumb);
             ArrayList<string> expectedArrayList = ArrayListMock.GetMock_RemoveRange(expectedMockNumb);
-            
+
             actualArrayList.RemoveRange(count);
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
@@ -194,7 +194,6 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
-        
         [TestCase(7, 2, 1, 2)]
         [TestCase(7, 20, 1, 2)]
         [TestCase(0, 2, 1, 3)]
@@ -204,12 +203,12 @@ namespace ArrayList.Test
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock_RemoveRange(mockNumb);
             ArrayList<string> expectedArrayList = ArrayListMock.GetMock_RemoveRange(expectedMockNumb);
-            
+
             actualArrayList.RemoveRangeAt(index, count);
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
-        
+
 
 
         [TestCase("@@??", 1, 4)]
@@ -436,6 +435,24 @@ namespace ArrayList.Test
                 }
 
                 return new ArrayList<string>(a);
+            }
+
+            public static ArrayList<string> GetMock(int numb)
+            {
+                string[] array;
+
+                switch (numb)
+                {
+                    default:
+                        array = new string[] { };
+                        break;
+
+                    case 1:
+                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+                        break;
+                }
+
+                return new ArrayList<string>(array);
             }
 
             public static ArrayList<string> GetMock_Add(int numb)
