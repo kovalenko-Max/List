@@ -8,7 +8,7 @@ namespace List
     public class ArrayList<T> where T : IComparable
     {
         public int Length { get; private set; }
-        
+
         public T this[int index]
         {
             get
@@ -72,7 +72,7 @@ namespace List
             ++Length;
         }
 
-        public void AddFirst(T value)
+        public void AddAtFirst(T value)
         {
             int index = 0;
             this.AddAt(index, value);
@@ -110,63 +110,94 @@ namespace List
 
         public void AddListAt(int index, ArrayList<T> arrayList)
         {
-            Length += arrayList.Length;
-            if (Length >= _array.Length)
+            if ((index < Length) && (index >= 0))
             {
-                Resize();
+                Length += arrayList.Length;
+                if (Length >= _array.Length)
+                {
+                    Resize();
+                }
+
+                Shift(index, Length - 1, arrayList.Length);
+
+                for (int i = 0; i < arrayList.Length; ++i)
+                {
+                    _array[index] = arrayList[i];
+                    ++index;
+                }
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
             }
 
-            Shift(index, Length - 1, arrayList.Length);
-
-            for (int i = 0; i < arrayList.Length; ++i)
-            {
-                _array[index] = arrayList[i];
-                ++index;
-            }
         }
 
-        public void RemoveAtLast()
+        public void Remove()
         {
             int index = Length - 1;
             RemoveAt(index);
         }
 
-        public void RemoveAt(int index)
+        public void RemoveAtFirst()
         {
-            _array[index] = default(T);
-            --Length;
-            if (Length < _array.Length / 2)
-            {
-                this.Resize();
-            }
-            Shift(index, Length, -1);
+            int index = 0;
+            RemoveAt(index);
         }
 
-        public void RemoveRange(int index, int count)
+        public void RemoveAt(int index)
         {
-            int range = index + count;
-            for (int i = index; i < range; ++i)
+            if ((index < Length) && (index >= 0))
             {
-                _array[i] = default(T);
+                _array[index] = default(T);
+                --Length;
+                if (Length < _array.Length / 2)
+                {
+                    this.Resize();
+                }
+                Shift(index, Length, -1);
             }
-            Length -= count;
-            this.Shift(index, Length, -count);
-
-            if (Length < _array.Length / 2)
+            else
             {
-                this.Resize();
+                throw new IndexOutOfRangeException();
             }
+        }
 
+        public void RemoveRange(int count)
+        {
+            int index = (Length - count) > 0 ? (Length - count) : 0;
+
+            this.RemoveRangeAt(index, count);
         }
 
         public void RemoveRangeAtFirst(int count)
         {
-            this.RemoveRange(0, count);
+            this.RemoveRangeAt(0, count);
         }
 
-        public void RemoveRangeAtEnd(int cont)
+        public void RemoveRangeAt(int index, int count)
         {
-            this.RemoveRange(Length - cont, cont);
+            if ((index >= 0) && (index <= Length))
+            {
+                if (count > Length)
+                {
+                    Length = index;
+                }
+                else
+                {
+                    Length -= count;
+                    this.Shift(index, Length, -count);
+                }
+
+                if (Length < _array.Length / 2)
+                {
+                    this.Resize();
+                }
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public int RemoveByValue(T value)
