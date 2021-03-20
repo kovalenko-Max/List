@@ -221,10 +221,11 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedIndex, actualIndex);
         }
 
-        [TestCase(1, 3)]
+        [TestCase(1, 9)]
+        [TestCase(20, 0)]
         public void GetIndexOfMax_WhenArrayList_ShouldReturnIndexOfMax(int mockNumb, int expected)
         {
-            ArrayList<string> arrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            ArrayList<string> arrayList = ArrayListMock.GetMock(mockNumb);
             int actual = arrayList.GetIndexOfMax();
 
             Assert.AreEqual(expected, actual);
@@ -449,6 +450,10 @@ namespace ArrayList.Test
 
                     case 1:
                         array = new string[] { "0", "1", "2", "3", "3", "4", "5", "6", "7", "8", "8", "8", "8" };
+                        break;
+
+                    case 20:
+                        array = new string[] { };
                         break;
                 }
 
