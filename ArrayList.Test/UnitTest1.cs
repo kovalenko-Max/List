@@ -7,8 +7,8 @@ namespace ArrayList.Test
     public class ArrayListTests
     {
         [TestCase(0, 1, "0")]
-        [TestCase(4, 1, "4")]
-        [TestCase(8, 1, "8")]
+        [TestCase(4, 1, "3")]
+        [TestCase(8, 1, "7")]
         public void Get_WhenIndex_ShouldGetElement(int index, int mockNumb, string expected)
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
@@ -17,7 +17,7 @@ namespace ArrayList.Test
 
             Assert.AreEqual(expected, actual);
         }
-        
+
         [TestCase(2, 9999, 1, 3)]
         public void Set_WhenIndex_ShouldSetElement(int index, int value, int mockNumb, int expectedMockNumb)
         {
@@ -209,13 +209,13 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
-
-
-        [TestCase("@@??", 1, 4)]
-        [TestCase("0000", 1, -1)]
+        [TestCase("0", 1, 0)]
+        [TestCase("5", 1, 6)]
+        [TestCase("8", 1, 9)]
+        [TestCase("non-existent Value", 1, -1)]
         public void GetIndexByValue(string value, int mockNumb, int expectedIndex)
         {
-            ArrayList<string> actualArrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            ArrayList<string> actualArrayList = ArrayListMock.GetMock(mockNumb);
             int actualIndex = actualArrayList.GetIndexByValue(value);
 
             Assert.AreEqual(expectedIndex, actualIndex);
@@ -448,7 +448,7 @@ namespace ArrayList.Test
                         break;
 
                     case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+                        array = new string[] { "0", "1", "2", "3", "3", "4", "5", "6", "7", "8", "8", "8", "8" };
                         break;
                 }
 
