@@ -241,10 +241,11 @@ namespace ArrayList.Test
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(1, "что-то")]
+        [TestCase(1, "8")]
+        [TestCase(20, default(string))]
         public void GetMax_WhenArrayList_ShouldReturnMaxElement(int mockNumb, string expected)
         {
-            ArrayList<string> arrayList = ArrayListMock.GetStringArrayListMock(mockNumb);
+            ArrayList<string> arrayList = ArrayListMock.GetMock(mockNumb);
             string actual = arrayList.GetMax();
 
             Assert.AreEqual(expected, actual);
