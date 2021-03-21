@@ -32,6 +32,7 @@ namespace ArrayList.Test
         [TestCase("7", 1, 2)]
         [TestCase("8", 2, 3)]
         [TestCase("9", 3, 4)]
+        [TestCase(null, 3, 5)]
         public void Add_WhenValue_ShouldToEnd(string value, int mockNumb, int expectedMockNumb)
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock_Add(mockNumb);
@@ -56,6 +57,7 @@ namespace ArrayList.Test
         [TestCase("New Value", 7, 1, 2)]
         [TestCase("New Value", 0, 1, 3)]
         [TestCase("New Value", 2, 1, 4)]
+        [TestCase(null, 2, 1, 5)]
         public void AddAt_WhenIndexAndStringValue_ShouldAddElementByIndex(string value, int index, int mockNumb, int expectedMockNumb)
         {
             ArrayList<string> actualArrayList = ArrayListMock.GetMock_AddAt(mockNumb);
@@ -322,7 +324,7 @@ namespace ArrayList.Test
             Assert.AreEqual(expectedArrayList, actualArrayList);
         }
 
-        public static class ArrayListMock
+        private static class ArrayListMock
         {
             public static ArrayList<int> GetIntArrayListMock(int numb, int value = 0)
             {
@@ -495,11 +497,15 @@ namespace ArrayList.Test
                         break;
 
                     case 3:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8"};
                         break;
 
                     case 4:
                         array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+                        break;
+
+                    case 5:
+                        array = new string[10] { "0", "1", "2", "3", "4", "5", "6", "7", "8" , null };
                         break;
                 }
 
@@ -529,6 +535,10 @@ namespace ArrayList.Test
 
                     case 4:
                         array = new string[] { "0", "1", "New Value", "2", "3", "4", "5", "6" };
+                        break;
+                    
+                    case 5:
+                        array = new string[] { "0", "1", null, "2", "3", "4", "5", "6" };
                         break;
                 }
 
