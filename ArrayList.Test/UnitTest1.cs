@@ -18,11 +18,12 @@ namespace ArrayList.Test
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(2, 9999, 1, 3)]
-        public void Set_WhenIndex_ShouldSetElement(int index, int value, int mockNumb, int expectedMockNumb)
+        [TestCase(3, "New Value", 1, 5)]
+        [TestCase(3, null, 1, 6)]
+        public void Set_WhenIndex_ShouldSetElement(int index, string value, int mockNumb, int expectedMockNumb)
         {
-            ArrayList<int> expectedArrayList = ArrayListMock.GetIntArrayListMock(numb: expectedMockNumb);
-            ArrayList<int> actual = ArrayListMock.GetIntArrayListMock(mockNumb);
+            ArrayList<string> expectedArrayList = ArrayListMock.GetMock(expectedMockNumb);
+            ArrayList<string> actual = ArrayListMock.GetMock(mockNumb);
 
             actual[index] = value;
 
@@ -327,124 +328,6 @@ namespace ArrayList.Test
 
         private static class ArrayListMock
         {
-            public static ArrayList<int> GetIntArrayListMock(int numb, int value = 0)
-            {
-                int[] a;
-                switch (numb)
-                {
-                    default:
-                        a = new int[0];
-                        break;
-                    case 1:
-                        a = new int[] { 1, 325, 5, 25, 87, 922, 2, 1, 99, 38 };
-                        break;
-                    case 2:
-                        a = new int[] { 1, 325, 5, 25, 87, 922, 2, 1, 99, 38, value };
-                        break;
-                    case 3:
-                        a = new int[] { 1, 325, 9999, 25, 87, 922, 2, 1, 99, 38 };
-                        break;
-
-                    case 4:
-                        a = new int[] { 1, 1, 2, 5, 25, 38, 87, 99, 325, 922, };
-                        break;
-                }
-
-                return new ArrayList<int>(a);
-            }
-
-            public static ArrayList<string> GetStringArrayListMock(int numb, string value = "")
-            {
-                string[] a;
-                switch (numb)
-                {
-                    default:
-                        a = new string[0];
-                        break;
-                    case 1:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
-                        break;
-                    case 2:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f", "Alex" };
-                        break;
-
-                    case 3:
-                        a = new string[] { "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
-                        break;
-                    case 4:
-                        a = new string[] { "dog", " то-то", "что-то", "New value by index", "@@??", "", "25", "a, b, c, d, e, f" };
-                        break;
-
-                    case 5:
-                        a = new string[] { "Cat", "dog", " то-то", "25", "a, b, c, d, e, f" };
-                        break;
-
-                    case 6:
-                        a = new string[] { "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
-                        break;
-                    case 7:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??" };
-                        break;
-                    case 8:
-                        a = new string[] { "", "@@??", "25", "a, b, c, d, e, f", "Cat", "dog", " то-то", "что-то" };
-                        break;
-                    case 9:
-                        a = new string[] { "что-то", " то-то", "dog", "Cat", "a, b, c, d, e, f", "25", "@@??", "" };
-                        break;
-                    case 10:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "25", "a, b, c, d, e, f" };
-                        break;
-
-                    case 11:
-                        a = new string[] { "Cat", "dog", "25", " то-то", "25", "что-то", "25", "@@??", "25", "a, b, c, d, e, f" };
-                        break;
-
-                    case 12:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "a, b, c, d, e, f" };
-                        break;
-
-                    case 13:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f", "Cat", "dog", " то-то", "что-то", "@@??" };
-                        break;
-
-                    case 14:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "Cat", "dog", " то-то", "что-то", "@@??", "@@??", "", "25", "a, b, c, d, e, f" };
-                        break;
-                    case 15:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
-                        break;
-                    case 16:
-                        a = new string[] { "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
-                        break;
-
-                    case 17:
-                        a = new string[] { "Cat", "dog", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", " то-то", "что-то", "@@??" };
-                        break;
-                    case 18:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f" };
-                        break;
-                    case 19:
-                        a = new string[] { "Cat", "dog", " то-то", "что-то", "@@??", "", "25", "a, b, c, d, e, f", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
-                        break;
-
-                    case 20:
-                        a = new string[] { };
-                        break;
-                    case 21:
-                        a = new string[] { "Value" };
-                        break;
-                    case 22:
-                        a = new string[] { "New value by index", "Value" };
-                        break;
-                    case 23:
-                        a = new string[] { "New value by index", "Value", "New value by index" };
-                        break;
-
-                }
-
-                return new ArrayList<string>(a);
-            }
-
             public static ArrayList<string> GetMock(int numb)
             {
                 string[] array;
@@ -470,6 +353,14 @@ namespace ArrayList.Test
 
                     case 4:
                         array = new string[] { "8", "8", "8", "8", "7", "6", "5", "4", "3", "3", "2", "1", "0" };
+                        break;
+
+                    case 5:
+                        array = new string[] { "0", "1", "2", "New Value", "3", "4", "5", "6", "7", "8", "8", "8", "8" };
+                        break;
+
+                    case 6:
+                        array = new string[] { "0", "1", "2", null, "3", "4", "5", "6", "7", "8", "8", "8", "8" };
                         break;
 
                     case 20:
@@ -682,6 +573,4 @@ namespace ArrayList.Test
             }
         }
     }
-
-
 }
