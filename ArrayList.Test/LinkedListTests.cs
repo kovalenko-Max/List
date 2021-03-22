@@ -1,10 +1,43 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace LinkedList.Test
+
+namespace List.Test
 {
     class LinkedListTests
     {
+
+        [TestCase(0, 1, "0")]
+        [TestCase(4, 1, "3")]
+        [TestCase(8, 1, "7")]
+        public void Get_WhenIndex_ShouldGetElement(int index, int mockNumb, string expected)
+        {
+            LinkedList<string> actualArrayList = LinkedListMock.GetMock(mockNumb);
+
+            string actual = actualArrayList[index];
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(3, "New Value", 1, 5)]
+        [TestCase(3, null, 1, 6)]
+        public void Set_WhenIndex_ShouldSetElement(int index, string value, int mockNumb, int expectedMockNumb)
+        {
+            LinkedList<string> expectedArrayList = LinkedListMock.GetMock(expectedMockNumb);
+            LinkedList<string> actual = LinkedListMock.GetMock(mockNumb);
+
+            actual[index] = value;
+
+            Assert.AreEqual(expectedArrayList, actual);
+        }
+
+
+
+
+
+
+
+
         private static class LinkedListMock
         {
             public static LinkedList<string> GetMock(int numb)
