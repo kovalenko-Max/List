@@ -166,7 +166,7 @@ namespace List
                 linkedList._tail.Next = current.Next;
                 current.Next = linkedList._root;
             }
-            else if(index == 0)
+            else if (index == 0)
             {
                 AddListAtFirst(linkedList);
             }
@@ -179,19 +179,34 @@ namespace List
 
         public void Remove()
         {
-            
+            _tail = GetCurrentNode(Length - 1);
+            _tail.Next = null;
+            --Length;
         }
 
         public void RemoveAtFirst()
         {
-            
+            _root = _root.Next;
+            Length--;
         }
 
         public void RemoveAt(int index)
         {
-            if ((index < Length) && (index >= 0))
+            if ((index > 0) && (index < Length))
             {
-                
+                Node<T> current = _root;
+
+                for (int i = 1; i < index; i++)
+                {
+                    current = current.Next;
+                }
+
+                current.Next = current.Next.Next;
+                Length--;
+            }
+            else if (index == 0)
+            {
+                RemoveAtFirst();
             }
             else
             {
@@ -201,19 +216,19 @@ namespace List
 
         public void RemoveRange(int count)
         {
-           
+
         }
 
         public void RemoveRangeAtFirst(int count)
         {
-            
+
         }
 
         public void RemoveRangeAt(int index, int count)
         {
             if ((index >= 0) && (index <= Length))
             {
-               
+
             }
             else
             {
@@ -224,7 +239,7 @@ namespace List
         public int RemoveByValue(T value)
         {
             int indexForRemove = 0;
-           
+
 
             return indexForRemove;
         }
@@ -232,7 +247,7 @@ namespace List
         public int RemoveAllByValue(T value)
         {
             int count = 0;
-            
+
 
             return count;
         }
@@ -287,6 +302,17 @@ namespace List
             }
 
             return isEquals;
+        }
+
+        private Node<T> GetCurrentNode(int index)
+        {
+            Node<T> current = _root;
+
+            for (int i = 1; i < index; i++)
+            {
+                current = current.Next;
+            }
+            return current;
         }
     }
 }
