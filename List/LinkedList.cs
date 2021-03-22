@@ -122,28 +122,32 @@ namespace List
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj);
-        }
+            LinkedList<T> list = (LinkedList<T>)obj;
+            bool isEquals = true;
 
+            if (this.Length == list.Length)
+            {
+                Node<T> currentThis = this._root;
+                Node<T> currentList = list._root;
+                Comparer<T> comparer = Comparer<T>.Default;
+                do
+                {
+                    if (comparer.Compare(currentThis.Value, currentList.Value) != 0)
+                    {
+                        isEquals = false;
+                        break;
+                    }
+                    currentList = currentList.Next;
+                    currentThis = currentThis.Next;
+                }
+                while (!(currentThis.Next is null));
+            }
+            else
+            {
+                isEquals = false;
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public int CompareTo(object obj)
-        {
-            throw new NotImplementedException();
+            return isEquals;
         }
     }
 }
