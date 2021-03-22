@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace List
 {
-    public class LinkedList <T> where T : IComparable
+    public class LinkedList<T> where T : IComparable
     {
         public int Length { get; private set; }
 
@@ -14,7 +14,7 @@ namespace List
         {
             get
             {
-                if((index >= 0) && (index<=Length))
+                if ((index >= 0) && (index <= Length))
                 {
                     Node<T> current = _root;
 
@@ -28,7 +28,7 @@ namespace List
                 {
                     throw new IndexOutOfRangeException();
                 }
-                
+
             }
 
             set
@@ -48,7 +48,7 @@ namespace List
                 {
                     throw new IndexOutOfRangeException();
                 }
-                    
+
             }
         }
 
@@ -71,7 +71,7 @@ namespace List
 
         public LinkedList(T[] values)
         {
-            if(!(values is null))
+            if (!(values is null))
             {
                 Length = values.Length;
 
@@ -98,24 +98,49 @@ namespace List
             }
         }
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        public override string ToString()
+        {
+            if (Length != 0)
+            {
+                Node<T> current = _root;
+                StringBuilder result = new StringBuilder(string.Empty);
+                result.Append(current.Value + " ");
+
+                while (!(current.Next is null))
+                {
+                    current = current.Next;
+                    result.Append(current.Value + " ");
+                }
+
+                return result.ToString().Trim();
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public int CompareTo(object obj)
         {
             throw new NotImplementedException();
