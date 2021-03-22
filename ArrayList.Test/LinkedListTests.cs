@@ -11,9 +11,9 @@ namespace List.Test
         [TestCase(8, 1, "7")]
         public void Get_WhenIndex_ShouldGetElement(int index, int mockNumb, string expected)
         {
-            LinkedList<string> actualArrayList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock(mockNumb);
 
-            string actual = actualArrayList[index];
+            string actual = actualLinkedList[index];
 
             Assert.AreEqual(expected, actual);
         }
@@ -22,12 +22,12 @@ namespace List.Test
         [TestCase(3, null, 1, 6)]
         public void Set_WhenIndex_ShouldSetElement(int index, string value, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> expectedArrayList = LinkedListMock.GetMock(expectedMockNumb);
+            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock(expectedMockNumb);
             LinkedList<string> actual = LinkedListMock.GetMock(mockNumb);
 
             actual[index] = value;
 
-            Assert.AreEqual(expectedArrayList, actual);
+            Assert.AreEqual(expectedLinkedList, actual);
         }
 
         [TestCase("7", 1, 2)]
@@ -36,23 +36,23 @@ namespace List.Test
         [TestCase(null, 3, 5)]
         public void Add_WhenValue_ShouldToEnd(string value, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualArrayList = LinkedListMock.GetMock_Add(mockNumb);
-            LinkedList<string> expectedArrayList = LinkedListMock.GetMock_Add(expectedMockNumb);
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Add(mockNumb);
+            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_Add(expectedMockNumb);
 
-            actualArrayList.Add(value);
+            actualLinkedList.Add(value);
 
-            Assert.AreEqual(expectedArrayList, actualArrayList);
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
         }
 
         [TestCase("New Value", 1, 3)]
         public void AddAtFirst_WhenValue_ShouldAddtoFirst(string value, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualArrayList = LinkedListMock.GetMock_AddAt(mockNumb);
-            LinkedList<string> expectedArrayList = LinkedListMock.GetMock_AddAt(expectedMockNumb);
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
+            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddAt(expectedMockNumb);
 
-            actualArrayList.AddAtFirst(value);
+            actualLinkedList.AddAtFirst(value);
 
-            Assert.AreEqual(expectedArrayList, actualArrayList);
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
         }
 
         [TestCase("New Value", 7, 1, 2)]
@@ -61,24 +61,72 @@ namespace List.Test
         [TestCase(null, 2, 1, 5)]
         public void AddAt_WhenIndexAndStringValue_ShouldAddElementByIndex(string value, int index, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualArrayList = LinkedListMock.GetMock_AddAt(mockNumb);
-            LinkedList<string> expectedArrayList = LinkedListMock.GetMock_AddAt(expectedMockNumb);
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
+            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddAt(expectedMockNumb);
 
-            actualArrayList.AddAt(index, value);
+            actualLinkedList.AddAt(index, value);
 
-            Assert.AreEqual(expectedArrayList, actualArrayList);
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
         }
 
         [TestCase(25, "New Value", 1)]
         [TestCase(-3, "New Value", 1)]
         public void AddAt_WhenIndexAndStringValue_ShouldThrowIndexOutOfRangeException(int index, string value, int mockNumb)
         {
-            LinkedList<string> actualArrayList = LinkedListMock.GetMock_AddAt(mockNumb);
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
 
-            Assert.Throws<IndexOutOfRangeException>(() => actualArrayList.AddAt(index, value));
+            Assert.Throws<IndexOutOfRangeException>(() => actualLinkedList.AddAt(index, value));
         }
 
+        [TestCase(1, 20, 2)]
+        public void AddList_WhenLinkedList_ShouldAddToLinkedList(int mockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddList(mockNumb);
+            LinkedList<string> listForAdding = LinkedListMock.GetMock_AddList(numbListForAdding);
+            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddList(expectedMockNumb);
 
+            actualLinkedList.AddList(listForAdding);
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
+
+        [TestCase(1, 20, 3)]
+        public void AddListAtFirst_WhenLinkedList_ShouldAddAtFirst(int mockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddList(mockNumb);
+            LinkedList<string> listForAdding = LinkedListMock.GetMock_AddList(numbListForAdding);
+            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddList(expectedMockNumb);
+
+            actualLinkedList.AddListAtFirst(listForAdding);
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
+
+        [TestCase(7, 1, 20, 2)]
+        [TestCase(0, 1, 20, 3)]
+        [TestCase(2, 1, 20, 4)]
+        [TestCase(6, 1, 20, 5)]
+        [TestCase(3, 1, 6, 7)]
+        public void AddListAt_WhenIndexAndLinkedList_ShouldAddLinkedListAtIndex(int index, int mockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddList(mockNumb);
+            LinkedList<string> listForAdding = LinkedListMock.GetMock_AddList(numbListForAdding);
+            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddList(expectedMockNumb);
+
+            actualLinkedList.AddListAt(index, listForAdding);
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
+
+        [TestCase(25, 1, 20)]
+        [TestCase(-25, 1, 20)]
+        public void AddListAt_WhenIndexAndLinkedList_ShouldThrowIndexOutOfRangeException(int index, int mockNumb, int numbListForAdding)
+        {
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
+            LinkedList<string> listForAdding = LinkedListMock.GetMock_AddList(numbListForAdding);
+
+            Assert.Throws<IndexOutOfRangeException>(() => actualLinkedList.AddListAt(index, listForAdding));
+        }
 
 
 

@@ -139,6 +139,27 @@ namespace List
 
         }
 
+        public void AddList(LinkedList<T> arrayList)
+        {
+        }
+
+        public void AddListAtFirst(LinkedList<T> arrayList)
+        {
+        }
+
+        public void AddListAt(int index, LinkedList<T> arrayList)
+        {
+            if ((index <= Length) && (index >= 0))
+            {
+               
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+        }
+
         public override string ToString()
         {
             if (Length != 0)
