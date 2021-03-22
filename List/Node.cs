@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace List
 {
-    class Node<T> 
+    class Node<T>
     {
         public T Value { get; set; }
         public Node<T> Next { get; set; }

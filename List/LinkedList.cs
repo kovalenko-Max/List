@@ -98,6 +98,47 @@ namespace List
             }
         }
 
+        public void Add(T value)
+        {
+            Length++;
+            _tail.Next = new Node<T>(value);
+            _tail = _tail.Next;
+        }
+
+        public void AddAtFirst(T value)
+        {
+            Length++;
+            Node<T> current = new Node<T>(value);
+            current.Next = _root;
+            _root = current;
+        }
+
+        public void AddAt(int index, T value)
+        {
+            Node<T> nodeForAdding = new Node<T>(value);
+            if ((index >= 1) && (index <= Length))
+            {
+                Node<T> current = _root;
+                for (int i = 0; i < index - 1; ++i)
+                {
+                    current = current.Next;
+                }
+
+                nodeForAdding.Next = current.Next;
+                current.Next = nodeForAdding;
+                Length++;
+            }
+            else if(index == 0)
+            {
+                AddAtFirst(value);
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+        }
+
         public override string ToString()
         {
             if (Length != 0)
