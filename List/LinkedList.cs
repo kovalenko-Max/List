@@ -288,10 +288,55 @@ namespace List
         public int RemoveAllByValue(T value)
         {
             int count = 0;
+            Comparer<T> comparer = Comparer<T>.Default;
 
+            Node<T> current = _root;
+
+            while (!(current.Next is null))
+            {
+                if (comparer.Compare(current.Next.Value, value) == 0)
+                {
+                    current.Next = current.Next.Next;
+                    count++;
+                }
+                else
+                {
+                    current = current.Next;
+                }
+            }
+
+            Length -= count;
 
             return count;
         }
+
+
+        public int GetIndexByValue(T value)
+        {
+            int result = -1;
+            Comparer<T> comparer = Comparer<T>.Default;
+
+            if (comparer.Compare(_root.Value, value) == 0)
+            {
+                result = 0;
+            }
+            else
+            {
+                Node<T> current = _root.Next;
+                for (int i = 1; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, value) == 0)
+                    {
+                        result = i;
+                        break;
+                    }
+                    current = current.Next;
+                }
+            }
+
+            return result;
+        }
+
 
         public override string ToString()
         {
