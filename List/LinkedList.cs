@@ -216,19 +216,60 @@ namespace List
 
         public void RemoveRange(int count)
         {
+            if (count < Length)
+            {
+                Node<T> current = GetCurrentNode(Length - count);
+                Length -= count;
+                _tail = current;
+                current.Next = null;
+            }
+            else
+            {
+                Length = 0;
+                _tail = null;
+                _root = null;
+            }
 
         }
 
         public void RemoveRangeAtFirst(int count)
         {
-
+            if (count < Length)
+            {
+                Node<T> current = GetCurrentNode(count);
+                _root = current.Next;
+                Length -= count;
+            }
+            else
+            {
+                Length = 0;
+                _root = null;
+                _tail = null;
+            }
         }
 
         public void RemoveRangeAt(int index, int count)
         {
-            if ((index >= 0) && (index <= Length))
+            if ((index > 0) && (index <= Length))
             {
-
+                Node<T> current = GetCurrentNode(index);
+                int indexLastPart = index + count + 1;
+                if (indexLastPart < Length)
+                {
+                    Node<T> LastPart = GetCurrentNode(indexLastPart);
+                    current.Next = LastPart;
+                    Length -= count;
+                }
+                else
+                {
+                    _tail = current;
+                    current.Next = null;
+                    Length = index;
+                }
+            }
+            else if (index == 0)
+            {
+                RemoveRangeAtFirst(count);
             }
             else
             {
@@ -284,17 +325,21 @@ namespace List
                 Node<T> currentThis = this._root;
                 Node<T> currentList = list._root;
                 Comparer<T> comparer = Comparer<T>.Default;
-                do
+
+                if (!((currentThis is null) && (currentList is null)))
                 {
-                    if (comparer.Compare(currentThis.Value, currentList.Value) != 0)
+                    do
                     {
-                        isEquals = false;
-                        break;
+                        if (comparer.Compare(currentThis.Value, currentList.Value) != 0)
+                        {
+                            isEquals = false;
+                            break;
+                        }
+                        currentList = currentList.Next;
+                        currentThis = currentThis.Next;
                     }
-                    currentList = currentList.Next;
-                    currentThis = currentThis.Next;
+                    while (!(currentThis.Next is null));
                 }
-                while (!(currentThis.Next is null));
             }
             else
             {
