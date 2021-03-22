@@ -177,6 +177,66 @@ namespace List
 
         }
 
+        public void Remove()
+        {
+            
+        }
+
+        public void RemoveAtFirst()
+        {
+            
+        }
+
+        public void RemoveAt(int index)
+        {
+            if ((index < Length) && (index >= 0))
+            {
+                
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+        public void RemoveRange(int count)
+        {
+           
+        }
+
+        public void RemoveRangeAtFirst(int count)
+        {
+            
+        }
+
+        public void RemoveRangeAt(int index, int count)
+        {
+            if ((index >= 0) && (index <= Length))
+            {
+               
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+        public int RemoveByValue(T value)
+        {
+            int indexForRemove = 0;
+           
+
+            return indexForRemove;
+        }
+
+        public int RemoveAllByValue(T value)
+        {
+            int count = 0;
+            
+
+            return count;
+        }
+
         public override string ToString()
         {
             if (Length != 0)
