@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace List
 {
-    class Node
+    class Node<T> where T : IComparable
     {
+        public T Value { get; set; }
+        public Node<T> Next { get; set; }
 
+        public Node(T value)
+        {
+            Value = value;
+            Next = null;
+        }
     }
 }
