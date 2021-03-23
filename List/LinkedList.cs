@@ -383,7 +383,7 @@ namespace List
                         currentList = currentList.Next;
                         currentThis = currentThis.Next;
                     }
-                    while (!(currentThis.Next is null));
+                    while (!(currentThis is null));
                 }
             }
             else

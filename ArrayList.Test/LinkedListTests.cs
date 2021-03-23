@@ -43,6 +43,18 @@ namespace List.Test
 
             Assert.AreEqual(expectedLinkedList, actualLinkedList);
         }
+        
+        [TestCase()]
+        public void Add_Test()
+        {
+            LinkedList<string> actualLinkedList = new LinkedList<string>("Some");
+            LinkedList<string> expectedLinkedList = new LinkedList<string>("Some");
+
+            bool isEqual = actualLinkedList.Equals(expectedLinkedList);
+
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
 
         [TestCase("New Value", 1, 3)]
         public void AddAtFirst_WhenValue_ShouldAddtoFirst(string value, int mockNumb, int expectedMockNumb)
@@ -312,6 +324,7 @@ namespace List.Test
                     case 5:
                         array = new string[10] { "0", "1", "2", "3", "4", "5", "6", "7", "8", null };
                         break;
+
                 }
 
                 return new LinkedList<string>(array);
