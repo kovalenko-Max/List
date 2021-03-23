@@ -251,6 +251,68 @@ namespace List.Test
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(1, 2)]
+        [TestCase(20, 20)]
+        public void Reverse_WhenArray_ShouldRevers(int mockNumb, int expectedMockNumb)
+        {
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Reverse(mockNumb);
+            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_Reverse(expectedMockNumb);
+
+            actualLinkedList.Reverse();
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
+        [TestCase("0", 1, 0)]
+        [TestCase("5", 1, 6)]
+        [TestCase("8", 1, 9)]
+        [TestCase("non-existent Value", 1, -1)]
+        public void GetIndexByValue(string value, int mockNumb, int expectedIndex)
+        {
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock(mockNumb);
+            int actualIndex = actualLinkedList.GetIndexByValue(value);
+
+            Assert.AreEqual(expectedIndex, actualIndex);
+        }
+
+        [TestCase(1, 9)]
+        [TestCase(5, 3)]
+        public void GetIndexOfMax_WhenLinkedList_ShouldReturnIndexOfMax(int mockNumb, int expected)
+        {
+            LinkedList<string> LinkedList = LinkedListMock.GetMock(mockNumb);
+            int actual = LinkedList.GetIndexOfMax();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 0)]
+        [TestCase(6, 3)]
+        public void GetIndexOfMin_WhenLinkedList_ShouldReturnIndexOfMax(int mockNumb, int expected)
+        {
+            LinkedList<string> LinkedList = LinkedListMock.GetMock(mockNumb);
+            int actual = LinkedList.GetIndexOfMin();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, "8")]
+        [TestCase(5, "New Value")]
+        public void GetMax_WhenLinkedList_ShouldReturnMaxElement(int mockNumb, string expected)
+        {
+            LinkedList<string> LinkedList = LinkedListMock.GetMock(mockNumb);
+            string actual = LinkedList.GetMax();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, "0")]
+        [TestCase(3, "0")]
+        public void GetMin_WhenLinkedList_ShouldReturnMinElement(int mockNumb, string expected)
+        {
+            LinkedList<string> LinkedList = LinkedListMock.GetMock(mockNumb);
+            string actual = LinkedList.GetMin();
+
+            Assert.AreEqual(expected, actual);
+        }
 
         private static class LinkedListMock
         {

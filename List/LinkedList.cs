@@ -14,21 +14,7 @@ namespace List
         {
             get
             {
-                if ((index >= 0) && (index <= Length))
-                {
-                    Node<T> current = _root;
-
-                    for (int i = 1; i <= index; i++)
-                    {
-                        current = current.Next;
-                    }
-                    return current.Value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException();
-                }
-
+                return GetCurrentNode(index).Value;
             }
 
             set
@@ -100,7 +86,7 @@ namespace List
 
         public void Add(T value)
         {
-            if(Length==0)
+            if (Length == 0)
             {
                 _root = new Node<T>(value);
             }
@@ -287,10 +273,10 @@ namespace List
         public int RemoveByValue(T value)
         {
             int indexForRemove = -1;
-            
+
             Comparer<T> comparer = Comparer<T>.Default;
-            
-            if(comparer.Compare(_root.Value, value) == 0)
+
+            if (comparer.Compare(_root.Value, value) == 0)
             {
                 _root.Next = _root.Next.Next;
                 indexForRemove = 0;
@@ -298,10 +284,10 @@ namespace List
             else
             {
                 Node<T> current = _root;
-                
-                for(int i=1;i<Length;++i)
+
+                for (int i = 1; i < Length; ++i)
                 {
-                    if(comparer.Compare(current.Next.Value, value) == 0)
+                    if (comparer.Compare(current.Next.Value, value) == 0)
                     {
                         indexForRemove = i;
                         current.Next = current.Next.Next;
@@ -334,7 +320,7 @@ namespace List
                 }
             }
 
-            if(comparer.Compare(_root.Value, value)==0)
+            if (comparer.Compare(_root.Value, value) == 0)
             {
                 _root = _root.Next;
                 count++;
@@ -347,7 +333,7 @@ namespace List
 
         public void Reverse()
         {
-            
+
         }
 
         public int GetIndexByValue(T value)
@@ -378,43 +364,78 @@ namespace List
 
         public int GetIndexOfMax()
         {
-            int result = 0;
-            
-            Comparer<T> comparer = Comparer<T>.Default;
+            if (Length != 0)
+            {
+                int result = 0;
+                T maxValue = _root.Value;
+                Comparer<T> comparer = Comparer<T>.Default;
+                Node<T> current = _root;
 
-
-            return result;
+                for (int i = 0; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, maxValue) > 0)
+                    {
+                        maxValue = current.Value;
+                        result = i;
+                    }
+                    current = current.Next;
+                }
+                return result;
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
         }
 
         public int GetIndexOfMin()
         {
-            int result = 0;
-            
-            Comparer<T> comparer = Comparer<T>.Default;
+            if (Length != 0)
+            {
+                int result = 0;
+                T minValue = _root.Value;
+                Comparer<T> comparer = Comparer<T>.Default;
 
-            return result;
+                Node<T> current = _root;
+
+                for (int i = 0; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, minValue) < 0)
+                    {
+                        minValue = current.Value;
+                        result = i;
+                    }
+                    current = current.Next;
+                }
+
+                return result;
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
         }
 
         public T GetMax()
         {
-            return default(T);
+            return this[GetIndexOfMax()];
         }
 
         public T GetMin()
         {
-            return default(T);
+            return this[GetIndexOfMin()];
         }
 
         public void SortAscending()
         {
             Comparer<T> comparer = Comparer<T>.Default;
-            
+
         }
 
         public void SortDescending()
         {
             Comparer<T> comparer = Comparer<T>.Default;
-            
+
         }
 
         public override string ToString()
@@ -475,13 +496,20 @@ namespace List
 
         private Node<T> GetCurrentNode(int index)
         {
-            Node<T> current = _root;
-
-            for (int i = 1; i < index; i++)
+            if ((index >= 0) && (index < Length))
             {
-                current = current.Next;
+                Node<T> current = _root;
+
+                for (int i = 1; i <= index; i++)
+                {
+                    current = current.Next;
+                }
+                return current;
             }
-            return current;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
     }
 }
