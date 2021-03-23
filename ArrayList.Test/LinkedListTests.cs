@@ -34,6 +34,7 @@ namespace List.Test
         [TestCase("8", 2, 3)]
         [TestCase("9", 3, 4)]
         [TestCase(null, 3, 5)]
+        [TestCase("New value", 0, 6)]
         public void Add_WhenValue_ShouldToEnd(string value, int mockNumb, int expectedMockNumb)
         {
             LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Add(mockNumb);
@@ -43,7 +44,7 @@ namespace List.Test
 
             Assert.AreEqual(expectedLinkedList, actualLinkedList);
         }
-        
+
         [TestCase()]
         public void Add_Test()
         {
@@ -226,11 +227,11 @@ namespace List.Test
         }
 
         [TestCase("3", 1, 3)]
-        [TestCase("8", 1, 9)]
+        [TestCase("8", 1, 8)]
         [TestCase("non-existent Value", 1, -1)]
         public void RemoveByValue_WhenArray_ShouldRevers(string value, int mockNumb, int expected)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Remove(mockNumb);
 
             int actual = actualLinkedList.RemoveByValue(value);
 
@@ -324,7 +325,9 @@ namespace List.Test
                     case 5:
                         array = new string[10] { "0", "1", "2", "3", "4", "5", "6", "7", "8", null };
                         break;
-
+                    case 6:
+                        array = new string[] { "New value" };
+                        break;
                 }
 
                 return new LinkedList<string>(array);
