@@ -14,21 +14,7 @@ namespace List
         {
             get
             {
-                if ((index >= 0) && (index <= Length))
-                {
-                    Node<T> current = _root;
-
-                    for (int i = 1; i <= index; i++)
-                    {
-                        current = current.Next;
-                    }
-                    return current.Value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException();
-                }
-
+                return GetCurrentNode(index).Value;
             }
 
             set
@@ -100,9 +86,16 @@ namespace List
 
         public void Add(T value)
         {
-            Length++;
-            _tail.Next = new Node<T>(value);
-            _tail = _tail.Next;
+            if (Length == 0)
+            {
+                _root = new Node<T>(value);
+            }
+            else
+            {
+                _tail.Next = new Node<T>(value);
+                _tail = _tail.Next;
+            }
+            ++Length;
         }
 
         public void AddAtFirst(T value)
@@ -166,7 +159,7 @@ namespace List
                 linkedList._tail.Next = current.Next;
                 current.Next = linkedList._root;
             }
-            else if(index == 0)
+            else if (index == 0)
             {
                 AddListAtFirst(linkedList);
             }
@@ -174,6 +167,274 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
+
+        }
+
+        public void Remove()
+        {
+            _tail = GetCurrentNode(Length - 1);
+            _tail.Next = null;
+            --Length;
+        }
+
+        public void RemoveAtFirst()
+        {
+            _root = _root.Next;
+            Length--;
+        }
+
+        public void RemoveAt(int index)
+        {
+            if ((index > 0) && (index < Length))
+            {
+                Node<T> current = _root;
+
+                for (int i = 1; i < index; i++)
+                {
+                    current = current.Next;
+                }
+
+                current.Next = current.Next.Next;
+                Length--;
+            }
+            else if (index == 0)
+            {
+                RemoveAtFirst();
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+        public void RemoveRange(int count)
+        {
+            if (count < Length)
+            {
+                Node<T> current = GetCurrentNode(Length - count);
+                Length -= count;
+                _tail = current;
+                current.Next = null;
+            }
+            else
+            {
+                Length = 0;
+                _tail = null;
+                _root = null;
+            }
+
+        }
+
+        public void RemoveRangeAtFirst(int count)
+        {
+            if (count < Length)
+            {
+                Node<T> current = GetCurrentNode(count);
+                _root = current.Next;
+                Length -= count;
+            }
+            else
+            {
+                Length = 0;
+                _root = null;
+                _tail = null;
+            }
+        }
+
+        public void RemoveRangeAt(int index, int count)
+        {
+            if ((index > 0) && (index <= Length))
+            {
+                Node<T> current = GetCurrentNode(index);
+                int indexLastPart = index + count + 1;
+                if (indexLastPart < Length)
+                {
+                    Node<T> LastPart = GetCurrentNode(indexLastPart);
+                    current.Next = LastPart;
+                    Length -= count;
+                }
+                else
+                {
+                    _tail = current;
+                    current.Next = null;
+                    Length = index;
+                }
+            }
+            else if (index == 0)
+            {
+                RemoveRangeAtFirst(count);
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+        public int RemoveByValue(T value)
+        {
+            int indexForRemove = -1;
+
+            Comparer<T> comparer = Comparer<T>.Default;
+
+            if (comparer.Compare(_root.Value, value) == 0)
+            {
+                _root.Next = _root.Next.Next;
+                indexForRemove = 0;
+            }
+            else
+            {
+                Node<T> current = _root;
+
+                for (int i = 1; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Next.Value, value) == 0)
+                    {
+                        indexForRemove = i;
+                        current.Next = current.Next.Next;
+                        break;
+                    }
+                    current = current.Next;
+                }
+            }
+
+            return indexForRemove;
+        }
+
+        public int RemoveAllByValue(T value)
+        {
+            int count = 0;
+            Comparer<T> comparer = Comparer<T>.Default;
+            Node<T> current = _root;
+
+
+            while (!(current.Next is null))
+            {
+                if (comparer.Compare(current.Next.Value, value) == 0)
+                {
+                    current.Next = current.Next.Next;
+                    count++;
+                }
+                else
+                {
+                    current = current.Next;
+                }
+            }
+
+            if (comparer.Compare(_root.Value, value) == 0)
+            {
+                _root = _root.Next;
+                count++;
+            }
+
+            Length -= count;
+
+            return count;
+        }
+
+        public void Reverse()
+        {
+
+        }
+
+        public int GetIndexByValue(T value)
+        {
+            int result = -1;
+            Comparer<T> comparer = Comparer<T>.Default;
+
+            if (comparer.Compare(_root.Value, value) == 0)
+            {
+                result = 0;
+            }
+            else
+            {
+                Node<T> current = _root.Next;
+                for (int i = 1; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, value) == 0)
+                    {
+                        result = i;
+                        break;
+                    }
+                    current = current.Next;
+                }
+            }
+
+            return result;
+        }
+
+        public int GetIndexOfMax()
+        {
+            if (Length != 0)
+            {
+                int result = 0;
+                T maxValue = _root.Value;
+                Comparer<T> comparer = Comparer<T>.Default;
+                Node<T> current = _root;
+
+                for (int i = 0; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, maxValue) > 0)
+                    {
+                        maxValue = current.Value;
+                        result = i;
+                    }
+                    current = current.Next;
+                }
+                return result;
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+        }
+
+        public int GetIndexOfMin()
+        {
+            if (Length != 0)
+            {
+                int result = 0;
+                T minValue = _root.Value;
+                Comparer<T> comparer = Comparer<T>.Default;
+
+                Node<T> current = _root;
+
+                for (int i = 0; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, minValue) < 0)
+                    {
+                        minValue = current.Value;
+                        result = i;
+                    }
+                    current = current.Next;
+                }
+
+                return result;
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+        }
+
+        public T GetMax()
+        {
+            return this[GetIndexOfMax()];
+        }
+
+        public T GetMin()
+        {
+            return this[GetIndexOfMin()];
+        }
+
+        public void SortAscending()
+        {
+            Comparer<T> comparer = Comparer<T>.Default;
+
+        }
+
+        public void SortDescending()
+        {
+            Comparer<T> comparer = Comparer<T>.Default;
 
         }
 
@@ -209,17 +470,21 @@ namespace List
                 Node<T> currentThis = this._root;
                 Node<T> currentList = list._root;
                 Comparer<T> comparer = Comparer<T>.Default;
-                do
+
+                if (!((currentThis is null) && (currentList is null)))
                 {
-                    if (comparer.Compare(currentThis.Value, currentList.Value) != 0)
+                    do
                     {
-                        isEquals = false;
-                        break;
+                        if (comparer.Compare(currentThis.Value, currentList.Value) != 0)
+                        {
+                            isEquals = false;
+                            break;
+                        }
+                        currentList = currentList.Next;
+                        currentThis = currentThis.Next;
                     }
-                    currentList = currentList.Next;
-                    currentThis = currentThis.Next;
+                    while (!(currentThis is null));
                 }
-                while (!(currentThis.Next is null));
             }
             else
             {
@@ -227,6 +492,24 @@ namespace List
             }
 
             return isEquals;
+        }
+
+        private Node<T> GetCurrentNode(int index)
+        {
+            if ((index >= 0) && (index < Length))
+            {
+                Node<T> current = _root;
+
+                for (int i = 1; i <= index; i++)
+                {
+                    current = current.Next;
+                }
+                return current;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
     }
 }
