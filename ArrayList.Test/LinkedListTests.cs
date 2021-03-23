@@ -5,7 +5,6 @@ namespace List.Test
 {
     class LinkedListTests
     {
-
         [TestCase(0, 1, "0")]
         [TestCase(4, 1, "3")]
         [TestCase(8, 1, "7")]
@@ -48,8 +47,8 @@ namespace List.Test
         [TestCase()]
         public void Add_Test()
         {
-            LinkedList<string> actualLinkedList = new LinkedList<string>("Some");
-            LinkedList<string> expectedLinkedList = new LinkedList<string>("Some");
+            LinkedList<string> actualLinkedList = new LinkedList<string>("");
+            LinkedList<string> expectedLinkedList = new LinkedList<string>("");
 
             bool isEqual = actualLinkedList.Equals(expectedLinkedList);
 

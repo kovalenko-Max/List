@@ -129,7 +129,6 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-
         }
 
         public void AddList(LinkedList<T> linkedList)
@@ -230,7 +229,7 @@ namespace List
             if (count < Length)
             {
                 Node<T> current = GetCurrentNode(count);
-                _root = current.Next;
+                _root = current;
                 Length -= count;
             }
             else
@@ -245,8 +244,8 @@ namespace List
         {
             if ((index > 0) && (index <= Length))
             {
-                Node<T> current = GetCurrentNode(index);
-                int indexLastPart = index + count + 1;
+                Node<T> current = GetCurrentNode(index - 1);
+                int indexLastPart = index + count;
                 if (indexLastPart < Length)
                 {
                     Node<T> LastPart = GetCurrentNode(indexLastPart);
@@ -333,7 +332,21 @@ namespace List
 
         public void Reverse()
         {
+            Node<T> previous = null;
+            Node<T> current = _root;
+            Node<T> following = _root;
+            
+            while (!(current is null!))
+            {
+                following = following.Next;
+                current.Next = previous;
+                previous = current;
+                current = following;
+            }
 
+            current = _root;
+            _root = _tail;
+            _tail = _root;
         }
 
         public int GetIndexByValue(T value)
@@ -429,6 +442,7 @@ namespace List
         public void SortAscending()
         {
             Comparer<T> comparer = Comparer<T>.Default;
+
 
         }
 
