@@ -8,6 +8,8 @@ namespace List.Test
         [TestCase(0, 1, "0")]
         [TestCase(4, 1, "3")]
         [TestCase(8, 1, "7")]
+        [TestCase(12, 1, "8")]
+        [TestCase(0, 7, "0")]
         public void Get_WhenIndex_ShouldGetElement(int index, int mockNumb, string expected)
         {
             LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock(mockNumb));
@@ -34,6 +36,7 @@ namespace List.Test
         [TestCase("9", 3, 4)]
         [TestCase(null, 3, 5)]
         [TestCase("New value", 0, 6)]
+        [TestCase("New value", 20, 6)]
         public void Add_WhenValue_ShouldToEnd(string value, int mockNumb, int expectedMockNumb)
         {
             LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Add(mockNumb));
@@ -43,18 +46,6 @@ namespace List.Test
 
             Assert.AreEqual(expectedLinkedList, actualLinkedList);
         }
-
-        //[TestCase()]
-        //public void Add_Test()
-        //{
-        //    LinkedList<string> actualLinkedList = new LinkedList<string>("");
-        //    LinkedList<string> expectedLinkedList = new LinkedList<string>("");
-
-        //    bool isEqual = actualLinkedList.Equals(expectedLinkedList);
-
-
-        //    Assert.AreEqual(expectedLinkedList, actualLinkedList);
-        //}
 
         [TestCase("New Value", 1, 3)]
         public void AddAtFirst_WhenValue_ShouldAddtoFirst(string value, int mockNumb, int expectedMockNumb)

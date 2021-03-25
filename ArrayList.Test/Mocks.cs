@@ -40,6 +40,10 @@ namespace List.Test
                     array = new string[] { "0", "1", "2", null, "3", "4", "5", "6", "7", "8", "8", "8", "8" };
                     break;
 
+                case 7:
+                    array = new string[] { "0" };
+                    break;
+
                 case 20:
                     array = new string[] { };
                     break;

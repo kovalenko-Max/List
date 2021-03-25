@@ -624,7 +624,5 @@ namespace List
 
             return isEquals;
         }
-
-
     }
 }
