@@ -10,7 +10,7 @@ namespace List.Test
         [TestCase(8, 1, "7")]
         public void Get_WhenIndex_ShouldGetElement(int index, int mockNumb, string expected)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock(mockNumb));
 
             string actual = actualLinkedList[index];
 
@@ -21,8 +21,8 @@ namespace List.Test
         [TestCase(3, null, 1, 6)]
         public void Set_WhenIndex_ShouldSetElement(int index, string value, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock(expectedMockNumb);
-            LinkedList<string> actual = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> actual = new LinkedList<string>(Mocks.GetMock(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock(expectedMockNumb));
 
             actual[index] = value;
 
@@ -36,31 +36,31 @@ namespace List.Test
         [TestCase("New value", 0, 6)]
         public void Add_WhenValue_ShouldToEnd(string value, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Add(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_Add(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Add(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_Add(expectedMockNumb));
 
             actualLinkedList.Add(value);
 
             Assert.AreEqual(expectedLinkedList, actualLinkedList);
         }
 
-        [TestCase()]
-        public void Add_Test()
-        {
-            LinkedList<string> actualLinkedList = new LinkedList<string>("");
-            LinkedList<string> expectedLinkedList = new LinkedList<string>("");
+        //[TestCase()]
+        //public void Add_Test()
+        //{
+        //    LinkedList<string> actualLinkedList = new LinkedList<string>("");
+        //    LinkedList<string> expectedLinkedList = new LinkedList<string>("");
 
-            bool isEqual = actualLinkedList.Equals(expectedLinkedList);
+        //    bool isEqual = actualLinkedList.Equals(expectedLinkedList);
 
 
-            Assert.AreEqual(expectedLinkedList, actualLinkedList);
-        }
+        //    Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        //}
 
         [TestCase("New Value", 1, 3)]
         public void AddAtFirst_WhenValue_ShouldAddtoFirst(string value, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddAt(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_AddAt(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_AddAt(expectedMockNumb));
 
             actualLinkedList.AddAtFirst(value);
 
@@ -73,8 +73,8 @@ namespace List.Test
         [TestCase(null, 2, 1, 5)]
         public void AddAt_WhenIndexAndStringValue_ShouldAddElementByIndex(string value, int index, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddAt(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_AddAt(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_AddAt(expectedMockNumb));
 
             actualLinkedList.AddAt(index, value);
 
@@ -85,7 +85,7 @@ namespace List.Test
         [TestCase(-3, "New Value", 1)]
         public void AddAt_WhenIndexAndStringValue_ShouldThrowIndexOutOfRangeException(int index, string value, int mockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_AddAt(mockNumb));
 
             Assert.Throws<IndexOutOfRangeException>(() => actualLinkedList.AddAt(index, value));
         }
@@ -93,9 +93,9 @@ namespace List.Test
         [TestCase(1, 20, 2)]
         public void AddList_WhenLinkedList_ShouldAddToLinkedList(int mockNumb, int numbListForAdding, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddList(mockNumb);
-            LinkedList<string> listForAdding = LinkedListMock.GetMock_AddList(numbListForAdding);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddList(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_AddList(mockNumb));
+            LinkedList<string> listForAdding = new LinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_AddList(expectedMockNumb));
 
             actualLinkedList.AddList(listForAdding);
 
@@ -105,9 +105,9 @@ namespace List.Test
         [TestCase(1, 20, 3)]
         public void AddListAtFirst_WhenLinkedList_ShouldAddAtFirst(int mockNumb, int numbListForAdding, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddList(mockNumb);
-            LinkedList<string> listForAdding = LinkedListMock.GetMock_AddList(numbListForAdding);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddList(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_AddList(mockNumb));
+            LinkedList<string> listForAdding = new LinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_AddList(expectedMockNumb));
 
             actualLinkedList.AddListAtFirst(listForAdding);
 
@@ -121,9 +121,9 @@ namespace List.Test
         [TestCase(3, 1, 6, 7)]
         public void AddListAt_WhenIndexAndLinkedList_ShouldAddLinkedListAtIndex(int index, int mockNumb, int numbListForAdding, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddList(mockNumb);
-            LinkedList<string> listForAdding = LinkedListMock.GetMock_AddList(numbListForAdding);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_AddList(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_AddList(mockNumb));
+            LinkedList<string> listForAdding = new LinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_AddList(expectedMockNumb));
 
             actualLinkedList.AddListAt(index, listForAdding);
 
@@ -134,8 +134,8 @@ namespace List.Test
         [TestCase(-25, 1, 20)]
         public void AddListAt_WhenIndexAndLinkedList_ShouldThrowIndexOutOfRangeException(int index, int mockNumb, int numbListForAdding)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
-            LinkedList<string> listForAdding = LinkedListMock.GetMock_AddList(numbListForAdding);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_AddList(mockNumb));
+            LinkedList<string> listForAdding = new LinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
 
             Assert.Throws<IndexOutOfRangeException>(() => actualLinkedList.AddListAt(index, listForAdding));
         }
@@ -143,8 +143,8 @@ namespace List.Test
         [TestCase(1, 2)]
         public void RemoveAtLast_WhenLinkedList_ShouldRemoveAtLast(int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Remove(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_Remove(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Remove(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_Remove(expectedMockNumb));
 
             actualLinkedList.Remove();
 
@@ -154,8 +154,8 @@ namespace List.Test
         [TestCase(1, 3)]
         public void RemoveAtFirst_WhenArraList_ShouldRemoveAtFirst(int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Remove(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_Remove(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Remove(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_Remove(expectedMockNumb));
 
             actualLinkedList.RemoveAtFirst();
 
@@ -167,8 +167,8 @@ namespace List.Test
         [TestCase(2, 1, 4)]
         public void RemoveAt_WhenArraList_ShouldRemoveAtFirst(int index, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Remove(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_Remove(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Remove(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_Remove(expectedMockNumb));
 
             actualLinkedList.RemoveAt(index);
 
@@ -179,7 +179,7 @@ namespace List.Test
         [TestCase(-25, 1)]
         public void RemoveAt_WhenIndexAndLinkedList_ShouldThrowIndexOutOfRangeException(int index, int mockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_AddAt(mockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Remove(mockNumb));
 
             Assert.Throws<IndexOutOfRangeException>(() => actualLinkedList.RemoveAt(index));
         }
@@ -190,8 +190,8 @@ namespace List.Test
         [TestCase(9, 1, 20)]
         public void RemoveRange_WhenCount_ShoudlRemoveRange(int count, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_RemoveRange(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_RemoveRange(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_RemoveRange(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_RemoveRange(expectedMockNumb));
 
             actualLinkedList.RemoveRange(count);
 
@@ -202,8 +202,8 @@ namespace List.Test
         [TestCase(100, 1, 20)]
         public void RemoveRangeAtFirst_WhenCount_ShouldRemoveRangeFromFirst(int count, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_RemoveRange(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_RemoveRange(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_RemoveRange(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_RemoveRange(expectedMockNumb));
 
             actualLinkedList.RemoveRangeAtFirst(count);
 
@@ -217,8 +217,8 @@ namespace List.Test
         [TestCase(3, 2, 1, 4)]
         public void RemoveRangeAt_WhenIndexAndRange_ShoudlRemoveRange(int index, int count, int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_RemoveRange(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_RemoveRange(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_RemoveRange(mockNumb));
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_RemoveRange(expectedMockNumb));
 
             actualLinkedList.RemoveRangeAt(index, count);
 
@@ -228,9 +228,9 @@ namespace List.Test
         [TestCase("3", 1, 3)]
         [TestCase("8", 1, 8)]
         [TestCase("non-existent Value", 1, -1)]
-        public void RemoveByValue_WhenArray_ShouldRevers(string value, int mockNumb, int expected)
+        public void RemoveByValue_WhenValue_ShouldRemove(string value, int mockNumb, int expected)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Remove(mockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Remove(mockNumb));
 
             int actual = actualLinkedList.RemoveByValue(value);
 
@@ -243,7 +243,7 @@ namespace List.Test
         [TestCase("non-existent Value", 1, 0)]
         public void RemoveAllByValue_WhenAllValues_ShoulRemoved(string value, int mockNumb, int expected)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock(mockNumb));
 
             int actual = actualLinkedList.RemoveAllByValue(value);
 
@@ -254,8 +254,9 @@ namespace List.Test
         [TestCase(20, 20)]
         public void Reverse_WhenArray_ShouldRevers(int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock_Reverse(mockNumb);
-            LinkedList<string> expectedLinkedList = LinkedListMock.GetMock_Reverse(expectedMockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Reverse(mockNumb));
+                //LinkedListMock.GetMock_Reverse(mockNumb);
+            LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_Reverse(expectedMockNumb));
 
             actualLinkedList.Reverse();
 
@@ -267,7 +268,7 @@ namespace List.Test
         [TestCase("non-existent Value", 1, -1)]
         public void GetIndexByValue(string value, int mockNumb, int expectedIndex)
         {
-            LinkedList<string> actualLinkedList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock(mockNumb));
             int actualIndex = actualLinkedList.GetIndexByValue(value);
 
             Assert.AreEqual(expectedIndex, actualIndex);
@@ -277,7 +278,7 @@ namespace List.Test
         [TestCase(5, 3)]
         public void GetIndexOfMax_WhenLinkedList_ShouldReturnIndexOfMax(int mockNumb, int expected)
         {
-            LinkedList<string> LinkedList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> LinkedList = new LinkedList<string>(Mocks.GetMock(mockNumb));
             int actual = LinkedList.GetIndexOfMax();
 
             Assert.AreEqual(expected, actual);
@@ -287,7 +288,7 @@ namespace List.Test
         [TestCase(6, 3)]
         public void GetIndexOfMin_WhenLinkedList_ShouldReturnIndexOfMax(int mockNumb, int expected)
         {
-            LinkedList<string> LinkedList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> LinkedList = new LinkedList<string>(Mocks.GetMock(mockNumb));
             int actual = LinkedList.GetIndexOfMin();
 
             Assert.AreEqual(expected, actual);
@@ -297,7 +298,7 @@ namespace List.Test
         [TestCase(5, "New Value")]
         public void GetMax_WhenLinkedList_ShouldReturnMaxElement(int mockNumb, string expected)
         {
-            LinkedList<string> LinkedList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> LinkedList = new LinkedList<string>(Mocks.GetMock(mockNumb));
             string actual = LinkedList.GetMax();
 
             Assert.AreEqual(expected, actual);
@@ -307,7 +308,7 @@ namespace List.Test
         [TestCase(3, "0")]
         public void GetMin_WhenLinkedList_ShouldReturnMinElement(int mockNumb, string expected)
         {
-            LinkedList<string> LinkedList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> LinkedList = new LinkedList<string>(Mocks.GetMock(mockNumb));
             string actual = LinkedList.GetMin();
 
             Assert.AreEqual(expected, actual);
@@ -318,8 +319,8 @@ namespace List.Test
         [TestCase(20, 20)]
         public void SortAscending_WhenStringArrayList_ShouldBeSorted(int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualArrayList = LinkedListMock.GetMock(mockNumb);
-            LinkedList<string> expectedArrayList = LinkedListMock.GetMock(expectedMockNumb);
+            LinkedList<string> actualArrayList = new LinkedList<string>(Mocks.GetMock(mockNumb));
+            LinkedList<string> expectedArrayList = new LinkedList<string>(Mocks.GetMock(expectedMockNumb));
             actualArrayList.SortAscending();
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
@@ -330,261 +331,11 @@ namespace List.Test
         [TestCase(20, 20)]
         public void SortDescending_WhenStringArrayList_ShouldBeSorted(int mockNumb, int expectedMockNumb)
         {
-            LinkedList<string> actualArrayList = LinkedListMock.GetMock(mockNumb);
-            LinkedList<string> expectedArrayList = LinkedListMock.GetMock(expectedMockNumb);
+            LinkedList<string> actualArrayList = new LinkedList<string>(Mocks.GetMock(mockNumb));
+            LinkedList<string> expectedArrayList = new LinkedList<string>(Mocks.GetMock(expectedMockNumb));
             actualArrayList.SortDescending();
 
             Assert.AreEqual(expectedArrayList, actualArrayList);
-        }
-
-        private static class LinkedListMock
-        {
-            public static LinkedList<string> GetMock(int numb)
-            {
-                string[] array;
-
-                switch (numb)
-                {
-                    default:
-                        array = new string[] { };
-                        break;
-
-                    case 1:
-                        array = new string[] { "0", "1", "2", "3", "3", "4", "5", "6", "7", "8", "8", "8", "8" };
-                        break;
-
-                    case 2:
-                        array = new string[] { "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8" };
-                        break;
-
-
-                    case 3:
-                        array = new string[] { "2", "5", "8", "0", "8", "1", "8", "3", "3", "4", "6", "7", "8" };
-                        break;
-
-                    case 4:
-                        array = new string[] { "8", "8", "8", "8", "7", "6", "5", "4", "3", "3", "2", "1", "0" };
-                        break;
-
-                    case 5:
-                        array = new string[] { "0", "1", "2", "New Value", "3", "4", "5", "6", "7", "8", "8", "8", "8" };
-                        break;
-
-                    case 6:
-                        array = new string[] { "0", "1", "2", null, "3", "4", "5", "6", "7", "8", "8", "8", "8" };
-                        break;
-
-                    case 20:
-                        array = new string[] { };
-                        break;
-                }
-
-                return new LinkedList<string>(array);
-            }
-
-            public static LinkedList<string> GetMock_Add(int numb)
-            {
-                string[] array;
-                switch (numb)
-                {
-                    default:
-                        array = new string[] { };
-                        break;
-
-                    case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", };
-                        break;
-
-                    case 2:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7" };
-                        break;
-
-                    case 3:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
-                        break;
-
-                    case 4:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-                        break;
-
-                    case 5:
-                        array = new string[10] { "0", "1", "2", "3", "4", "5", "6", "7", "8", null };
-                        break;
-                    case 6:
-                        array = new string[] { "New value" };
-                        break;
-                }
-
-                return new LinkedList<string>(array);
-            }
-
-            public static LinkedList<string> GetMock_AddAt(int numb)
-            {
-                string[] array;
-                switch (numb)
-                {
-                    default:
-                        array = new string[] { };
-                        break;
-
-                    case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6" };
-                        break;
-
-                    case 2:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "New Value" };
-                        break;
-
-                    case 3:
-                        array = new string[] { "New Value", "0", "1", "2", "3", "4", "5", "6" };
-                        break;
-
-                    case 4:
-                        array = new string[] { "0", "1", "New Value", "2", "3", "4", "5", "6" };
-                        break;
-
-                    case 5:
-                        array = new string[] { "0", "1", null, "2", "3", "4", "5", "6" };
-                        break;
-                }
-
-                return new LinkedList<string>(array);
-            }
-
-            public static LinkedList<string> GetMock_AddList(int numb)
-            {
-                string[] array;
-                switch (numb)
-                {
-                    default:
-                        array = new string[] { };
-                        break;
-
-                    case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6" };
-                        break;
-
-                    case 2:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "n0", "n1", "n2", "n3", "n4", "n5", "n6" };
-                        break;
-
-                    case 3:
-                        array = new string[] { "n0", "n1", "n2", "n3", "n4", "n5", "n6", "0", "1", "2", "3", "4", "5", "6" };
-                        break;
-
-                    case 4:
-                        array = new string[] { "0", "1", "n0", "n1", "n2", "n3", "n4", "n5", "n6", "2", "3", "4", "5", "6" };
-                        break;
-                    case 5:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "n0", "n1", "n2", "n3", "n4", "n5", "n6", "6" };
-                        break;
-
-                    case 6:
-                        array = new string[] { null, null, null };
-                        break;
-
-                    case 7:
-                        array = new string[] { "0", "1", "2", null, null, null, "3", "4", "5", "6" };
-                        break;
-                    case 20:
-                        array = new string[] { "n0", "n1", "n2", "n3", "n4", "n5", "n6" };
-                        break;
-
-                }
-
-                return new LinkedList<string>(array);
-            }
-
-            public static LinkedList<string> GetMock_Remove(int numb)
-            {
-                string[] array;
-                switch (numb)
-                {
-                    default:
-                        array = new string[] { };
-                        break;
-
-                    case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
-                        break;
-
-                    case 2:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7" };
-                        break;
-
-                    case 3:
-                        array = new string[] { "1", "2", "3", "4", "5", "6", "7", "8" };
-                        break;
-
-                    case 4:
-                        array = new string[] { "0", "1", "3", "4", "5", "6", "7", "8" };
-                        break;
-                }
-
-                return new LinkedList<string>(array);
-            }
-
-            public static LinkedList<string> GetMock_RemoveRange(int numb)
-            {
-                string[] array;
-                switch (numb)
-                {
-                    default:
-                        array = new string[] { };
-                        break;
-
-                    case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
-                        break;
-
-                    case 2:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6" };
-                        break;
-
-                    case 3:
-                        array = new string[] { "2", "3", "4", "5", "6", "7", "8" };
-                        break;
-
-                    case 4:
-                        array = new string[] { "0", "1", "2", "5", "6", "7", "8" };
-                        break;
-
-                    case 5:
-                        array = new string[] { "0", "1" };
-                        break;
-
-                    case 20:
-                        array = new string[] { };
-                        break;
-                }
-
-                return new LinkedList<string>(array);
-            }
-
-            public static LinkedList<string> GetMock_Reverse(int numb)
-            {
-                string[] array;
-                switch (numb)
-                {
-                    default:
-                        array = new string[] { };
-                        break;
-
-                    case 1:
-                        array = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
-                        break;
-
-                    case 2:
-                        array = new string[] { "8", "7", "6", "5", "4", "3", "2", "1", "0" };
-                        break;
-
-                    case 20:
-                        array = new string[] { };
-                        break;
-                }
-
-                return new LinkedList<string>(array);
-            }
         }
     }
 }

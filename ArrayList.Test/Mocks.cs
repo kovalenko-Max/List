@@ -5,7 +5,7 @@ namespace List.Test
 {
     class Mocks
     {
-        public static ArrayList<string> GetMock(int numb)
+        public static string[] GetMock(int numb)
         {
             string[] array;
 
@@ -45,12 +45,13 @@ namespace List.Test
                     break;
             }
 
-            return new ArrayList<string>(array);
+            return array;
         }
 
-        public static ArrayList<string> GetMock_Add(int numb)
+        public static string[] GetMock_Add(int numb)
         {
             string[] array;
+
             switch (numb)
             {
                 default:
@@ -76,12 +77,15 @@ namespace List.Test
                 case 5:
                     array = new string[10] { "0", "1", "2", "3", "4", "5", "6", "7", "8", null };
                     break;
+                case 6:
+                    array = new string[] { "New value" };
+                    break;
             }
 
-            return new ArrayList<string>(array);
+            return array;
         }
 
-        public static ArrayList<string> GetMock_AddAt(int numb)
+        public static string[] GetMock_AddAt(int numb)
         {
             string[] array;
             switch (numb)
@@ -111,10 +115,10 @@ namespace List.Test
                     break;
             }
 
-            return new ArrayList<string>(array);
+            return array;
         }
 
-        public static ArrayList<string> GetMock_AddList(int numb)
+        public static string[] GetMock_AddList(int numb)
         {
             string[] array;
             switch (numb)
@@ -155,10 +159,10 @@ namespace List.Test
 
             }
 
-            return new ArrayList<string>(array);
+            return array;
         }
 
-        public static ArrayList<string> GetMock_Remove(int numb)
+        public static string[] GetMock_Remove(int numb)
         {
             string[] array;
             switch (numb)
@@ -184,10 +188,10 @@ namespace List.Test
                     break;
             }
 
-            return new ArrayList<string>(array);
+            return array;
         }
 
-        public static ArrayList<string> GetMock_RemoveRange(int numb)
+        public static string[] GetMock_RemoveRange(int numb)
         {
             string[] array;
             switch (numb)
@@ -221,10 +225,10 @@ namespace List.Test
                     break;
             }
 
-            return new ArrayList<string>(array);
+            return array;
         }
 
-        public static ArrayList<string> GetMock_Reverse(int numb)
+        public static string[] GetMock_Reverse(int numb)
         {
             string[] array;
             switch (numb)
@@ -246,7 +250,7 @@ namespace List.Test
                     break;
             }
 
-            return new ArrayList<string>(array);
+            return array;
         }
     }
 }
