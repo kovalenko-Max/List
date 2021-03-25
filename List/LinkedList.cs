@@ -335,7 +335,7 @@ namespace List
             Node<T> previous = null;
             Node<T> current = _root;
             Node<T> following = _root;
-            
+
             while (!(current is null!))
             {
                 following = following.Next;
@@ -441,33 +441,37 @@ namespace List
 
         public void SortAscending()
         {
-            this._root = this.mergeSort(this._root);
+            this._root = this.mergeSort(this._root, isAscending: true);
         }
 
-        private Node<T> mergeSort(Node<T> h)
+        public void SortDescending()
         {
-            Comparer<T> comparer = Comparer<T>.Default;
+            this._root = this.mergeSort(this._root, isAscending: false);
+        }
+
+        private Node<T> mergeSort(Node<T> root, bool isAscending)
+        {
             // Base case : if head is null  
-            if (h == null || h.Next == null)
+            if (root == null || root.Next == null)
             {
-                return h;
+                return root;
             }
 
             // get the middle of the list  
-            Node<T> middle = getMiddle(h);
+            Node<T> middle = getMiddle(root);
             Node<T> nextofmiddle = middle.Next;
 
             // set the next of middle node to null  
             middle.Next = null;
 
             // Apply mergeSort on left list  
-            Node<T> left = mergeSort(h);
+            Node<T> left = mergeSort(root, isAscending);
 
             // Apply mergeSort on right list  
-            Node<T> right = mergeSort(nextofmiddle);
+            Node<T> right = mergeSort(nextofmiddle, isAscending);
 
             // Merge the left and right lists  
-            Node<T> sortedlist = sortedMerge(left, right);
+            Node<T> sortedlist = sortedMerge(left, right, isAscending);
             return sortedlist;
         }
 
@@ -475,7 +479,10 @@ namespace List
         {
             // Base case  
             if (node == null)
+            {
                 return node;
+            }
+
             Node<T> fastptr = node.Next;
             Node<T> slowptr = node;
 
@@ -493,36 +500,73 @@ namespace List
             return slowptr;
         }
 
-        private Node<T> sortedMerge(Node<T> a, Node<T> b)
+        private Node<T> sortedMerge(Node<T> a, Node<T> b, bool isAscending)
         {
             Node<T> result = null;
             /* Base cases */
             if (a == null)
+            {
                 return b;
+            }
+
             if (b == null)
+            {
                 return a;
+            }
 
             Comparer<T> comparer = Comparer<T>.Default;
-            /* Pick either a or b, and recur */
-            if(comparer.Compare(a.Value,b.Value)<=0)
+
+            switch (isAscending)
             {
-                result = a;
-                result.Next = sortedMerge(a.Next, b);
+                case true:
+
+                    /* SortAscending a, b and recur */
+                    if (comparer.Compare(a.Value, b.Value) <= 0)
+                    {
+                        result = a;
+                        result.Next = sortedMerge(a.Next, b, isAscending);
+                    }
+                    else
+                    {
+                        result = b;
+                        result.Next = sortedMerge(a, b.Next, isAscending);
+                    }
+                    break;
+
+                case false:
+                    /* SortDescending a, b and recur */
+                    if (comparer.Compare(a.Value, b.Value) >= 0)
+                    {
+                        result = a;
+                        result.Next = sortedMerge(a.Next, b, isAscending);
+                    }
+                    else
+                    {
+                        result = b;
+                        result.Next = sortedMerge(a, b.Next, isAscending);
+                    }
+                    break;
             }
-            else
-            {
-                result = b;
-                result.Next = sortedMerge(a, b.Next);
-            }
+
             return result;
         }
 
-
-
-        public void SortDescending()
+        private Node<T> GetCurrentNode(int index)
         {
-            Comparer<T> comparer = Comparer<T>.Default;
+            if ((index >= 0) && (index < Length))
+            {
+                Node<T> current = _root;
 
+                for (int i = 1; i <= index; i++)
+                {
+                    current = current.Next;
+                }
+                return current;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public override string ToString()
@@ -581,22 +625,6 @@ namespace List
             return isEquals;
         }
 
-        private Node<T> GetCurrentNode(int index)
-        {
-            if ((index >= 0) && (index < Length))
-            {
-                Node<T> current = _root;
 
-                for (int i = 1; i <= index; i++)
-                {
-                    current = current.Next;
-                }
-                return current;
-            }
-            else
-            {
-                throw new IndexOutOfRangeException();
-            }
-        }
     }
 }
