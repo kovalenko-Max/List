@@ -346,7 +346,7 @@ namespace List
 
             current = _root;
             _root = _tail;
-            _tail = _root;
+            _tail = current;
         }
 
         public int GetIndexByValue(T value)
@@ -441,10 +441,83 @@ namespace List
 
         public void SortAscending()
         {
-            Comparer<T> comparer = Comparer<T>.Default;
-
-
+            this._root = this.mergeSort(this._root);
         }
+
+        private Node<T> mergeSort(Node<T> h)
+        {
+            Comparer<T> comparer = Comparer<T>.Default;
+            // Base case : if head is null  
+            if (h == null || h.Next == null)
+            {
+                return h;
+            }
+
+            // get the middle of the list  
+            Node<T> middle = getMiddle(h);
+            Node<T> nextofmiddle = middle.Next;
+
+            // set the next of middle node to null  
+            middle.Next = null;
+
+            // Apply mergeSort on left list  
+            Node<T> left = mergeSort(h);
+
+            // Apply mergeSort on right list  
+            Node<T> right = mergeSort(nextofmiddle);
+
+            // Merge the left and right lists  
+            Node<T> sortedlist = sortedMerge(left, right);
+            return sortedlist;
+        }
+
+        private Node<T> getMiddle(Node<T> node)
+        {
+            // Base case  
+            if (node == null)
+                return node;
+            Node<T> fastptr = node.Next;
+            Node<T> slowptr = node;
+
+            // Move fastptr by two and slow ptr by one  
+            // Finally slowptr will point to middle node  
+            while (fastptr != null)
+            {
+                fastptr = fastptr.Next;
+                if (fastptr != null)
+                {
+                    slowptr = slowptr.Next;
+                    fastptr = fastptr.Next;
+                }
+            }
+            return slowptr;
+        }
+
+        private Node<T> sortedMerge(Node<T> a, Node<T> b)
+        {
+            Node<T> result = null;
+            /* Base cases */
+            if (a == null)
+                return b;
+            if (b == null)
+                return a;
+
+            Comparer<T> comparer = Comparer<T>.Default;
+            /* Pick either a or b, and recur */
+            if(comparer.Compare(a.Value,b.Value)<=0)
+            {
+                result = a;
+                result.Next = sortedMerge(a.Next, b);
+            }
+            else
+            {
+                result = b;
+                result.Next = sortedMerge(a, b.Next);
+            }
+            return result;
+        }
+
+
 
         public void SortDescending()
         {

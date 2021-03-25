@@ -313,6 +313,18 @@ namespace List.Test
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(3, 1)]
+        [TestCase(2, 2)]
+        [TestCase(20, 20)]
+        public void SortAscending_WhenStringArrayList_ShouldBeSorted(int mockNumb, int expectedMockNumb)
+        {
+            LinkedList<string> actualArrayList = LinkedListMock.GetMock(mockNumb);
+            LinkedList<string> expectedArrayList = LinkedListMock.GetMock(expectedMockNumb);
+            actualArrayList.SortAscending();
+
+            Assert.AreEqual(expectedArrayList, actualArrayList);
+        }
+
         private static class LinkedListMock
         {
             public static LinkedList<string> GetMock(int numb)
