@@ -84,6 +84,9 @@ namespace List.Test
                 case 6:
                     array = new string[] { "New value" };
                     break;
+                case 7:
+                    array = new string[] { "New value", "Second new value" };
+                    break;
             }
 
             return array;

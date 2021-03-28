@@ -38,8 +38,8 @@ namespace List
             }
         }
 
-        private Node<T> _root;
-        private Node<T> _tail;
+        protected Node<T> _root;
+        protected Node<T> _tail;
 
         public LinkedList()
         {
@@ -89,6 +89,7 @@ namespace List
             if (Length == 0)
             {
                 _root = new Node<T>(value);
+                _tail = _root;
             }
             else
             {
