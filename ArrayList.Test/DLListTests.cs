@@ -36,8 +36,8 @@ namespace List.Test
         {
             DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock_Add(mockNumb));
 
-            actualLinkedList.AddAtFirst(value);
-            actualLinkedList.AddAtFirst("Second new value");
+            actualLinkedList.AddAt(0, value);
+            actualLinkedList.AddAt(5, "Second new value");
         }
 
         [TestCase("7", 1, 2)]
@@ -138,6 +138,49 @@ namespace List.Test
             DLinkedList<string> listForAdding = new DLinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
 
             Assert.Throws<IndexOutOfRangeException>(() => actualDLinkedList.AddListAt(index, listForAdding));
+        }
+
+        public void RemoveAtLast_WhenLinkedList_ShouldRemoveAtLast(int mockNumb, int expectedMockNumb)
+        {
+            DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(mockNumb));
+            DLinkedList<string> expectedLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(expectedMockNumb));
+
+            actualLinkedList.Remove();
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
+
+        [TestCase(1, 3)]
+        public void RemoveAtFirst_WhenArraList_ShouldRemoveAtFirst(int mockNumb, int expectedMockNumb)
+        {
+            DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(mockNumb));
+            DLinkedList<string> expectedLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(expectedMockNumb));
+
+            actualLinkedList.RemoveAtFirst();
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
+
+        [TestCase(8, 1, 2)]
+        [TestCase(0, 1, 3)]
+        [TestCase(2, 1, 4)]
+        public void RemoveAt_WhenArraList_ShouldRemoveAtFirst(int index, int mockNumb, int expectedMockNumb)
+        {
+            DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(mockNumb));
+            DLinkedList<string> expectedLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(expectedMockNumb));
+
+            actualLinkedList.RemoveAt(index);
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
+
+        [TestCase(25, 1)]
+        [TestCase(-25, 1)]
+        public void RemoveAt_WhenIndexAndLinkedList_ShouldThrowIndexOutOfRangeException(int index, int mockNumb)
+        {
+            DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(mockNumb));
+
+            Assert.Throws<IndexOutOfRangeException>(() => actualLinkedList.RemoveAt(index));
         }
     }
 }

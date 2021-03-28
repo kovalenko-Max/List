@@ -110,13 +110,9 @@ namespace List
         public void AddAt(int index, T value)
         {
             Node<T> nodeForAdding = new Node<T>(value);
-            if ((index >= 1) && (index <= Length))
+            if ((index >= 1) && (index < Length))
             {
-                Node<T> current = _root;
-                for (int i = 0; i < index - 1; ++i)
-                {
-                    current = current.Next;
-                }
+                Node<T> current = GetCurrentNode(index - 1);
 
                 nodeForAdding.Next = current.Next;
                 current.Next = nodeForAdding;
@@ -125,6 +121,10 @@ namespace List
             else if (index == 0)
             {
                 AddAtFirst(value);
+            }
+            else if (index == Length)
+            {
+                Add(value);
             }
             else
             {
@@ -136,6 +136,7 @@ namespace List
         {
             Length += linkedList.Length;
             _tail.Next = linkedList._root;
+            _tail = linkedList._tail;
         }
 
         public void AddListAtFirst(LinkedList<T> linkedList)
@@ -149,19 +150,19 @@ namespace List
         {
             if ((index >= 1) && (index <= Length))
             {
-                Length += linkedList.Length;
-                Node<T> current = _root;
-                for (int i = 0; i < index - 1; ++i)
-                {
-                    current = current.Next;
-                }
+                Node<T> current = GetCurrentNode(index - 1);
 
+                Length += linkedList.Length;
                 linkedList._tail.Next = current.Next;
                 current.Next = linkedList._root;
             }
             else if (index == 0)
             {
                 AddListAtFirst(linkedList);
+            }
+            else if(index == Length)
+            {
+                AddList(linkedList);
             }
             else
             {

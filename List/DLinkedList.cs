@@ -111,9 +111,9 @@ namespace List
         public void AddAt(int index, T value)
         {
             DLNode<T> nodeForAdding = new DLNode<T>(value);
-            if ((index >= 1) && (index <= Length))
+            if ((index >= 1) && (index < Length))
             {
-                DLNode<T> current = GetCurrentNode(index-1);
+                DLNode<T> current = GetCurrentNode(index - 1);
 
                 nodeForAdding.Next = current.Next;
                 current.Next.Previous = nodeForAdding;
@@ -125,6 +125,10 @@ namespace List
             {
                 AddAtFirst(value);
             }
+            else if (index == Length)
+            {
+                Add(value);
+            }
             else
             {
                 throw new IndexOutOfRangeException();
@@ -135,32 +139,37 @@ namespace List
         {
             Length += linkedList.Length;
             _tail.Next = linkedList._root;
+            linkedList._root.Previous = _tail;
+            _tail = linkedList._tail;
         }
 
         public void AddListAtFirst(DLinkedList<T> linkedList)
         {
             Length += linkedList.Length;
             linkedList._tail.Next = _root;
+            _root.Previous = linkedList._tail;
             _root = linkedList._root;
         }
 
         public void AddListAt(int index, DLinkedList<T> linkedList)
         {
-            if ((index >= 1) && (index <= Length))
+            if ((index >= 1) && (index < Length))
             {
-                Length += linkedList.Length;
-                DLNode<T> current = _root;
-                for (int i = 0; i < index - 1; ++i)
-                {
-                    current = current.Next;
-                }
+                DLNode<T> current = GetCurrentNode(index - 1);
 
+                Length += linkedList.Length;
                 linkedList._tail.Next = current.Next;
+                linkedList._root.Previous = current;
+                current.Next.Previous = linkedList._tail;
                 current.Next = linkedList._root;
             }
             else if (index == 0)
             {
                 AddListAtFirst(linkedList);
+            }
+            else if (index == Length)
+            {
+                AddList(linkedList);
             }
             else
             {
@@ -168,6 +177,107 @@ namespace List
             }
 
         }
+
+        public void Remove()
+        {
+            _tail = GetCurrentNode(Length - 1);
+            _tail.Next = null;
+            --Length;
+        }
+
+        public void RemoveAtFirst()
+        {
+            _root = _root.Next;
+            _root.Previous = null;
+            Length--;
+        }
+
+        public void RemoveAt(int index)
+        {
+            if ((index > 0) && (index < Length - 1))
+            {
+                DLNode<T> current = GetCurrentNode(index);
+
+                current.Previous.Next = current.Next;
+                current.Next.Previous = current.Previous;
+                --Length;
+            }
+            else if (index == 0)
+            {
+                RemoveAtFirst();
+            }
+            else if (index == Length - 1)
+            {
+                Remove();
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+        //public void RemoveRange(int count)
+        //{
+        //    if (count < Length)
+        //    {
+        //        Node<T> current = GetCurrentNode(Length - count);
+        //        Length -= count;
+        //        _tail = current;
+        //        current.Next = null;
+        //    }
+        //    else
+        //    {
+        //        Length = 0;
+        //        _tail = null;
+        //        _root = null;
+        //    }
+
+        //}
+
+        //public void RemoveRangeAtFirst(int count)
+        //{
+        //    if (count < Length)
+        //    {
+        //        Node<T> current = GetCurrentNode(count);
+        //        _root = current;
+        //        Length -= count;
+        //    }
+        //    else
+        //    {
+        //        Length = 0;
+        //        _root = null;
+        //        _tail = null;
+        //    }
+        //}
+
+        //public void RemoveRangeAt(int index, int count)
+        //{
+        //    if ((index > 0) && (index <= Length))
+        //    {
+        //        Node<T> current = GetCurrentNode(index - 1);
+        //        int indexLastPart = index + count;
+        //        if (indexLastPart < Length)
+        //        {
+        //            Node<T> LastPart = GetCurrentNode(indexLastPart);
+        //            current.Next = LastPart;
+        //            Length -= count;
+        //        }
+        //        else
+        //        {
+        //            _tail = current;
+        //            current.Next = null;
+        //            Length = index;
+        //        }
+        //    }
+        //    else if (index == 0)
+        //    {
+        //        RemoveRangeAtFirst(count);
+        //    }
+        //    else
+        //    {
+        //        throw new IndexOutOfRangeException();
+        //    }
+        //}
 
         public override string ToString()
         {
@@ -243,7 +353,7 @@ namespace List
                 {
                     DLNode<T> current = _tail;
 
-                    for (int i = Length-1; i > index; --i)
+                    for (int i = Length - 1; i > index; --i)
                     {
                         current = current.Previous;
                     }
