@@ -160,7 +160,7 @@ namespace List
             {
                 AddListAtFirst(linkedList);
             }
-            else if(index == Length)
+            else if (index == Length)
             {
                 AddList(linkedList);
             }
@@ -173,7 +173,7 @@ namespace List
 
         public void Remove()
         {
-            _tail = GetCurrentNode(Length - 1);
+            _tail = GetCurrentNode(Length - 2);
             _tail.Next = null;
             --Length;
         }
@@ -245,7 +245,7 @@ namespace List
 
         public void RemoveRangeAt(int index, int count)
         {
-            if ((index > 0) && (index <= Length))
+            if ((index > 0) && (index < Length - 1))
             {
                 Node<T> current = GetCurrentNode(index - 1);
                 int indexLastPart = index + count;
@@ -266,6 +266,10 @@ namespace List
             {
                 RemoveRangeAtFirst(count);
             }
+            else if (index == Length - 1)
+            {
+                RemoveRange(count);
+            }
             else
             {
                 throw new IndexOutOfRangeException();
@@ -280,8 +284,13 @@ namespace List
 
             if (comparer.Compare(_root.Value, value) == 0)
             {
-                _root.Next = _root.Next.Next;
+                RemoveAtFirst();
                 indexForRemove = 0;
+            }
+            else if (comparer.Compare(_tail.Value, value) == 0)
+            {
+                indexForRemove = Length - 1;
+                Remove();
             }
             else
             {
@@ -293,6 +302,7 @@ namespace List
                     {
                         indexForRemove = i;
                         current.Next = current.Next.Next;
+                        --Length;
                         break;
                     }
                     current = current.Next;
@@ -339,7 +349,7 @@ namespace List
             Node<T> current = _root;
             Node<T> following = _root;
 
-            while (!(current is null!))
+            while (!(current is null))
             {
                 following = following.Next;
                 current.Next = previous;
@@ -596,28 +606,34 @@ namespace List
 
         public override bool Equals(object obj)
         {
-            LinkedList<T> list = (LinkedList<T>)obj;
+            LinkedList<T> comparableList = (LinkedList<T>)obj;
             bool isEquals = true;
 
-            if (this.Length == list.Length)
+            if (this.Length == comparableList.Length)
             {
-                Node<T> currentThis = this._root;
-                Node<T> currentList = list._root;
+                Node<T> left = this._root;
+                Node<T> right = comparableList._root;
                 Comparer<T> comparer = Comparer<T>.Default;
 
-                if (!((currentThis is null) && (currentList is null)))
+                if (!((left is null) && (right is null)))
                 {
-                    do
+                    left = left.Next;
+                    right = right.Next;
+                    for (int i = 1; i < Length - 1; ++i)
                     {
-                        if (comparer.Compare(currentThis.Value, currentList.Value) != 0)
+                        if (comparer.Compare(left.Value, right.Value) != 0)
                         {
                             isEquals = false;
                             break;
                         }
-                        currentList = currentList.Next;
-                        currentThis = currentThis.Next;
+                        if (comparer.Compare(left.Next.Value, right.Next.Value) != 0)
+                        {
+                            isEquals = false;
+                            break;
+                        }
+                        right = right.Next;
+                        left = left.Next;
                     }
-                    while (!(currentThis is null));
                 }
             }
             else

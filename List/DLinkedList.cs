@@ -180,8 +180,17 @@ namespace List
 
         public void Remove()
         {
-            _tail = GetCurrentNode(Length - 2);
-            _tail.Next = null;
+            if (Length > 1)
+            {
+                _tail = _tail.Previous;
+                _tail.Next = null;
+            }
+            else
+            {
+                _root = null;
+                _tail = null;
+            }
+
             --Length;
         }
 
@@ -254,7 +263,7 @@ namespace List
 
         public void RemoveRangeAt(int index, int count)
         {
-            if ((index > 0) && (index < Length -1))
+            if ((index > 0) && (index < Length - 1))
             {
                 DLNode<T> current = GetCurrentNode(index - 1);
                 int indexLastPart = index + count;
@@ -276,7 +285,7 @@ namespace List
             {
                 RemoveRangeAtFirst(count);
             }
-            else if(index == Length - 1)
+            else if (index == Length - 1)
             {
                 RemoveRange(count);
             }
@@ -284,6 +293,188 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
+        }
+
+        public int RemoveByValue(T value)
+        {
+            int indexForRemove = -1;
+
+            Comparer<T> comparer = Comparer<T>.Default;
+
+            if (comparer.Compare(_root.Value, value) == 0)
+            {
+                RemoveAtFirst();
+                indexForRemove = 0;
+            }
+            else if (comparer.Compare(_tail.Value, value) == 0)
+            {
+                indexForRemove = Length - 1;
+                Remove();
+            }
+            else
+            {
+                DLNode<T> current = _root.Next;
+
+                for (int i = 1; i < Length - 1; ++i)
+                {
+                    if (comparer.Compare(current.Value, value) == 0)
+                    {
+                        indexForRemove = i;
+                        current.Next.Previous = current.Previous;
+                        current.Previous.Next = current.Next;
+                        --Length;
+                        break;
+                    }
+                    current = current.Next;
+                }
+            }
+
+            return indexForRemove;
+        }
+
+        public int RemoveAllByValue(T value)
+        {
+            int count = 0;
+            Comparer<T> comparer = Comparer<T>.Default;
+            DLNode<T> current = _root;
+
+            while (!(current.Next.Next is null))
+            {
+                if (comparer.Compare(current.Next.Value, value) == 0)
+                {
+                    current.Next.Next.Previous = current;
+                    current.Next = current.Next.Next;
+                    ++count;
+                }
+                else
+                {
+                    current = current.Next;
+                }
+            }
+
+            Length -= count;
+
+            if (comparer.Compare(_root.Value, value) == 0)
+            {
+                RemoveAtFirst();
+                ++count;
+            }
+            if (comparer.Compare(_tail.Value, value) == 0)
+            {
+                Remove();
+                ++count;
+            }
+
+
+            return count;
+        }
+
+        public void Reverse()
+        {
+            DLNode<T> current = _root;
+
+            for (int i = 0; i < Length; ++i)
+            {
+                DLNode<T> tmp = current.Next;
+                current.Next = current.Previous;
+                current.Previous = tmp;
+                current = current.Previous;
+            }
+
+            current = _root;
+            _root = _tail;
+            _tail = current;
+        }
+
+        public int GetIndexByValue(T value)
+        {
+            int result = -1;
+            Comparer<T> comparer = Comparer<T>.Default;
+
+            if (comparer.Compare(_root.Value, value) == 0)
+            {
+                result = 0;
+            }
+            else
+            {
+                DLNode<T> current = _root.Next;
+
+                for (int i = 1; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, value) == 0)
+                    {
+                        result = i;
+                        break;
+                    }
+                    current = current.Next;
+                }
+            }
+
+            return result;
+        }
+
+        public int GetIndexOfMax()
+        {
+            if (Length != 0)
+            {
+                int result = 0;
+                T maxValue = _root.Value;
+                Comparer<T> comparer = Comparer<T>.Default;
+                DLNode<T> current = _root;
+
+                for (int i = 0; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, maxValue) > 0)
+                    {
+                        maxValue = current.Value;
+                        result = i;
+                    }
+                    current = current.Next;
+                }
+                return result;
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+        }
+
+        public int GetIndexOfMin()
+        {
+            if (Length != 0)
+            {
+                int result = 0;
+                T minValue = _root.Value;
+                Comparer<T> comparer = Comparer<T>.Default;
+
+                DLNode<T> current = _root;
+
+                for (int i = 0; i < Length; ++i)
+                {
+                    if (comparer.Compare(current.Value, minValue) < 0)
+                    {
+                        minValue = current.Value;
+                        result = i;
+                    }
+                    current = current.Next;
+                }
+
+                return result;
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+        }
+
+        public T GetMax()
+        {
+            return this[GetIndexOfMax()];
+        }
+
+        public T GetMin()
+        {
+            return this[GetIndexOfMin()];
         }
 
         public override string ToString()
@@ -310,29 +501,39 @@ namespace List
 
         public override bool Equals(object obj)
         {
-            DLinkedList<T> list = (DLinkedList<T>)obj;
+            DLinkedList<T> comparableList = (DLinkedList<T>)obj;
             bool isEquals = true;
 
-            if (this.Length == list.Length)
+            if (this.Length == comparableList.Length)
             {
-                DLNode<T> currentThis = this._root;
-                DLNode<T> currentList = list._root;
+                DLNode<T> left = this._root;
+                DLNode<T> right = comparableList._root;
                 Comparer<T> comparer = Comparer<T>.Default;
 
-                if (!((currentThis is null) && (currentList is null)))
+                if (!((left is null) && (right is null)))
                 {
-                    do
+                    left = left.Next;
+                    right = right.Next;
+                    for (int i = 1; i < Length - 1; ++i)
                     {
-                        if (comparer.Compare(currentThis.Value, currentList.Value) != 0)
+                        if (comparer.Compare(left.Value, right.Value) != 0)
                         {
                             isEquals = false;
                             break;
                         }
-
-                        currentList = currentList.Next;
-                        currentThis = currentThis.Next;
+                        if (comparer.Compare(left.Next.Value, right.Next.Value) != 0)
+                        {
+                            isEquals = false;
+                            break;
+                        }
+                        if (comparer.Compare(left.Previous.Value, right.Previous.Value) != 0)
+                        {
+                            isEquals = false;
+                            break;
+                        }
+                        right = right.Next;
+                        left = left.Next;
                     }
-                    while (!((currentThis is null) && (currentList is null)));
                 }
             }
             else

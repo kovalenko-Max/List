@@ -253,6 +253,7 @@ namespace List.Test
 
             Assert.AreEqual(expectedLinkedList, actualLinkedList);
         }
+
         [TestCase("0", 1, 0)]
         [TestCase("5", 1, 6)]
         [TestCase("8", 1, 9)]
