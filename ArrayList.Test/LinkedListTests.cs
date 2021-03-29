@@ -246,7 +246,7 @@ namespace List.Test
         public void Reverse_WhenArray_ShouldRevers(int mockNumb, int expectedMockNumb)
         {
             LinkedList<string> actualLinkedList = new LinkedList<string>(Mocks.GetMock_Reverse(mockNumb));
-                //LinkedListMock.GetMock_Reverse(mockNumb);
+            //LinkedListMock.GetMock_Reverse(mockNumb);
             LinkedList<string> expectedLinkedList = new LinkedList<string>(Mocks.GetMock_Reverse(expectedMockNumb));
 
             actualLinkedList.Reverse();
