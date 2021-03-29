@@ -180,7 +180,7 @@ namespace List
 
         public void Remove()
         {
-            _tail = GetCurrentNode(Length - 1);
+            _tail = GetCurrentNode(Length - 2);
             _tail.Next = null;
             --Length;
         }
@@ -216,68 +216,75 @@ namespace List
             }
         }
 
-        //public void RemoveRange(int count)
-        //{
-        //    if (count < Length)
-        //    {
-        //        Node<T> current = GetCurrentNode(Length - count);
-        //        Length -= count;
-        //        _tail = current;
-        //        current.Next = null;
-        //    }
-        //    else
-        //    {
-        //        Length = 0;
-        //        _tail = null;
-        //        _root = null;
-        //    }
+        public void RemoveRange(int count)
+        {
+            if (count < Length)
+            {
+                int currentIndex = Length - count - 1;
+                DLNode<T> current = GetCurrentNode(currentIndex);
+                Length -= count;
+                _tail = current;
+                current.Next = null;
+            }
+            else
+            {
+                Length = 0;
+                _tail = null;
+                _root = null;
+            }
 
-        //}
+        }
 
-        //public void RemoveRangeAtFirst(int count)
-        //{
-        //    if (count < Length)
-        //    {
-        //        Node<T> current = GetCurrentNode(count);
-        //        _root = current;
-        //        Length -= count;
-        //    }
-        //    else
-        //    {
-        //        Length = 0;
-        //        _root = null;
-        //        _tail = null;
-        //    }
-        //}
+        public void RemoveRangeAtFirst(int count)
+        {
+            if (count < Length)
+            {
+                DLNode<T> current = GetCurrentNode(count);
+                _root = current;
+                _root.Previous = null;
+                Length -= count;
+            }
+            else
+            {
+                Length = 0;
+                _root = null;
+                _tail = null;
+            }
+        }
 
-        //public void RemoveRangeAt(int index, int count)
-        //{
-        //    if ((index > 0) && (index <= Length))
-        //    {
-        //        Node<T> current = GetCurrentNode(index - 1);
-        //        int indexLastPart = index + count;
-        //        if (indexLastPart < Length)
-        //        {
-        //            Node<T> LastPart = GetCurrentNode(indexLastPart);
-        //            current.Next = LastPart;
-        //            Length -= count;
-        //        }
-        //        else
-        //        {
-        //            _tail = current;
-        //            current.Next = null;
-        //            Length = index;
-        //        }
-        //    }
-        //    else if (index == 0)
-        //    {
-        //        RemoveRangeAtFirst(count);
-        //    }
-        //    else
-        //    {
-        //        throw new IndexOutOfRangeException();
-        //    }
-        //}
+        public void RemoveRangeAt(int index, int count)
+        {
+            if ((index > 0) && (index < Length -1))
+            {
+                DLNode<T> current = GetCurrentNode(index - 1);
+                int indexLastPart = index + count;
+                if (indexLastPart < Length)
+                {
+                    DLNode<T> LastPart = GetCurrentNode(indexLastPart);
+                    current.Next = LastPart;
+                    LastPart.Previous = current;
+                    Length -= count;
+                }
+                else
+                {
+                    _tail = current;
+                    current.Next = null;
+                    Length = index;
+                }
+            }
+            else if (index == 0)
+            {
+                RemoveRangeAtFirst(count);
+            }
+            else if(index == Length - 1)
+            {
+                RemoveRange(count);
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
 
         public override string ToString()
         {
@@ -321,10 +328,11 @@ namespace List
                             isEquals = false;
                             break;
                         }
+
                         currentList = currentList.Next;
                         currentThis = currentThis.Next;
                     }
-                    while (!(currentThis is null));
+                    while (!((currentThis is null) && (currentList is null)));
                 }
             }
             else
@@ -365,6 +373,5 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
-
     }
 }

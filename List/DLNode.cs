@@ -18,5 +18,10 @@ namespace List
             Next = null;
             Previous = null;
         }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
     }
 }

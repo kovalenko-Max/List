@@ -212,7 +212,8 @@ namespace List
         {
             if (count < Length)
             {
-                Node<T> current = GetCurrentNode(Length - count);
+                int currentIndex = Length - count - 1;
+                Node<T> current = GetCurrentNode(currentIndex);
                 Length -= count;
                 _tail = current;
                 current.Next = null;
