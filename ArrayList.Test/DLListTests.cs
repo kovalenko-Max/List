@@ -240,6 +240,7 @@ namespace List.Test
         [TestCase("8", 1, 4)]
         [TestCase("8", 2, 12)]
         [TestCase("non-existent Value", 1, 0)]
+        [TestCase("0", 7, 1)]
         public void RemoveAllByValue_WhenAllValues_ShoulRemoved(string value, int mockNumb, int expected)
         {
             DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock(mockNumb));

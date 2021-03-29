@@ -196,9 +196,19 @@ namespace List
 
         public void RemoveAtFirst()
         {
-            _root = _root.Next;
-            _root.Previous = null;
-            Length--;
+            if (Length > 0)
+            {
+                _root.Previous = null;
+                _root = _root.Next;
+
+                if (Length == 1)
+                {
+                    _tail = null;
+                }
+
+                Length--;
+            }
+
         }
 
         public void RemoveAt(int index)
@@ -338,33 +348,40 @@ namespace List
             Comparer<T> comparer = Comparer<T>.Default;
             DLNode<T> current = _root;
 
-            while (!(current.Next.Next is null))
+            if (Length > 1)
             {
-                if (comparer.Compare(current.Next.Value, value) == 0)
+                while (!(current.Next.Next is null))
                 {
-                    current.Next.Next.Previous = current;
-                    current.Next = current.Next.Next;
+                    if (comparer.Compare(current.Next.Value, value) == 0)
+                    {
+                        current.Next.Next.Previous = current;
+                        current.Next = current.Next.Next;
+                        ++count;
+                    }
+                    else
+                    {
+                        current = current.Next;
+                    }
+                }
+
+                Length -= count;
+
+                if (comparer.Compare(_root.Value, value) == 0)
+                {
+                    RemoveAtFirst();
                     ++count;
                 }
-                else
+                if (comparer.Compare(_tail.Value, value) == 0)
                 {
-                    current = current.Next;
+                    Remove();
+                    ++count;
                 }
             }
-
-            Length -= count;
-
-            if (comparer.Compare(_root.Value, value) == 0)
-            {
-                RemoveAtFirst();
-                ++count;
-            }
-            if (comparer.Compare(_tail.Value, value) == 0)
+            else if(Length == 1)
             {
                 Remove();
                 ++count;
             }
-
 
             return count;
         }
