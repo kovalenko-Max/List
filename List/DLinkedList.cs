@@ -477,6 +477,126 @@ namespace List
             return this[GetIndexOfMin()];
         }
 
+        public void SortAscending()
+        {
+            this._root = this.mergeSort(this._root, isAscending: true);
+        }
+
+        public void SortDescending()
+        {
+            this._root = this.mergeSort(this._root, isAscending: false);
+        }
+
+        private DLNode<T> mergeSort(DLNode<T> root, bool isAscending)
+        {
+            // Base case : if head is null  
+            if (root == null || root.Next == null)
+            {
+                return root;
+            }
+
+            // get the middle of the list  
+            DLNode<T> middle = getMiddle(root);
+            DLNode<T> nextofmiddle = middle.Next;
+
+            // set the next of middle node to null  
+            middle.Next = null;
+
+            // Apply mergeSort on left list  
+            DLNode<T> left = mergeSort(root, isAscending);
+
+            // Apply mergeSort on right list  
+            DLNode<T> right = mergeSort(nextofmiddle, isAscending);
+
+            // Merge the left and right lists  
+            DLNode<T> sortedlist = sortedMerge(left, right, isAscending);
+            return sortedlist;
+        }
+
+        private DLNode<T> getMiddle(DLNode<T> node)
+        {
+            // Base case  
+            if (node == null)
+            {
+                return node;
+            }
+
+            DLNode<T> fastptr = node.Next;
+            DLNode<T> slowptr = node;
+
+            // Move fastptr by two and slow ptr by one  
+            // Finally slowptr will point to middle node  
+            while (fastptr != null)
+            {
+                fastptr = fastptr.Next;
+                if (fastptr != null)
+                {
+                    slowptr = slowptr.Next;
+                    fastptr = fastptr.Next;
+                }
+            }
+            return slowptr;
+        }
+
+        private DLNode<T> sortedMerge(DLNode<T> a, DLNode<T> b, bool isAscending)
+        {
+            DLNode<T> result = null;
+            /* Base cases */
+            if (a == null)
+            {
+                return b;
+            }
+
+            if (b == null)
+            {
+                return a;
+            }
+
+            Comparer<T> comparer = Comparer<T>.Default;
+
+            switch (isAscending)
+            {
+                case true:
+
+                    /* SortAscending a, b and recur */
+                    if (comparer.Compare(a.Value, b.Value) <= 0)
+                    {
+                        result = a;
+                        result.Next = sortedMerge(a.Next, b, isAscending);
+                        result.Next.Previous = result;
+                        result.Previous = null;
+                    }
+                    else
+                    {
+                        result = b;
+                        result.Next = sortedMerge(a, b.Next, isAscending);
+                        b.Next.Previous = b;
+                        b.Previous = null;
+                    }
+                    break;
+
+                case false:
+                    /* SortDescending a, b and recur */
+                    if (comparer.Compare(a.Value, b.Value) >= 0)
+                    {
+                        result = a;
+                        result.Next = sortedMerge(a.Next, b, isAscending);
+                        result.Next.Previous = result;
+                        result.Previous = null;
+                    }
+                    else
+                    {
+                        result = b;
+                        result.Next = sortedMerge(a, b.Next, isAscending);
+                        b.Next.Previous = b;
+                        b.Previous = null;
+                    }
+                    break;
+            }
+
+            return result;
+        }
+
         public override string ToString()
         {
             if (Length != 0)

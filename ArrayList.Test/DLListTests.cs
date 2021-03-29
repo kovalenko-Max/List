@@ -313,5 +313,29 @@ namespace List.Test
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestCase(3, 1)]
+        [TestCase(2, 2)]
+        [TestCase(20, 20)]
+        public void SortAscending_WhenStringArrayList_ShouldBeSorted(int mockNumb, int expectedMockNumb)
+        {
+            DLinkedList<string> actualArrayList = new DLinkedList<string>(Mocks.GetMock(mockNumb));
+            DLinkedList<string> expectedArrayList = new DLinkedList<string>(Mocks.GetMock(expectedMockNumb));
+            actualArrayList.SortAscending();
+
+            Assert.AreEqual(expectedArrayList, actualArrayList);
+        }
+
+        [TestCase(3, 4)]
+        [TestCase(2, 2)]
+        [TestCase(20, 20)]
+        public void SortDescending_WhenStringArrayList_ShouldBeSorted(int mockNumb, int expectedMockNumb)
+        {
+            DLinkedList<string> actualArrayList = new DLinkedList<string>(Mocks.GetMock(mockNumb));
+            DLinkedList<string> expectedArrayList = new DLinkedList<string>(Mocks.GetMock(expectedMockNumb));
+            actualArrayList.SortDescending();
+
+            Assert.AreEqual(expectedArrayList, actualArrayList);
+        }
     }
 }

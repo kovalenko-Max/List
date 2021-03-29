@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace List.Test
 {
     class Mocks
