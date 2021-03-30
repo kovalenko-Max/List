@@ -177,15 +177,38 @@ namespace List
 
         public void Remove()
         {
-            _tail = GetCurrentNode(Length - 2);
-            _tail.Next = null;
-            --Length;
+            if (Length > 0)
+            {
+                if (Length > 1)
+                {
+                    _tail = GetCurrentNode(Length - 2);
+                    _tail.Next = null;
+                }
+                else
+                {
+                    _root = null;
+                    _tail = null;
+                }
+
+                --Length;
+            }
         }
 
         public void RemoveAtFirst()
         {
-            _root = _root.Next;
-            Length--;
+            if (Length > 0)
+            {
+                if (Length > 1)
+                {
+                    _root = _root.Next;
+                }
+                else
+                {
+                    _root = null;
+                    _tail = null;
+                }
+                Length--;
+            }
         }
 
         public void RemoveAt(int index)
@@ -322,27 +345,41 @@ namespace List
             Comparer<T> comparer = Comparer<T>.Default;
             Node<T> current = _root;
 
-
-            while (!(current.Next is null))
+            if (Length > 1)
             {
-                if (comparer.Compare(current.Next.Value, value) == 0)
+                for (int i = 1; i < Length - 1;)
                 {
-                    current.Next = current.Next.Next;
+                    if (comparer.Compare(current.Next.Value, value) == 0)
+                    {
+                        current.Next = current.Next.Next;
+                        count++;
+                        --Length;
+                    }
+                    else
+                    {
+                        current = current.Next;
+                        ++i;
+                    }
+                }
+
+                if (comparer.Compare(_root.Value, value) == 0)
+                {
+                    RemoveAtFirst();
                     count++;
                 }
-                else
+
+                if (comparer.Compare(_tail.Value, value) == 0)
                 {
-                    current = current.Next;
+                    Remove();
+                    count++;
                 }
             }
-
-            if (comparer.Compare(_root.Value, value) == 0)
+            else
             {
-                _root = _root.Next;
+                Remove();
                 count++;
             }
 
-            Length -= count;
 
             return count;
         }

@@ -134,14 +134,20 @@ namespace List
 
         public void Remove()
         {
-            int index = Length - 1;
-            RemoveAt(index);
+            if(Length>0)
+            {
+                int index = Length - 1;
+                RemoveAt(index);
+            }
         }
 
         public void RemoveAtFirst()
         {
-            int index = 0;
-            RemoveAt(index);
+            if (Length > 0)
+            {
+                int index = 0;
+                RemoveAt(index);
+            }
         }
 
         public void RemoveAt(int index)

@@ -185,18 +185,21 @@ namespace List
 
         public void Remove()
         {
-            if (Length > 1)
+            if (Length > 0)
             {
-                _tail = _tail.Previous;
-                _tail.Next = null;
-            }
-            else
-            {
-                _root = null;
-                _tail = null;
-            }
+                if (Length > 1)
+                {
+                    _tail = _tail.Previous;
+                    _tail.Next = null;
+                }
+                else
+                {
+                    _root = null;
+                    _tail = null;
+                }
 
-            --Length;
+                --Length;
+            }
         }
 
         public void RemoveAtFirst()
@@ -382,7 +385,7 @@ namespace List
                     ++count;
                 }
             }
-            else if(Length == 1)
+            else if (Length == 1)
             {
                 Remove();
                 ++count;

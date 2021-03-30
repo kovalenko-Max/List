@@ -192,6 +192,14 @@ namespace List.Test
                 case 4:
                     array = new string[] { "0", "1", "3", "4", "5", "6", "7", "8" };
                     break;
+                
+                case 5:
+                    array = new string[] { "0" };
+                    break;
+                
+                case 20:
+                    array = new string[] { };
+                    break;
             }
 
             return array;

@@ -207,7 +207,10 @@ namespace List.Test
             Assert.Throws<IndexOutOfRangeException>(() => actual.AddListAt(index, listForAdding));
         }
 
-        public void RemoveAtLast_WhenLinkedList_ShouldRemoveAtLast(int inputMockNumb, int expectedinputMockNumb)
+        [TestCase(5, 6)]
+        [TestCase(1, 2)]
+        [TestCase(20, 20)]
+        public void Remove_WhenLinkedList_ShouldRemoveAtLast(int inputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_Remove(inputMockNumb), expectedArray: Mocks.GetMock_Remove(expectedinputMockNumb));
 
@@ -302,6 +305,11 @@ namespace List.Test
         [TestCase("8", 2, 12)]
         [TestCase("non-existent Value", 1, 0)]
         [TestCase("0", 7, 1)]
+        [TestCase("8", 4, 4)]
+        [TestCase(null, 6, 1)]
+        [TestCase("0", 4, 1)]
+        [TestCase("3", 3, 2)]
+        [TestCase("8", 3, 4)]
         public void RemoveAllByValue_WhenAllValues_ShoulRemoved(string value, int inputMockNumb, int expectedCount)
         {
             Setup(inputArray: Mocks.GetMock(inputMockNumb));
