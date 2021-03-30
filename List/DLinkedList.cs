@@ -17,7 +17,7 @@ namespace List
 
             set
             {
-                if ((index >= 0) && (index <= Length))
+                if ((index >= 0) && (index < Length))
                 {
                     DLNode<T> current = _root;
 
@@ -32,7 +32,6 @@ namespace List
                 {
                     throw new IndexOutOfRangeException();
                 }
-
             }
         }
 
@@ -498,6 +497,11 @@ namespace List
         public T GetMin()
         {
             return this[GetIndexOfMin()];
+        }
+
+        public void Sort(bool isAscending = true)
+        {
+            _root = MergeSort(_root, isAscending);
         }
 
         public void SortAscending()

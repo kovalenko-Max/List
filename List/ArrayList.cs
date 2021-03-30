@@ -297,6 +297,18 @@ namespace List
             return _array[GetIndexOfMin()];
         }
 
+        public void Sort(bool isAscending = true)
+        {
+            if(isAscending)
+            {
+                SortAscending();
+            }
+            else
+            {
+                SortDescending();
+            }
+        }
+
         public void SortAscending()
         {
             Comparer<T> comparer = Comparer<T>.Default;

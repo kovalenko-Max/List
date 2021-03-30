@@ -456,17 +456,22 @@ namespace List
             return this[GetIndexOfMin()];
         }
 
+        public void Sort(bool isAscending = true)
+        {
+            _root = MergeSort(_root, isAscending);
+        }
+
         public void SortAscending()
         {
-            this._root = this.mergeSort(this._root, isAscending: true);
+            this._root = this.MergeSort(this._root, isAscending: true);
         }
 
         public void SortDescending()
         {
-            this._root = this.mergeSort(this._root, isAscending: false);
+            this._root = this.MergeSort(this._root, isAscending: false);
         }
 
-        private Node<T> mergeSort(Node<T> root, bool isAscending)
+        private Node<T> MergeSort(Node<T> root, bool isAscending)
         {
             // Base case : if head is null  
             if (root == null || root.Next == null)
@@ -475,24 +480,24 @@ namespace List
             }
 
             // get the middle of the list  
-            Node<T> middle = getMiddle(root);
+            Node<T> middle = GetMiddle(root);
             Node<T> nextofmiddle = middle.Next;
 
             // set the next of middle node to null  
             middle.Next = null;
 
             // Apply mergeSort on left list  
-            Node<T> left = mergeSort(root, isAscending);
+            Node<T> left = MergeSort(root, isAscending);
 
             // Apply mergeSort on right list  
-            Node<T> right = mergeSort(nextofmiddle, isAscending);
+            Node<T> right = MergeSort(nextofmiddle, isAscending);
 
             // Merge the left and right lists  
-            Node<T> sortedlist = sortedMerge(left, right, isAscending);
+            Node<T> sortedlist = SortedMerge(left, right, isAscending);
             return sortedlist;
         }
 
-        private Node<T> getMiddle(Node<T> node)
+        private Node<T> GetMiddle(Node<T> node)
         {
             // Base case  
             if (node == null)
@@ -517,7 +522,7 @@ namespace List
             return slowptr;
         }
 
-        private Node<T> sortedMerge(Node<T> a, Node<T> b, bool isAscending)
+        private Node<T> SortedMerge(Node<T> a, Node<T> b, bool isAscending)
         {
             Node<T> result = null;
             /* Base cases */
@@ -541,12 +546,12 @@ namespace List
                     if (comparer.Compare(a.Value, b.Value) <= 0)
                     {
                         result = a;
-                        result.Next = sortedMerge(a.Next, b, isAscending);
+                        result.Next = SortedMerge(a.Next, b, isAscending);
                     }
                     else
                     {
                         result = b;
-                        result.Next = sortedMerge(a, b.Next, isAscending);
+                        result.Next = SortedMerge(a, b.Next, isAscending);
                     }
                     break;
 
@@ -555,12 +560,12 @@ namespace List
                     if (comparer.Compare(a.Value, b.Value) >= 0)
                     {
                         result = a;
-                        result.Next = sortedMerge(a.Next, b, isAscending);
+                        result.Next = SortedMerge(a.Next, b, isAscending);
                     }
                     else
                     {
                         result = b;
-                        result.Next = sortedMerge(a, b.Next, isAscending);
+                        result.Next = SortedMerge(a, b.Next, isAscending);
                     }
                     break;
             }
@@ -647,5 +652,6 @@ namespace List
 
             return isEquals;
         }
+
     }
 }

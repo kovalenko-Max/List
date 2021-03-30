@@ -51,5 +51,7 @@ namespace List
         public void SortAscending();
 
         public void SortDescending();
+
+        public void Sort(bool isAisAscending = true);
     }
 }
