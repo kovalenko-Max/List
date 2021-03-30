@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace List.Test
 {
     class Mocks
@@ -83,6 +82,9 @@ namespace List.Test
                     break;
                 case 6:
                     array = new string[] { "New value" };
+                    break;
+                case 7:
+                    array = new string[] { "New value", "Second new value" };
                     break;
             }
 
@@ -189,6 +191,14 @@ namespace List.Test
 
                 case 4:
                     array = new string[] { "0", "1", "3", "4", "5", "6", "7", "8" };
+                    break;
+                
+                case 5:
+                    array = new string[] { "0" };
+                    break;
+                
+                case 20:
+                    array = new string[] { };
                     break;
             }
 
