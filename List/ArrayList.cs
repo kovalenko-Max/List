@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace List
 {
-    public class ArrayList<T> where T : IComparable
+    public class ArrayList<T> : IList<T> where T : IComparable
     {
         public int Length { get; private set; }
 
@@ -95,32 +95,33 @@ namespace List
 
         }
 
-        public void AddList(ArrayList<T> arrayList)
+        public void AddList(IList<T> arrayList)
         {
             AddListAt(Length, arrayList);
         }
 
-        public void AddListAtFirst(ArrayList<T> arrayList)
+        public void AddListAtFirst(IList<T> arrayList)
         {
             int firstIndex = 0;
             AddListAt(firstIndex, arrayList);
         }
 
-        public void AddListAt(int index, ArrayList<T> arrayList)
+        public void AddListAt(int index, IList<T> listForAdding)
         {
+            ArrayList<T> ArrayListForAdding = (ArrayList<T>)listForAdding;
             if ((index <= Length) && (index >= 0))
             {
-                Length += arrayList.Length;
+                Length += ArrayListForAdding.Length;
                 if (Length >= _array.Length)
                 {
                     Resize();
                 }
 
-                Shift(index, Length - 1, arrayList.Length);
+                Shift(index, Length - 1, ArrayListForAdding.Length);
 
-                for (int i = 0; i < arrayList.Length; ++i)
+                for (int i = 0; i < ArrayListForAdding.Length; ++i)
                 {
-                    _array[index] = arrayList[i];
+                    _array[index] = ArrayListForAdding[i];
                     ++index;
                 }
             }

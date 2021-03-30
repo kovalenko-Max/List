@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace List
 {
-    public class LinkedList<T> where T : IComparable
+    public class LinkedList<T> : IList<T> where T : IComparable
     {
         public int Length { get; private set; }
 
@@ -132,29 +132,33 @@ namespace List
             }
         }
 
-        public void AddList(LinkedList<T> linkedList)
+        public void AddList(IList<T> linkedList)
         {
-            Length += linkedList.Length;
-            _tail.Next = linkedList._root;
-            _tail = linkedList._tail;
+            LinkedList<T> dListForAdding = (LinkedList<T>)linkedList;
+            Length += dListForAdding.Length;
+            _tail.Next = dListForAdding._root;
+            _tail = dListForAdding._tail;
         }
 
-        public void AddListAtFirst(LinkedList<T> linkedList)
+        public void AddListAtFirst(IList<T> listForAdding)
         {
-            Length += linkedList.Length;
-            linkedList._tail.Next = _root;
-            _root = linkedList._root;
+            LinkedList<T> linkedListForAdding = (LinkedList<T>)listForAdding;
+            Length += linkedListForAdding.Length;
+            linkedListForAdding._tail.Next = _root;
+            _root = linkedListForAdding._root;
         }
 
-        public void AddListAt(int index, LinkedList<T> linkedList)
+        public void AddListAt(int index, IList<T> linkedList)
         {
+            LinkedList<T> linkedListForAdding = (LinkedList<T>)linkedList;
+
             if ((index >= 1) && (index <= Length))
             {
                 Node<T> current = GetCurrentNode(index - 1);
 
-                Length += linkedList.Length;
-                linkedList._tail.Next = current.Next;
-                current.Next = linkedList._root;
+                Length += linkedListForAdding.Length;
+                linkedListForAdding._tail.Next = current.Next;
+                current.Next = linkedListForAdding._root;
             }
             else if (index == 0)
             {
