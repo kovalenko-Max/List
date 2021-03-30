@@ -4,7 +4,7 @@ using System.Text;
 
 namespace List
 {
-    public class DLinkedList<T> where T : IComparable
+    public class DLinkedList<T> : IList<T> where T : IComparable
     {
         public int Length { get; private set; }
 
@@ -96,6 +96,7 @@ namespace List
                 _tail.Next.Previous = _tail;
                 _tail = _tail.Next;
             }
+
             ++Length;
         }
 
@@ -111,6 +112,7 @@ namespace List
         public void AddAt(int index, T value)
         {
             DLNode<T> nodeForAdding = new DLNode<T>(value);
+
             if ((index >= 1) && (index < Length))
             {
                 DLNode<T> current = GetCurrentNode(index - 1);
@@ -135,41 +137,45 @@ namespace List
             }
         }
 
-        public void AddList(DLinkedList<T> linkedList)
+        public void AddList(IList<T> listForAdding)//
         {
-            Length += linkedList.Length;
-            _tail.Next = linkedList._root;
-            linkedList._root.Previous = _tail;
-            _tail = linkedList._tail;
+            DLinkedList<T> dListForAdding = (DLinkedList<T>)listForAdding;
+            Length += dListForAdding.Length;
+            _tail.Next = dListForAdding._root;
+            dListForAdding._root.Previous = _tail;
+            _tail = dListForAdding._tail;
         }
 
-        public void AddListAtFirst(DLinkedList<T> linkedList)
+        public void AddListAtFirst(IList<T> listForAdding)//
         {
-            Length += linkedList.Length;
-            linkedList._tail.Next = _root;
-            _root.Previous = linkedList._tail;
-            _root = linkedList._root;
+            DLinkedList<T> dListForAdding = (DLinkedList<T>)listForAdding;
+            Length += dListForAdding.Length;
+            dListForAdding._tail.Next = _root;
+            _root.Previous = dListForAdding._tail;
+            _root = dListForAdding._root;
         }
 
-        public void AddListAt(int index, DLinkedList<T> linkedList)
+        public void AddListAt(int index, IList<T> listForAdding)
         {
+            DLinkedList<T> dListForAdding = (DLinkedList<T>)listForAdding;
+
             if ((index >= 1) && (index < Length))
             {
                 DLNode<T> current = GetCurrentNode(index - 1);
 
-                Length += linkedList.Length;
-                linkedList._tail.Next = current.Next;
-                linkedList._root.Previous = current;
-                current.Next.Previous = linkedList._tail;
-                current.Next = linkedList._root;
+                Length += dListForAdding.Length;
+                dListForAdding._tail.Next = current.Next;
+                dListForAdding._root.Previous = current;
+                current.Next.Previous = dListForAdding._tail;
+                current.Next = dListForAdding._root;
             }
             else if (index == 0)
             {
-                AddListAtFirst(linkedList);
+                AddListAtFirst(dListForAdding);
             }
             else if (index == Length)
             {
-                AddList(linkedList);
+                AddList(dListForAdding);
             }
             else
             {
@@ -237,7 +243,7 @@ namespace List
 
         public void RemoveRange(int count)
         {
-            if (count < Length)
+            if (count < Length)//
             {
                 int currentIndex = Length - count - 1;
                 DLNode<T> current = GetCurrentNode(currentIndex);
@@ -254,7 +260,7 @@ namespace List
 
         }
 
-        public void RemoveRangeAtFirst(int count)
+        public void RemoveRangeAtFirst(int count)//
         {
             if (count < Length)
             {
@@ -271,7 +277,7 @@ namespace List
             }
         }
 
-        public void RemoveRangeAt(int index, int count)
+        public void RemoveRangeAt(int index, int count)//
         {
             if ((index > 0) && (index < Length - 1))
             {
@@ -311,7 +317,7 @@ namespace List
 
             Comparer<T> comparer = Comparer<T>.Default;
 
-            if (comparer.Compare(_root.Value, value) == 0)
+            if (_root.Value.CompareTo(value) == 0)//
             {
                 RemoveAtFirst();
                 indexForRemove = 0;
@@ -496,15 +502,15 @@ namespace List
 
         public void SortAscending()
         {
-            this._root = this.mergeSort(this._root, isAscending: true);
+            this._root = this.MergeSort(this._root, isAscending: true);
         }
 
         public void SortDescending()
         {
-            this._root = this.mergeSort(this._root, isAscending: false);
+            this._root = this.MergeSort(this._root, isAscending: false);
         }
 
-        private DLNode<T> mergeSort(DLNode<T> root, bool isAscending)
+        private DLNode<T> MergeSort(DLNode<T> root, bool isAscending)
         {
             // Base case : if head is null  
             if (root == null || root.Next == null)
@@ -513,24 +519,24 @@ namespace List
             }
 
             // get the middle of the list  
-            DLNode<T> middle = getMiddle(root);
+            DLNode<T> middle = GetMiddle(root);
             DLNode<T> nextofmiddle = middle.Next;
 
             // set the next of middle node to null  
             middle.Next = null;
 
             // Apply mergeSort on left list  
-            DLNode<T> left = mergeSort(root, isAscending);
+            DLNode<T> left = MergeSort(root, isAscending);
 
             // Apply mergeSort on right list  
-            DLNode<T> right = mergeSort(nextofmiddle, isAscending);
+            DLNode<T> right = MergeSort(nextofmiddle, isAscending);
 
             // Merge the left and right lists  
-            DLNode<T> sortedlist = sortedMerge(left, right, isAscending);
+            DLNode<T> sortedlist = SortedMerge(left, right, isAscending);
             return sortedlist;
         }
 
-        private DLNode<T> getMiddle(DLNode<T> node)
+        private DLNode<T> GetMiddle(DLNode<T> node)
         {
             // Base case  
             if (node == null)
@@ -555,7 +561,7 @@ namespace List
             return slowptr;
         }
 
-        private DLNode<T> sortedMerge(DLNode<T> a, DLNode<T> b, bool isAscending)
+        private DLNode<T> SortedMerge(DLNode<T> a, DLNode<T> b, bool isAscending)//
         {
             DLNode<T> result = null;
             /* Base cases */
@@ -579,14 +585,14 @@ namespace List
                     if (comparer.Compare(a.Value, b.Value) <= 0)
                     {
                         result = a;
-                        result.Next = sortedMerge(a.Next, b, isAscending);
+                        result.Next = SortedMerge(a.Next, b, isAscending);
                         result.Next.Previous = result;
                         result.Previous = null;
                     }
                     else
                     {
                         result = b;
-                        result.Next = sortedMerge(a, b.Next, isAscending);
+                        result.Next = SortedMerge(a, b.Next, isAscending);
                         b.Next.Previous = b;
                         b.Previous = null;
                     }
@@ -597,14 +603,14 @@ namespace List
                     if (comparer.Compare(a.Value, b.Value) >= 0)
                     {
                         result = a;
-                        result.Next = sortedMerge(a.Next, b, isAscending);
+                        result.Next = SortedMerge(a.Next, b, isAscending);
                         result.Next.Previous = result;
                         result.Previous = null;
                     }
                     else
                     {
                         result = b;
-                        result.Next = sortedMerge(a, b.Next, isAscending);
+                        result.Next = SortedMerge(a, b.Next, isAscending);
                         b.Next.Previous = b;
                         b.Previous = null;
                     }
@@ -625,7 +631,7 @@ namespace List
                 while (!(current.Next is null))
                 {
                     current = current.Next;
-                    result.Append(current.Value + " ");
+                    result.Append(current.Value + " ");//$
                 }
 
                 return result.ToString().Trim();
