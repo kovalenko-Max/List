@@ -6,6 +6,10 @@
     <IsPackable>false</IsPackable>
 
     <OutputType>Library</OutputType>
+
+    <AssemblyName>ArrayList.Test</AssemblyName>
+
+    <RootNamespace>ArrayList.Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
