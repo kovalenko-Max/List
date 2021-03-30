@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace List.Test
 {
@@ -8,6 +9,7 @@ namespace List.Test
     public class ListTests
     {
         public IList<string> actual;
+        public IList<string> listForAdding;
         public IList<string> expected;
 
         public string listType = string.Empty;
@@ -17,27 +19,95 @@ namespace List.Test
             listType = type;
         }
 
-        public void Setup(string[] inputArray, string[] expectedArray)
+        //public void Setup(string[] inputArray, string[] expectedArray)
+        //{
+        //    switch (listType)
+        //    {
+        //        case "ArrayList":
+        //            actual = new ArrayList<string>(inputArray);
+        //            expected = new ArrayList<string>(expectedArray);
+        //            break;
+
+        //        case "LinkedList":
+        //            actual = new LinkedList<string>(inputArray);
+        //            expected = new LinkedList<string>(expectedArray);
+        //            break;
+
+        //        case "DLinkedList":
+        //            actual = new DLinkedList<string>(inputArray);
+        //            expected = new DLinkedList<string>(expectedArray);
+        //            break;
+        //    }
+        //}
+
+        public void Setup(string[] inputArray = null, string[] arrayForAdding = null, string[] expectedArray = null)
         {
             switch (listType)
             {
-                case "LinkedList":
-                    actual = new LinkedList<string>(inputArray);
-                    IList<string> sList = new LinkedList<string>(inputArray);
-                    expected = new LinkedList<string>(expectedArray);
+                case "ArrayList":
+                    if(!(inputArray is null))
+                    {
+                        actual = new ArrayList<string>(inputArray);
+                    }
+                    if (!(arrayForAdding is null))
+                    {
+                        listForAdding = new ArrayList<string>(arrayForAdding);
+                    }
+                    if (!(expectedArray is null))
+                    {
+                        expected = new ArrayList<string>(expectedArray);
+                    }
                     break;
 
-                case "ArrayList":
-                    actual = new ArrayList<string>(inputArray);
-                    expected = new ArrayList<string>(expectedArray);
+                case "LinkedList":
+                    if (!(inputArray is null))
+                    {
+                        actual = new LinkedList<string>(inputArray);
+                    }
+                    if (!(arrayForAdding is null))
+                    {
+                        listForAdding = new LinkedList<string>(arrayForAdding);
+                    }
+                    if (!(expectedArray is null))
+                    {
+                        expected = new LinkedList<string>(expectedArray);
+                    }
                     break;
 
                 case "DLinkedList":
-                    actual = new DLinkedList<string>(inputArray);
-                    expected = new DLinkedList<string>(expectedArray);
+                    if (!(inputArray is null))
+                    {
+                        actual = new DLinkedList<string>(inputArray);
+                    }
+                    if (!(arrayForAdding is null))
+                    {
+                        listForAdding = new DLinkedList<string>(arrayForAdding);
+                    }
+                    if (!(expectedArray is null))
+                    {
+                        expected = new DLinkedList<string>(expectedArray);
+                    }
                     break;
             }
         }
+
+        //public void Setup(string[] inputArray)
+        //{
+        //    switch (listType)
+        //    {
+        //        case "ArrayList":
+        //            actual = new ArrayList<string>(inputArray);
+        //            break;
+
+        //        case "LinkedList":
+        //            actual = new LinkedList<string>(inputArray);
+        //            break;
+
+        //        case "DLinkedList":
+        //            actual = new DLinkedList<string>(inputArray);
+        //            break;
+        //    }
+        //}
 
         //        //[TestCase(4, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 })]
         //        //[TestCase(0, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 0 })]
@@ -57,10 +127,9 @@ namespace List.Test
         //[TestCase(0, 7, "0")]
         //public void Get_WhenIndex_ShouldGetElement(int index, int mockNumb, string expected)
         //{
+        //    Setup(Mocks.GetMock(mockNumb));
 
-        //    DLinkedList<string> actualDLinkedList = new DLinkedList<string>(Mocks.GetMock(mockNumb));
-
-        //    string actual = actualDLinkedList[index];
+        //    string actualValue = actual[index];
 
         //    Assert.AreEqual(expected, actual);
         //}
@@ -127,71 +196,68 @@ namespace List.Test
         [TestCase(-3, "New Value", 1)]
         public void AddAt_WhenIndexAndStringValue_ShouldThrowIndexOutOfRangeException(int index, string value, int mockNumb)
         {
+            Setup(Mocks.GetMock_AddAt(mockNumb));
 
-            DLinkedList<string> actualDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddAt(mockNumb));
-
-            Assert.Throws<IndexOutOfRangeException>(() => actualDLinkedList.AddAt(index, value));
+            Assert.Throws<IndexOutOfRangeException>(() => actual.AddAt(index, value));
         }
 
-        //        [TestCase(1, 20, 2)]
-        //        public void AddList_WhenDLinkedList_ShouldAddToDLinkedList(int mockNumb, int numbListForAdding, int expectedMockNumb)
-        //        {
-        //            DLinkedList<string> actualDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddList(mockNumb));
-        //            DLinkedList<string> listForAdding = new DLinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
-        //            DLinkedList<string> expectedDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddList(expectedMockNumb));
+        [TestCase(1, 20, 2)]
+        public void AddList_WhenDLinkedList_ShouldAddToDLinkedList(int inputMockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            Setup(Mocks.GetMock_AddList(inputMockNumb), Mocks.GetMock_AddList(numbListForAdding),  Mocks.GetMock_AddList(expectedMockNumb));
 
-        //            actualDLinkedList.AddList(listForAdding);
+            actual.AddList(listForAdding);
 
-        //            Assert.AreEqual(expectedDLinkedList, actualDLinkedList);
-        //        }
+            Assert.AreEqual(expected, actual);
+        }
 
-        //        [TestCase(1, 20, 3)]
-        //        public void AddListAtFirst_WhenDLinkedList_ShouldAddAtFirst(int mockNumb, int numbListForAdding, int expectedMockNumb)
-        //        {
-        //            DLinkedList<string> actualDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddList(mockNumb));
-        //            DLinkedList<string> listForAdding = new DLinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
-        //            DLinkedList<string> expectedDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddList(expectedMockNumb));
+        [TestCase(1, 20, 3)]
+        public void AddListAtFirst_WhenDLinkedList_ShouldAddAtFirst(int mockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            Setup(Mocks.GetMock_AddList(mockNumb), Mocks.GetMock_AddList(numbListForAdding), Mocks.GetMock_AddList(expectedMockNumb));
 
-        //            actualDLinkedList.AddListAtFirst(listForAdding);
+            actual.AddListAtFirst(listForAdding);
 
-        //            Assert.AreEqual(expectedDLinkedList, actualDLinkedList);
-        //        }
+            Assert.AreEqual(expected, actual);
+        }
 
-        //        [TestCase(7, 1, 20, 2)]
-        //        [TestCase(0, 1, 20, 3)]
-        //        [TestCase(2, 1, 20, 4)]
-        //        [TestCase(6, 1, 20, 5)]
-        //        [TestCase(3, 1, 6, 7)]
-        //        public void AddListAt_WhenIndexAndDLinkedList_ShouldAddDLinkedListAtIndex(int index, int mockNumb, int numbListForAdding, int expectedMockNumb)
-        //        {
-        //            DLinkedList<string> actualDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddList(mockNumb));
-        //            DLinkedList<string> listForAdding = new DLinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
-        //            DLinkedList<string> expectedDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddList(expectedMockNumb));
+        [TestCase(7, 1, 20, 2)]
+        [TestCase(0, 1, 20, 3)]
+        [TestCase(2, 1, 20, 4)]
+        [TestCase(6, 1, 20, 5)]
+        [TestCase(3, 1, 6, 7)]
+        public void AddListAt_WhenIndexAndDLinkedList_ShouldAddDLinkedListAtIndex(int index, int mockNumb, int numbListForAdding, int expectedMockNumb)
+        {
+            Setup(Mocks.GetMock_AddList(mockNumb), Mocks.GetMock_AddList(numbListForAdding), Mocks.GetMock_AddList(expectedMockNumb));
 
-        //            actualDLinkedList.AddListAt(index, listForAdding);
+            actual.AddListAt(index, listForAdding);
 
-        //            Assert.AreEqual(expectedDLinkedList, actualDLinkedList);
-        //        }
+            Assert.AreEqual(expected, actual);
+        }
 
-        //        [TestCase(25, 1, 20)]
-        //        [TestCase(-25, 1, 20)]
-        //        public void AddListAt_WhenIndexAndDLinkedList_ShouldThrowIndexOutOfRangeException(int index, int mockNumb, int numbListForAdding)
-        //        {
-        //            DLinkedList<string> actualDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddList(mockNumb));
-        //            DLinkedList<string> listForAdding = new DLinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
+        //[TestCase(25, 1, 20)]
+        //[TestCase(-25, 1, 20)]
+        //public void AddListAt_WhenIndexAndDLinkedList_ShouldThrowIndexOutOfRangeException(int index, int mockNumb, int numbListForAdding)
+        //{
+        //    Setup(Mocks.GetMock_AddList(mockNumb), Mocks.GetMock_AddList(numbListForAdding));
 
-        //            Assert.Throws<IndexOutOfRangeException>(() => actualDLinkedList.AddListAt(index, listForAdding));
-        //        }
+        //    DLinkedList<string> actualDLinkedList = new DLinkedList<string>(Mocks.GetMock_AddList(mockNumb));
+        //    DLinkedList<string> listForAdding = new DLinkedList<string>(Mocks.GetMock_AddList(numbListForAdding));
 
-        //        public void RemoveAtLast_WhenLinkedList_ShouldRemoveAtLast(int mockNumb, int expectedMockNumb)
-        //        {
-        //            DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(mockNumb));
-        //            DLinkedList<string> expectedLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(expectedMockNumb));
+        //    Assert.Throws<IndexOutOfRangeException>(() => actualDLinkedList.AddListAt(index, listForAdding));
+        //}
 
-        //            actualLinkedList.Remove();
+        public void RemoveAtLast_WhenLinkedList_ShouldRemoveAtLast(int mockNumb, int expectedMockNumb)
+        {
+            Setup(Mocks.GetMock_Remove(mockNumb), Mocks.GetMock_Remove(expectedMockNumb));
 
-        //            Assert.AreEqual(expectedLinkedList, actualLinkedList);
-        //        }
+            DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(mockNumb));
+            DLinkedList<string> expectedLinkedList = new DLinkedList<string>(Mocks.GetMock_Remove(expectedMockNumb));
+
+            actualLinkedList.Remove();
+
+            Assert.AreEqual(expectedLinkedList, actualLinkedList);
+        }
 
         //        [TestCase(1, 3)]
         //        public void RemoveAtFirst_WhenArraList_ShouldRemoveAtFirst(int mockNumb, int expectedMockNumb)
