@@ -3,9 +3,9 @@ using System;
 
 namespace List.Test
 {
-    //[TestFixture("ArrayList")]
+    [TestFixture("ArrayList")]
     [TestFixture("LinkedList")]
-    //[TestFixture("DLinkedList")]
+    [TestFixture("DLinkedList")]
     public class ListTests
     {
         public IList<string> actual;
