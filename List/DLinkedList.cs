@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -722,6 +723,16 @@ namespace List
             else
             {
                 throw new IndexOutOfRangeException();
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            DLNode<T> node = _root;
+            while (node != null)
+            {
+                yield return node.Value;
+                node = node.Next;
             }
         }
     }

@@ -3,9 +3,9 @@ using System;
 
 namespace List.Test
 {
-    [TestFixture("ArrayList")]
+    //[TestFixture("ArrayList")]
     [TestFixture("LinkedList")]
-    [TestFixture("DLinkedList")]
+    //[TestFixture("DLinkedList")]
     public class ListTests
     {
         public IList<string> actual;
@@ -117,6 +117,16 @@ namespace List.Test
         //            actualLinkedList.AddAt(0, value);
         //            actualLinkedList.AddAt(5, "Second new value");
         //        }
+
+        [TestCase(1)]
+        public void Test(int mockNumb)
+        {
+            Setup(inputArray: Mocks.GetMock(1));
+            foreach(string s in actual)
+            {
+                string tmp = s;
+            }
+        }
 
         [TestCase("7", 1, 2)]
         [TestCase("8", 2, 3)]

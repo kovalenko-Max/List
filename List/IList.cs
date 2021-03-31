@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace List
 {
-   public interface IList<T>
+    public interface IList<T> : IEnumerable
     {
+        public T this[int index] { get; set; }
+
         public void Add(T value);
 
         public void AddAtFirst(T value);

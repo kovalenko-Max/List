@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace List
@@ -424,6 +425,14 @@ namespace List
             T tmp = a;
             a = b;
             b = tmp;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            for (int i = 0; i< Length; ++i)
+            {
+                yield return _array[i];
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -690,5 +691,14 @@ namespace List
             return isEquals;
         }
 
+        public IEnumerator GetEnumerator()
+        {
+            Node<T> node = _root;
+            while (node != null)
+            {
+                yield return node.Value;
+                node = node.Next;
+            }
+        }
     }
 }
