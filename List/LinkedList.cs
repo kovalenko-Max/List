@@ -9,6 +9,8 @@ namespace List
 {
     public class LinkedList<T> : IList<T> where T : IComparable
     {
+        protected Node<T> _root;
+        protected Node<T> _tail;
         public int Length { get; private set; }
 
         public T this[int index]
@@ -38,9 +40,6 @@ namespace List
 
             }
         }
-
-        protected Node<T> _root;
-        protected Node<T> _tail;
 
         public LinkedList()
         {
@@ -108,7 +107,7 @@ namespace List
 
             if (Length < 1)
             {
-                _tail = current;    
+                _tail = current;
             }
 
             Length++;
@@ -243,7 +242,7 @@ namespace List
             {
                 Node<T> current = _root;
 
-                current = GetCurrentNode(index -1);
+                current = GetCurrentNode(index - 1);
                 current.Next = current.Next.Next;
                 Length--;
             }
@@ -317,7 +316,7 @@ namespace List
             }
             else if (index == Length - 1)
             {
-                RemoveRange(count);
+                RemoveRange(1);
             }
             else
             {
@@ -534,123 +533,13 @@ namespace List
             return array;
         }
 
-        private Node<T> MergeSort(Node<T> root, bool isAscending)
+        public IEnumerator GetEnumerator()
         {
-            // Base case : if head is null  
-            if (root == null || root.Next == null)
+            Node<T> node = _root;
+            while (node != null)
             {
-                return root;
-            }
-
-            // get the middle of the list  
-            Node<T> middle = GetMiddle(root);
-            Node<T> nextofmiddle = middle.Next;
-
-            // set the next of middle node to null  
-            middle.Next = null;
-
-            // Apply mergeSort on left list  
-            Node<T> left = MergeSort(root, isAscending);
-
-            // Apply mergeSort on right list  
-            Node<T> right = MergeSort(nextofmiddle, isAscending);
-
-            // Merge the left and right lists  
-            Node<T> sortedlist = SortedMerge(left, right, isAscending);
-            return sortedlist;
-        }
-
-        private Node<T> GetMiddle(Node<T> node)
-        {
-            // Base case  
-            if (node == null)
-            {
-                return node;
-            }
-
-            Node<T> fastptr = node.Next;
-            Node<T> slowptr = node;
-
-            // Move fastptr by two and slow ptr by one  
-            // Finally slowptr will point to middle node  
-            while (fastptr != null)
-            {
-                fastptr = fastptr.Next;
-                if (fastptr != null)
-                {
-                    slowptr = slowptr.Next;
-                    fastptr = fastptr.Next;
-                }
-            }
-            return slowptr;
-        }
-
-        private Node<T> SortedMerge(Node<T> a, Node<T> b, bool isAscending)
-        {
-            Node<T> result = null;
-            /* Base cases */
-            if (a == null)
-            {
-                return b;
-            }
-
-            if (b == null)
-            {
-                return a;
-            }
-
-            Comparer<T> comparer = Comparer<T>.Default;
-
-            switch (isAscending)
-            {
-                case true:
-
-                    /* SortAscending a, b and recur */
-                    if (comparer.Compare(a.Value, b.Value) <= 0)
-                    {
-                        result = a;
-                        result.Next = SortedMerge(a.Next, b, isAscending);
-                    }
-                    else
-                    {
-                        result = b;
-                        result.Next = SortedMerge(a, b.Next, isAscending);
-                    }
-                    break;
-
-                case false:
-                    /* SortDescending a, b and recur */
-                    if (comparer.Compare(a.Value, b.Value) >= 0)
-                    {
-                        result = a;
-                        result.Next = SortedMerge(a.Next, b, isAscending);
-                    }
-                    else
-                    {
-                        result = b;
-                        result.Next = SortedMerge(a, b.Next, isAscending);
-                    }
-                    break;
-            }
-
-            return result;
-        }
-
-        private Node<T> GetCurrentNode(int index)
-        {
-            if ((index >= 0) && (index < Length))
-            {
-                Node<T> current = _root;
-
-                for (int i = 1; i <= index; i++)
-                {
-                    current = current.Next;
-                }
-                return current;
-            }
-            else
-            {
-                throw new IndexOutOfRangeException();
+                yield return node.Value;
+                node = node.Next;
             }
         }
 
@@ -716,13 +605,104 @@ namespace List
             return isEquals;
         }
 
-        public IEnumerator GetEnumerator()
+        private Node<T> MergeSort(Node<T> root, bool isAscending)
         {
-            Node<T> node = _root;
-            while (node != null)
+            // Base case : if head is null  
+            if (root == null || root.Next == null)
             {
-                yield return node.Value;
-                node = node.Next;
+                return root;
+            }
+
+            // get the middle of the list  
+            Node<T> middle = GetMiddle(root);
+            Node<T> nextofmiddle = middle.Next;
+
+            // set the next of middle node to null  
+            middle.Next = null;
+
+            // Apply mergeSort on left list  
+            Node<T> left = MergeSort(root, isAscending);
+
+            // Apply mergeSort on right list  
+            Node<T> right = MergeSort(nextofmiddle, isAscending);
+
+            // Merge the left and right lists  
+            Node<T> sortedlist = SortedMerge(left, right, isAscending);
+            return sortedlist;
+        }
+
+        private Node<T> GetMiddle(Node<T> node)
+        {
+            // Base case  
+            if (node == null)
+            {
+                return node;
+            }
+
+            Node<T> fastptr = node.Next;
+            Node<T> slowptr = node;
+
+            // Move fastptr by two and slow ptr by one  
+            // Finally slowptr will point to middle node  
+            while (fastptr != null)
+            {
+                fastptr = fastptr.Next;
+                if (fastptr != null)
+                {
+                    slowptr = slowptr.Next;
+                    fastptr = fastptr.Next;
+                }
+            }
+            return slowptr;
+        }
+
+        private Node<T> SortedMerge(Node<T> a, Node<T> b, bool isAscending)
+        {
+            Node<T> result = null;
+
+            if (a == null)
+            {
+                return b;
+            }
+
+            if (b == null)
+            {
+                return a;
+            }
+
+            Comparer<T> comparer = Comparer<T>.Default;
+
+            int compareResult = isAscending ? -1 : 1;
+
+            if (comparer.Compare(a.Value, b.Value) == compareResult)
+            {
+                result = a;
+                result.Next = SortedMerge(a.Next, b, isAscending);
+            }
+            else
+            {
+                result = b;
+                result.Next = SortedMerge(a, b.Next, isAscending);
+            }
+
+            return result;
+        }
+
+        private Node<T> GetCurrentNode(int index)
+        {
+            if ((index >= 0) && (index < Length))
+            {
+                Node<T> current = _root;
+
+                for (int i = 1; i <= index; i++)
+                {
+                    current = current.Next;
+                }
+                return current;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
             }
         }
     }

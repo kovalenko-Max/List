@@ -22,7 +22,6 @@ namespace List.Test
                     array = new string[] { "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8" };
                     break;
 
-
                 case 3:
                     array = new string[] { "2", "5", "8", "0", "8", "1", "8", "3", "3", "4", "6", "7", "8" };
                     break;
@@ -94,6 +93,7 @@ namespace List.Test
         public static string[] GetMock_AddAt(int numb)
         {
             string[] array;
+
             switch (numb)
             {
                 default:
@@ -131,6 +131,7 @@ namespace List.Test
         public static string[] GetMock_AddList(int numb)
         {
             string[] array;
+
             switch (numb)
             {
                 default:
@@ -199,7 +200,6 @@ namespace List.Test
                 case 20:
                     array = new string[] { "n0", "n1", "n2", "n3", "n4", "n5", "n6" };
                     break;
-
             }
 
             return array;
@@ -208,6 +208,7 @@ namespace List.Test
         public static string[] GetMock_Remove(int numb)
         {
             string[] array;
+
             switch (numb)
             {
                 default:

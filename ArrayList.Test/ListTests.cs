@@ -104,6 +104,7 @@ namespace List.Test
         public void Add_WhenValue_ShouldAddElementToEnd(string value, int inputinputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_Add(inputinputMockNumb), expectedArray: Mocks.GetMock_Add(expectedinputMockNumb));
+
             actual.Add(value);
 
             Assert.AreEqual(expected, actual);
@@ -257,6 +258,8 @@ namespace List.Test
         [TestCase(7, 1, 5)]
         [TestCase(20, 1, 20)]
         [TestCase(9, 1, 20)]
+        [TestCase(8, 1, 6)]
+        [TestCase(7, 1, 5)]
         public void RemoveRange_WhenCount_ShoudlRemoveRange(int count, int inputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_RemoveRange(inputMockNumb), expectedArray: Mocks.GetMock_RemoveRange(expectedinputMockNumb));
@@ -283,7 +286,7 @@ namespace List.Test
         [TestCase(0, 20, 1, 20)]
         [TestCase(3, 2, 1, 4)]
         [TestCase(1, 1, 5, 6)]
-        [TestCase(1, 5, 5, -1)]
+        [TestCase(1, 5, 5, 6)]
         public void RemoveRangeAt_WhenIndexAndRange_ShoudlRemoveRange(int index, int count, int inputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_RemoveRange(inputMockNumb), expectedArray: Mocks.GetMock_RemoveRange(expectedinputMockNumb));

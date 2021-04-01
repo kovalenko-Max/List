@@ -6,6 +6,11 @@ namespace List
 {
     public class ArrayList<T> : IList<T> where T : IComparable
     {
+        private const int defoultLenght = 10;
+        private const double lenghtCoef = 1.33d;
+        
+        private T[] _array;
+
         public int Length { get; private set; }
 
         public T this[int index]
@@ -33,11 +38,6 @@ namespace List
                 }
             }
         }
-
-        private T[] _array;
-
-        private const int defoultLenght = 10;
-        private const double lenghtCoef = 1.33d;
 
         public ArrayList()
         {
@@ -111,7 +111,7 @@ namespace List
         {
             ArrayList<T> ArrayListForAdding;
 
-            if(listForAdding is ArrayList<T>)
+            if (listForAdding is ArrayList<T>)
             {
                 ArrayListForAdding = (ArrayList<T>)listForAdding;
             }
@@ -119,7 +119,7 @@ namespace List
             {
                 ArrayListForAdding = new ArrayList<T>(listForAdding.ToArray());
             }
-            
+
             if ((index <= Length) && (index >= 0))
             {
                 Length += ArrayListForAdding.Length;
@@ -145,7 +145,7 @@ namespace List
 
         public void Remove()
         {
-            if(Length>0)
+            if (Length > 0)
             {
                 int index = Length - 1;
                 RemoveAt(index);
@@ -316,7 +316,7 @@ namespace List
 
         public void Sort(bool isAscending = true)
         {
-            if(isAscending)
+            if (isAscending)
             {
                 SortAscending();
             }
@@ -326,37 +326,11 @@ namespace List
             }
         }
 
-        private void SortAscending()
+        public IEnumerator GetEnumerator()
         {
-            Comparer<T> comparer = Comparer<T>.Default;
-            for (int i = 0; i < Length - 1; ++i)
+            for (int i = 0; i < Length; ++i)
             {
-                int min = i;
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if ((comparer.Compare(_array[j], _array[min]) < 0))
-                    {
-                        min = j;
-                    }
-                }
-                Swap(ref _array[min], ref _array[i]);
-            }
-        }
-
-        private void SortDescending()
-        {
-            Comparer<T> comparer = Comparer<T>.Default;
-            for (int i = 0; i < Length - 1; ++i)
-            {
-                int max = i;
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if ((comparer.Compare(_array[j], _array[max]) > 0))
-                    {
-                        max = j;
-                    }
-                }
-                Swap(ref _array[max], ref _array[i]);
+                yield return _array[i];
             }
         }
 
@@ -364,7 +338,7 @@ namespace List
         {
             T[] array = new T[Length];
 
-            for(int i = 0; i<Length; ++i)
+            for (int i = 0; i < Length; ++i)
             {
                 array[i] = _array[i];
             }
@@ -449,12 +423,40 @@ namespace List
             b = tmp;
         }
 
-        public IEnumerator GetEnumerator()
+        private void SortAscending()
         {
-            for (int i = 0; i< Length; ++i)
+            Comparer<T> comparer = Comparer<T>.Default;
+            for (int i = 0; i < Length - 1; ++i)
             {
-                yield return _array[i];
+                int min = i;
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if ((comparer.Compare(_array[j], _array[min]) < 0))
+                    {
+                        min = j;
+                    }
+                }
+                Swap(ref _array[min], ref _array[i]);
             }
         }
+
+        private void SortDescending()
+        {
+            Comparer<T> comparer = Comparer<T>.Default;
+            for (int i = 0; i < Length - 1; ++i)
+            {
+                int max = i;
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if ((comparer.Compare(_array[j], _array[max]) > 0))
+                    {
+                        max = j;
+                    }
+                }
+                Swap(ref _array[max], ref _array[i]);
+            }
+        }
+
+        
     }
 }
