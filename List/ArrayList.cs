@@ -109,7 +109,17 @@ namespace List
 
         public void AddListAt(int index, IList<T> listForAdding)
         {
-            ArrayList<T> ArrayListForAdding = (ArrayList<T>)listForAdding;
+            ArrayList<T> ArrayListForAdding;
+
+            if(listForAdding is ArrayList<T>)
+            {
+                ArrayListForAdding = (ArrayList<T>)listForAdding;
+            }
+            else
+            {
+                ArrayListForAdding = new ArrayList<T>(listForAdding.ToArray());
+            }
+            
             if ((index <= Length) && (index >= 0))
             {
                 Length += ArrayListForAdding.Length;

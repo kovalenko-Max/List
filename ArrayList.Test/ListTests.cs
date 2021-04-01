@@ -70,53 +70,30 @@ namespace List.Test
             }
         }
 
+        [TestCase(0, 1, "0")]
+        [TestCase(4, 1, "3")]
+        [TestCase(8, 1, "7")]
+        [TestCase(12, 1, "8")]
+        [TestCase(0, 7, "0")]
+        public void Get_WhenIndex_ShouldGetElement(int index, int inputMockNumb, string expected)
+        {
+            Setup(inputArray: Mocks.GetMock(inputMockNumb));
 
+            string actualValue = actual[index];
 
-        //[TestCase(4, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 })]
-        //[TestCase(0, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 0 })]
-        //[TestCase(4, new int[] { 1, 2 }, new int[] { 1, 2, 4 })]
-        //public void AddTest(int value, int[] array, int[] expectedArray)
-        //{
-        //    Setup(array, expectedArray);
-        //    actual.Add(value);
+            Assert.AreEqual(expected, actualValue);
+        }
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+        [TestCase(3, "New Value", 1, 5)]
+        [TestCase(3, null, 1, 6)]
+        public void Set_WhenIndex_ShouldSetElement(int index, string value, int inputMockNumb, int expectedinputMockNumb)
+        {
+            Setup(inputArray: Mocks.GetMock(inputMockNumb), expectedArray: Mocks.GetMock(expectedinputMockNumb));
 
-        //[TestCase(0, 1, "0")]
-        //[TestCase(4, 1, "3")]
-        //[TestCase(8, 1, "7")]
-        //[TestCase(12, 1, "8")]
-        //[TestCase(0, 7, "0")]
-        //public void Get_WhenIndex_ShouldGetElement(int index, int inputMockNumb, string expected)
-        //{
-        //    Setup(Mocks.GetMock(inputMockNumb));
+            actual[index] = value;
 
-        //    string actualValue = actual[index];
-
-        //    Assert.AreEqual(expected, actual);
-        //}
-
-        //[TestCase(3, "New Value", 1, 5)]
-        //[TestCase(3, null, 1, 6)]
-        //public void Set_WhenIndex_ShouldSetElement(int index, string value, int inputMockNumb, int expectedinputMockNumb)
-        //{
-        //    DLinkedList<string> actual = new DLinkedList<string>(Mocks.GetMock(inputMockNumb));
-        //    DLinkedList<string> expectedDLinkedList = new DLinkedList<string>(Mocks.GetMock(expectedinputMockNumb));
-
-        //    actual[index] = value;
-
-        //    Assert.AreEqual(expectedDLinkedList, actual);
-        //}
-
-        //        [TestCase("New value", 1)]
-        //        public void Add_Test(string value, int inputMockNumb)
-        //        {
-        //            DLinkedList<string> actualLinkedList = new DLinkedList<string>(Mocks.GetMock_Add(inputMockNumb));
-
-        //            actualLinkedList.AddAt(0, value);
-        //            actualLinkedList.AddAt(5, "Second new value");
-        //        }
+            Assert.AreEqual(expected, actual);
+        }
 
         [TestCase("7", 1, 2)]
         [TestCase("8", 2, 3)]
@@ -124,7 +101,7 @@ namespace List.Test
         [TestCase(null, 3, 5)]
         [TestCase("New value", 0, 6)]
         [TestCase("New value", -1, 6)]
-        public void Add_WhenValue_ShouldToEnd(string value, int inputinputMockNumb, int expectedinputMockNumb)
+        public void Add_WhenValue_ShouldAddElementToEnd(string value, int inputinputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_Add(inputinputMockNumb), expectedArray: Mocks.GetMock_Add(expectedinputMockNumb));
             actual.Add(value);
@@ -206,6 +183,22 @@ namespace List.Test
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(11, 15)]
+        public void AddListAt_WhenAnoutherList_ShouldAddAtIndex(int inputMockNumb, int expectedinputMockNumb)
+        {
+            Setup(inputArray: Mocks.GetMock_AddList(inputMockNumb), expectedArray: Mocks.GetMock_AddList(expectedinputMockNumb));
+
+            ArrayList<string> arrayListForAdding = new ArrayList<string>(Mocks.GetMock_AddList(12));
+            LinkedList<string> LinkedListForAdding = new LinkedList<string>(Mocks.GetMock_AddList(13));
+            DLinkedList<string> DLinkedListForAdding = new DLinkedList<string>(Mocks.GetMock_AddList(14));
+
+            actual.AddListAt(2, arrayListForAdding);
+            actual.AddListAt(0, LinkedListForAdding);
+            actual.AddListAt(9, DLinkedListForAdding);
+
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase(25, 1, 20)]
         [TestCase(-25, 1, 20)]
         public void AddListAt_WhenIndexAndDLinkedList_ShouldThrowIndexOutOfRangeException(int index, int inputMockNumb, int numbListForAdding)
@@ -215,9 +208,10 @@ namespace List.Test
             Assert.Throws<IndexOutOfRangeException>(() => actual.AddListAt(index, listForAdding));
         }
 
-        [TestCase(5, 6)]
+        [TestCase(5, -1)]
         [TestCase(1, 2)]
         [TestCase(20, 20)]
+
         public void Remove_WhenLinkedList_ShouldRemoveAtLast(int inputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_Remove(inputMockNumb), expectedArray: Mocks.GetMock_Remove(expectedinputMockNumb));
@@ -228,6 +222,7 @@ namespace List.Test
         }
 
         [TestCase(1, 3)]
+        [TestCase(5, -1)]
         public void RemoveAtFirst_WhenArraList_ShouldRemoveAtFirst(int inputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_Remove(inputMockNumb), expectedArray: Mocks.GetMock_Remove(expectedinputMockNumb));
@@ -287,6 +282,8 @@ namespace List.Test
         [TestCase(0, 2, 1, 3)]
         [TestCase(0, 20, 1, 20)]
         [TestCase(3, 2, 1, 4)]
+        [TestCase(1, 1, 5, 6)]
+        [TestCase(1, 5, 5, -1)]
         public void RemoveRangeAt_WhenIndexAndRange_ShoudlRemoveRange(int index, int count, int inputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_RemoveRange(inputMockNumb), expectedArray: Mocks.GetMock_RemoveRange(expectedinputMockNumb));
@@ -408,6 +405,30 @@ namespace List.Test
             actual.Sort(isAscending);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, "0 1 2 3 3 4 5 6 7 8 8 8 8")]
+        [TestCase(7, "0")]
+        [TestCase(-1, "")]
+        public void ToString_WhenList_ShouldReturnString(int inputMockNumb, string expected)
+        {
+            Setup(inputArray: Mocks.GetMock(inputMockNumb));
+
+            string actualString = actual.ToString();
+
+            Assert.AreEqual(actualString, expected);
+        }
+
+        [TestCase(1)]
+        [TestCase(7)]
+        [TestCase(-1)]
+        public void ToArray_WhenList_ShouldReturnArray(int inputMockNumb)
+        {
+            Setup(inputArray: Mocks.GetMock(inputMockNumb));
+
+            string[] actualArray = actual.ToArray();
+
+            Assert.AreEqual(Mocks.GetMock(inputMockNumb), actualArray);
         }
     }
 }

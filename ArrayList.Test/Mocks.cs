@@ -173,7 +173,27 @@ namespace List.Test
                     break;
 
                 case 10:
-                    array = new string[] {  "n0", "n1", "n2", "n3", "n4", "n5", "n6", "0"};
+                    array = new string[] { "n0", "n1", "n2", "n3", "n4", "n5", "n6", "0" };
+                    break;
+
+                case 11:
+                    array = new string[] { "0", "1", "2" };
+                    break;
+
+                case 12:
+                    array = new string[] { "A0", "A1", "A2" };
+                    break;
+
+                case 13:
+                    array = new string[] { "L0", "L1", "L2" };
+                    break;
+
+                case 14:
+                    array = new string[] { "DL0", "DL1", "DL2" };
+                    break;
+
+                case 15:
+                    array = new string[] { "L0", "L1", "L2", "0", "1", "A0", "A1", "A2", "2", "DL0", "DL1", "DL2" };
                     break;
 
                 case 20:
@@ -249,6 +269,10 @@ namespace List.Test
 
                 case 5:
                     array = new string[] { "0", "1" };
+                    break;
+
+                case 6:
+                    array = new string[] { "0" };
                     break;
 
                 case 20:

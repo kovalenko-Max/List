@@ -102,11 +102,20 @@ namespace List
 
         public void AddAtFirst(T value)
         {
-            Length++;
             DLNode<T> current = new DLNode<T>(value);
-            _root.Previous = current;
-            current.Next = _root;
+
+            if (Length > 1)
+            {
+                _root.Previous = current;
+                current.Next = _root;
+            }
+            else
+            {
+                _tail = current;
+            }
+
             _root = current;
+            ++Length;
         }
 
         public void AddAt(int index, T value)
@@ -145,21 +154,44 @@ namespace List
             }
         }
 
-        public void AddListAtFirst(IList<T> listForAdding)//
+        public void AddListAtFirst(IList<T> listForAdding)
         {
-            DLinkedList<T> dListForAdding = (DLinkedList<T>)listForAdding;
+            DLinkedList<T> dListForAdding;
+            if (listForAdding is DLinkedList<T>)
+            {
+                dListForAdding = (DLinkedList<T>)listForAdding;
+            }
+            else
+            {
+                dListForAdding = new DLinkedList<T>(listForAdding.ToArray());
+            }
+
             Length += dListForAdding.Length;
             dListForAdding._tail.Next = _root;
-            _root.Previous = dListForAdding._tail;
+            
+            if(!(_root is null))
+            {
+                _root.Previous = dListForAdding._tail;
+            }
+            
             _root = dListForAdding._root;
         }
 
         public void AddListAt(int index, IList<T> listForAdding)
         {
-            DLinkedList<T> dListForAdding = (DLinkedList<T>)listForAdding;
+            DLinkedList<T> dListForAdding;
 
             if ((index >= 1) && (index < Length))
             {
+                if (listForAdding is DLinkedList<T>)
+                {
+                    dListForAdding = (DLinkedList<T>)listForAdding;
+                }
+                else
+                {
+                    dListForAdding = new DLinkedList<T>(listForAdding.ToArray());
+                }
+
                 DLNode<T> current = GetCurrentNode(index - 1);
 
                 Length += dListForAdding.Length;
@@ -170,11 +202,11 @@ namespace List
             }
             else if (index == 0)
             {
-                AddListAtFirst(dListForAdding);
+                AddListAtFirst(listForAdding);
             }
             else if (index == Length)
             {
-                AddList(dListForAdding);
+                AddList(listForAdding);
             }
             else
             {
@@ -749,6 +781,6 @@ namespace List
             }
         }
 
-        
+
     }
 }

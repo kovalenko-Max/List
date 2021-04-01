@@ -53,6 +53,8 @@ namespace List
 
         public T[] ToArray();
 
+        public string ToString();
+
         public void Sort(bool isAisAscending = true);
     }
 }

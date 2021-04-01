@@ -243,11 +243,7 @@ namespace List
             {
                 Node<T> current = _root;
 
-                for (int i = 1; i < index; i++)
-                {
-                    current = current.Next;
-                }
-
+                current = GetCurrentNode(index -1);
                 current.Next = current.Next.Next;
                 Length--;
             }
