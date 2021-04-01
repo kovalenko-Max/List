@@ -137,13 +137,12 @@ namespace List
             }
         }
 
-        public void AddList(IList<T> listForAdding)//
+        public void AddList(IList<T> listForAdding)
         {
-            DLinkedList<T> dListForAdding = (DLinkedList<T>)listForAdding;
-            Length += dListForAdding.Length;
-            _tail.Next = dListForAdding._root;
-            dListForAdding._root.Previous = _tail;
-            _tail = dListForAdding._tail;
+            foreach (T value in listForAdding)
+            {
+                Add(value);
+            }
         }
 
         public void AddListAtFirst(IList<T> listForAdding)//

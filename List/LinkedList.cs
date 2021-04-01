@@ -133,12 +133,12 @@ namespace List
             }
         }
 
-        public void AddList(IList<T> linkedList)
+        public void AddList(IList<T> listForAdding)
         {
-            LinkedList<T> dListForAdding = (LinkedList<T>)linkedList;
-            Length += dListForAdding.Length;
-            _tail.Next = dListForAdding._root;
-            _tail = dListForAdding._tail;
+            foreach(T value in listForAdding)
+            {
+                Add(value);
+            }
         }
 
         public void AddListAtFirst(IList<T> listForAdding)
@@ -497,16 +497,6 @@ namespace List
         public void Sort(bool isAscending = true)
         {
             _root = MergeSort(_root, isAscending);
-        }
-
-        public void SortAscending()
-        {
-            this._root = this.MergeSort(this._root, isAscending: true);
-        }
-
-        public void SortDescending()
-        {
-            this._root = this.MergeSort(this._root, isAscending: false);
         }
 
         private Node<T> MergeSort(Node<T> root, bool isAscending)

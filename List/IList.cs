@@ -51,10 +51,6 @@ namespace List
 
         public T GetMin();
 
-        public void SortAscending();
-
-        public void SortDescending();
-
         public void Sort(bool isAisAscending = true);
     }
 }
