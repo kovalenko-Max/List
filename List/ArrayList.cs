@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace List
 {
@@ -8,7 +9,7 @@ namespace List
     {
         private const int defoultLenght = 10;
         private const double lenghtCoef = 1.33d;
-        
+
         private T[] _array;
 
         public int Length { get; private set; }
@@ -73,20 +74,20 @@ namespace List
 
         public void AddAtFirst(T value)
         {
-            int index = 0;
-            this.AddAt(index, value);
+            AddAt(0, value);
         }
 
         public void AddAt(int index, T value)
         {
-            if ((index <= Length) && (index >= 0))
+            if ((index >= 0) && (index <= Length))
             {
                 ++Length;
                 if (Length >= _array.Length)
                 {
-                    this.Resize();
+                    Resize();
                 }
-                this.Shift(index, Length, 1);
+
+                Shift(index, Length, 1);
                 _array[index] = value;
             }
             else
@@ -103,8 +104,7 @@ namespace List
 
         public void AddListAtFirst(IList<T> arrayList)
         {
-            int firstIndex = 0;
-            AddListAt(firstIndex, arrayList);
+            AddListAt(0, arrayList);
         }
 
         public void AddListAt(int index, IList<T> listForAdding)
@@ -140,7 +140,6 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-
         }
 
         public void Remove()
@@ -169,7 +168,7 @@ namespace List
 
                 if (Length < _array.Length / 2)
                 {
-                    this.Resize();
+                    Resize();
                 }
 
                 Shift(index, Length, -1);
@@ -184,12 +183,12 @@ namespace List
         {
             int index = (Length - count) > 0 ? (Length - count) : 0;
 
-            this.RemoveRangeAt(index, count);
+            RemoveRangeAt(index, count);
         }
 
         public void RemoveRangeAtFirst(int count)
         {
-            this.RemoveRangeAt(0, count);
+            RemoveRangeAt(0, count);
         }
 
         public void RemoveRangeAt(int index, int count)
@@ -203,12 +202,12 @@ namespace List
                 else
                 {
                     Length -= count;
-                    this.Shift(index, Length, -count);
+                    Shift(index, Length, -count);
                 }
 
                 if (Length < _array.Length / 2)
                 {
-                    this.Resize();
+                    Resize();
                 }
             }
             else
@@ -231,6 +230,7 @@ namespace List
         public int RemoveAllByValue(T value)
         {
             int count = 0;
+
             int indexForRemove = GetIndexByValue(value);
             while (indexForRemove != -1)
             {
@@ -257,6 +257,7 @@ namespace List
         {
             int result = -1;
             Comparer<T> comparer = Comparer<T>.Default;
+
             for (int i = 0; i < Length; ++i)
             {
                 if (comparer.Compare(_array[i], value) == 0)
@@ -265,6 +266,7 @@ namespace List
                     break;
                 }
             }
+
             return result;
         }
 
@@ -351,12 +353,12 @@ namespace List
             ArrayList<T> compareAray = (ArrayList<T>)obj;
             bool result = true;
 
-            if (this.Length == compareAray.Length)
+            if (Length == compareAray.Length)
             {
                 Comparer<T> comparer = Comparer<T>.Default;
-                for (int i = 0; i < this.Length; ++i)
+                for (int i = 0; i < Length; ++i)
                 {
-                    if (comparer.Compare(this._array[i], compareAray._array[i]) != 0)
+                    if (comparer.Compare(_array[i], compareAray._array[i]) != 0)
                     {
                         result = false;
                     }
@@ -372,12 +374,13 @@ namespace List
 
         public override string ToString()
         {
-            string toString = string.Empty;
+            StringBuilder result = new StringBuilder(string.Empty);
             for (int i = 0; i < Length; ++i)
             {
-                toString += _array[i] + " ";
+                result.Append(_array[i] + " ");
             }
-            return toString.Trim();
+
+            return result.ToString().Trim();
         }
 
         private void Resize()
@@ -457,6 +460,6 @@ namespace List
             }
         }
 
-        
+
     }
 }
