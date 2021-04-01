@@ -72,16 +72,16 @@ namespace List.Test
 
 
 
-        //        //[TestCase(4, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 })]
-        //        //[TestCase(0, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 0 })]
-        //        //[TestCase(4, new int[] { 1, 2 }, new int[] { 1, 2, 4 })]
-        //        //public void AddTest(int value, int[] array, int[] expectedArray)
-        //        //{
-        //        //    Setup(array, expectedArray);
-        //        //    actual.Add(value);
+        //[TestCase(4, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 })]
+        //[TestCase(0, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 0 })]
+        //[TestCase(4, new int[] { 1, 2 }, new int[] { 1, 2, 4 })]
+        //public void AddTest(int value, int[] array, int[] expectedArray)
+        //{
+        //    Setup(array, expectedArray);
+        //    actual.Add(value);
 
-        //        //    Assert.AreEqual(expected, actual);
-        //        //}
+        //    Assert.AreEqual(expected, actual);
+        //}
 
         //[TestCase(0, 1, "0")]
         //[TestCase(4, 1, "3")]
@@ -118,22 +118,12 @@ namespace List.Test
         //            actualLinkedList.AddAt(5, "Second new value");
         //        }
 
-        [TestCase(1)]
-        public void Test(int mockNumb)
-        {
-            Setup(inputArray: Mocks.GetMock(1));
-            foreach(string s in actual)
-            {
-                string tmp = s;
-            }
-        }
-
         [TestCase("7", 1, 2)]
         [TestCase("8", 2, 3)]
         [TestCase("9", 3, 4)]
         [TestCase(null, 3, 5)]
         [TestCase("New value", 0, 6)]
-        [TestCase("New value", 20, 6)]
+        [TestCase("New value", -1, 6)]
         public void Add_WhenValue_ShouldToEnd(string value, int inputinputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_Add(inputinputMockNumb), expectedArray: Mocks.GetMock_Add(expectedinputMockNumb));
@@ -143,6 +133,7 @@ namespace List.Test
         }
 
         [TestCase("New Value", 1, 3)]
+        [TestCase("0", -1, 6)]
         public void AddAtFirst_WhenValue_ShouldAddtoFirst(string value, int inputinputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_AddAt(inputinputMockNumb), expectedArray: Mocks.GetMock_AddAt(expectedinputMockNumb));
@@ -156,6 +147,7 @@ namespace List.Test
         [TestCase("New Value", 0, 1, 3)]
         [TestCase("New Value", 2, 1, 4)]
         [TestCase(null, 2, 1, 5)]
+        [TestCase("0", 0, -1, 6)]
         public void AddAt_WhenIndexAndStringValue_ShouldAddElementByIndex(string value, int index, int inputinputMockNumb, int expectedinputMockNumb)
         {
             Setup(inputArray: Mocks.GetMock_AddAt(inputinputMockNumb), expectedArray: Mocks.GetMock_AddAt(expectedinputMockNumb));
@@ -175,6 +167,9 @@ namespace List.Test
         }
 
         [TestCase(1, 20, 2)]
+        [TestCase(-1, 20, 20)]
+        [TestCase(-1, 6, 6)]
+        [TestCase(8, 20, 9)]
         public void AddList_WhenDLinkedList_ShouldAddToDLinkedList(int inputinputMockNumb, int numbListForAdding, int expectedinputMockNumb)
         {
             Setup(Mocks.GetMock_AddList(inputinputMockNumb), Mocks.GetMock_AddList(numbListForAdding), Mocks.GetMock_AddList(expectedinputMockNumb));
@@ -185,6 +180,8 @@ namespace List.Test
         }
 
         [TestCase(1, 20, 3)]
+        [TestCase(8, 20, 10)]
+        [TestCase(-1, 20, 20)]
         public void AddListAtFirst_WhenDLinkedList_ShouldAddAtFirst(int inputMockNumb, int numbListForAdding, int expectedinputMockNumb)
         {
             Setup(Mocks.GetMock_AddList(inputMockNumb), Mocks.GetMock_AddList(numbListForAdding), Mocks.GetMock_AddList(expectedinputMockNumb));
@@ -199,6 +196,7 @@ namespace List.Test
         [TestCase(2, 1, 20, 4)]
         [TestCase(6, 1, 20, 5)]
         [TestCase(3, 1, 6, 7)]
+        [TestCase(0, -1, 20, 20)]
         public void AddListAt_WhenIndexAndDLinkedList_ShouldAddDLinkedListAtIndex(int index, int inputMockNumb, int numbListForAdding, int expectedinputMockNumb)
         {
             Setup(Mocks.GetMock_AddList(inputMockNumb), Mocks.GetMock_AddList(numbListForAdding), Mocks.GetMock_AddList(expectedinputMockNumb));

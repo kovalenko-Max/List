@@ -51,6 +51,8 @@ namespace List
 
         public T GetMin();
 
+        public T[] ToArray();
+
         public void Sort(bool isAisAscending = true);
     }
 }

@@ -316,7 +316,7 @@ namespace List
             }
         }
 
-        public void SortAscending()
+        private void SortAscending()
         {
             Comparer<T> comparer = Comparer<T>.Default;
             for (int i = 0; i < Length - 1; ++i)
@@ -333,7 +333,7 @@ namespace List
             }
         }
 
-        public void SortDescending()
+        private void SortDescending()
         {
             Comparer<T> comparer = Comparer<T>.Default;
             for (int i = 0; i < Length - 1; ++i)
@@ -348,6 +348,18 @@ namespace List
                 }
                 Swap(ref _array[max], ref _array[i]);
             }
+        }
+
+        public T[] ToArray()
+        {
+            T[] array = new T[Length];
+
+            for(int i = 0; i<Length; ++i)
+            {
+                array[i] = _array[i];
+            }
+
+            return array;
         }
 
         public override bool Equals(object obj)

@@ -102,15 +102,22 @@ namespace List
 
         public void AddAtFirst(T value)
         {
-            Length++;
             Node<T> current = new Node<T>(value);
             current.Next = _root;
             _root = current;
+
+            if (Length < 1)
+            {
+                _tail = current;    
+            }
+
+            Length++;
         }
 
         public void AddAt(int index, T value)
         {
             Node<T> nodeForAdding = new Node<T>(value);
+
             if ((index >= 1) && (index < Length))
             {
                 Node<T> current = GetCurrentNode(index - 1);
@@ -135,7 +142,7 @@ namespace List
 
         public void AddList(IList<T> listForAdding)
         {
-            foreach(T value in listForAdding)
+            foreach (T value in listForAdding)
             {
                 Add(value);
             }
@@ -143,19 +150,37 @@ namespace List
 
         public void AddListAtFirst(IList<T> listForAdding)
         {
-            LinkedList<T> linkedListForAdding = (LinkedList<T>)listForAdding;
+            LinkedList<T> linkedListForAdding;
+
+            if (listForAdding is LinkedList<T>)
+            {
+                linkedListForAdding = (LinkedList<T>)listForAdding;
+            }
+            else
+            {
+                linkedListForAdding = new LinkedList<T>(listForAdding.ToArray());
+            }
+
             Length += linkedListForAdding.Length;
             linkedListForAdding._tail.Next = _root;
             _root = linkedListForAdding._root;
         }
 
-        public void AddListAt(int index, IList<T> linkedList)
+        public void AddListAt(int index, IList<T> listForAdding)
         {
-            LinkedList<T> linkedListForAdding = (LinkedList<T>)linkedList;
-
             if ((index >= 1) && (index <= Length))
             {
+                LinkedList<T> linkedListForAdding;
                 Node<T> current = GetCurrentNode(index - 1);
+
+                if (listForAdding is LinkedList<T>)
+                {
+                    linkedListForAdding = (LinkedList<T>)listForAdding;
+                }
+                else
+                {
+                    linkedListForAdding = new LinkedList<T>(listForAdding.ToArray());
+                }
 
                 Length += linkedListForAdding.Length;
                 linkedListForAdding._tail.Next = current.Next;
@@ -163,11 +188,11 @@ namespace List
             }
             else if (index == 0)
             {
-                AddListAtFirst(linkedList);
+                AddListAtFirst(listForAdding);
             }
             else if (index == Length)
             {
-                AddList(linkedList);
+                AddList(listForAdding);
             }
             else
             {
@@ -497,6 +522,20 @@ namespace List
         public void Sort(bool isAscending = true)
         {
             _root = MergeSort(_root, isAscending);
+        }
+
+        public T[] ToArray()
+        {
+            T[] array = new T[Length];
+            Node<T> current = _root;
+
+            for (int i = 0; i < Length; ++i)
+            {
+                array[i] = current.Value;
+                current = current.Next;
+            }
+
+            return array;
         }
 
         private Node<T> MergeSort(Node<T> root, bool isAscending)

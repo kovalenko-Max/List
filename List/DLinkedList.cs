@@ -627,6 +627,20 @@ namespace List
             return result;
         }
 
+        public T[] ToArray()
+        {
+            T[] array = new T[Length];
+            DLNode<T> current = _root;
+
+            for (int i = 0; i < Length; ++i)
+            {
+                array[i] = current.Value;
+                current = current.Next;
+            }
+
+            return array;
+        }
+
         public override string ToString()
         {
             if (Length != 0)
@@ -734,5 +748,7 @@ namespace List
                 node = node.Next;
             }
         }
+
+        
     }
 }
