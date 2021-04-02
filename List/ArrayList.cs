@@ -7,8 +7,8 @@ namespace List
 {
     public class ArrayList<T> : IList<T> where T : IComparable
     {
-        private const int defoultLenght = 10;
-        private const double lenghtCoef = 1.33d;
+        private const int defaultLenght = 10;
+        private const double lengthCoef = 1.33d;
 
         private T[] _array;
 
@@ -43,20 +43,20 @@ namespace List
         public ArrayList()
         {
             Length = 0;
-            _array = new T[defoultLenght];
+            _array = new T[defaultLenght];
         }
 
         public ArrayList(T value)
         {
             Length = 1;
-            _array = new T[defoultLenght];
+            _array = new T[defaultLenght];
             _array[0] = value;
         }
 
         public ArrayList(T[] values)
         {
             Length = values.Length;
-            int realLenght = (int)(Length * lenghtCoef + 1);
+            int realLenght = (int)(Length * lengthCoef + 1);
             _array = new T[realLenght];
             CopyArrayToList(values, _array);
         }
@@ -318,13 +318,22 @@ namespace List
 
         public void Sort(bool isAscending = true)
         {
-            if (isAscending)
+            Comparer<T> comparer = Comparer<T>.Default;
+            int compareResult = isAscending ? -1 : 1;
+
+            for (int i = 0; i < Length - 1; ++i)
             {
-                SortAscending();
-            }
-            else
-            {
-                SortDescending();
+                int comparedIndex = i;
+
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if ((comparer.Compare(_array[j], _array[comparedIndex]) == compareResult))
+                    {
+                        comparedIndex = j;
+                    }
+                }
+
+                Swap(ref _array[comparedIndex], ref _array[i]);
             }
         }
 
@@ -350,23 +359,26 @@ namespace List
 
         public override bool Equals(object obj)
         {
-            ArrayList<T> compareAray = (ArrayList<T>)obj;
-            bool result = true;
+            bool result = false;
 
-            if (Length == compareAray.Length)
+            if (obj is ArrayList<T>)
             {
-                Comparer<T> comparer = Comparer<T>.Default;
-                for (int i = 0; i < Length; ++i)
+                ArrayList<T> compareAray = (ArrayList<T>)obj;
+
+                if (Length == compareAray.Length)
                 {
-                    if (comparer.Compare(_array[i], compareAray._array[i]) != 0)
+                    result = true;
+                    Comparer<T> comparer = Comparer<T>.Default;
+
+                    for (int i = 0; i < Length; ++i)
                     {
-                        result = false;
+                        if (comparer.Compare(_array[i], compareAray._array[i]) != 0)
+                        {
+                            result = false;
+                            break;
+                        }
                     }
                 }
-            }
-            else
-            {
-                result = false;
             }
 
             return result;
@@ -385,7 +397,7 @@ namespace List
 
         private void Resize()
         {
-            int newRealLenght = (int)(Length * lenghtCoef + 1);
+            int newRealLenght = (int)(Length * lengthCoef + 1);
 
             T[] upSizeArray = new T[newRealLenght];
             CopyArrayToList(_array, upSizeArray);
@@ -425,41 +437,5 @@ namespace List
             a = b;
             b = tmp;
         }
-
-        private void SortAscending()
-        {
-            Comparer<T> comparer = Comparer<T>.Default;
-            for (int i = 0; i < Length - 1; ++i)
-            {
-                int min = i;
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if ((comparer.Compare(_array[j], _array[min]) < 0))
-                    {
-                        min = j;
-                    }
-                }
-                Swap(ref _array[min], ref _array[i]);
-            }
-        }
-
-        private void SortDescending()
-        {
-            Comparer<T> comparer = Comparer<T>.Default;
-            for (int i = 0; i < Length - 1; ++i)
-            {
-                int max = i;
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if ((comparer.Compare(_array[j], _array[max]) > 0))
-                    {
-                        max = j;
-                    }
-                }
-                Swap(ref _array[max], ref _array[i]);
-            }
-        }
-
-
     }
 }

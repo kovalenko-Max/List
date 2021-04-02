@@ -552,6 +552,7 @@ namespace List
 
             return array;
         }
+
         public IEnumerator GetEnumerator()
         {
             DLNode<T> node = _root;
@@ -580,7 +581,7 @@ namespace List
             }
             else
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 
